@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111b1b">
+  <meta name="description" content="An immersive four-day journey along the Nile, from Luxor's ancient temples to the slow rhythms of Aswan.">
+  <title>The river remembers · A four-day Nile journey</title>
+  <link rel="preload" href="images/nile.jpg" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#journey">Skip to the itinerary</a>
+  <header class="site-nav"><a class="brand" href="../index.html" aria-label="Return to travel homepage">NILE <span>&amp;</span> WONDER</a><a class="nav-link" href="#journey">The journey <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <!-- Scene 01: only the image and title animate; the hero itself is pinned. -->
+    <section id="top" class="hero" aria-labelledby="hero-title">
+      <div class="hero-image"><img src="images/nile.jpg" alt="The Nile winding past the sunlit shores of Aswan" title="A journey along the Nile" width="1920" height="1280" fetchpriority="high"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-copy"><p class="eyebrow">EGYPT · A JOURNEY BEYOND TIME</p><h1 id="hero-title">The river<br><em>remembers.</em></h1><p>Four days. A thousand stories.<br>Follow the Nile into another rhythm.</p><a class="hero-cta" href="#journey">Begin the journey <span aria-hidden="true">↓</span></a></div>
+      <div class="hero-bottom"><span>25°41′ N &nbsp; 32°38′ E</span><span class="scroll-cue">SCROLL TO WANDER <i aria-hidden="true"></i></span><span>LUXOR → ASWAN</span></div>
+      <span class="hero-index" aria-hidden="true">01 / THE UNVEILING</span>
+    </section>
+
+    <!-- Scene 02: progressive enhancement adds the 400%-wide horizontal track.
+         Without CDN scripts, these are regular, fully readable vertical cards. -->
+    <section id="journey" class="journey" aria-labelledby="journey-title">
+      <div class="journey-heading"><div><p class="eyebrow">THE RIVER IS YOUR ROAD</p><h2 id="journey-title">One river. <em>Four chapters.</em></h2></div><div class="journey-controls"><span id="day-indicator" aria-live="off">DAY 01 — 04</span><button id="toggle-days" type="button" aria-expanded="false">Open all days <span aria-hidden="true">＋</span></button></div></div>
+      <div class="journey-window"><div class="journey-track">
+        <article class="day" id="day-1" aria-labelledby="day-title-1"><div class="day-inner"><div class="day-visual"><img src="images/luxor.webp" alt="Ancient columns and carved stone at Luxor Temple" title="Day one: Luxor" width="1000" height="750" loading="lazy"><span class="image-note">WHERE THE STORY BEGINS</span><span class="day-number" aria-hidden="true">01</span></div><div class="day-copy"><p class="eyebrow">DAY ONE · LUXOR</p><h3 id="day-title-1">Meet the<br><em>ancient world.</em></h3><p class="day-intro">Walk between towering columns, trace the stories in the stone, and let the city’s golden light welcome you aboard.</p><details open><summary>Day one itinerary <span aria-hidden="true">＋</span></summary><div class="activities"><div><span>09:00 / MORNING</span><p>Arrive in Luxor and explore the monumental halls of Karnak with your guide.</p></div><div><span>14:00 / AFTERNOON</span><p>Settle into your Nile cabin. Lunch on board, followed by a little time to unwind.</p></div><div><span>18:00 / EVENING</span><p>Discover Luxor Temple in the softer evening light, then return for dinner.</p></div></div></details><span class="day-footnote">A gentle beginning · Guided walks</span></div></div></article>
+        <article class="day" id="day-2" aria-labelledby="day-title-2"><div class="day-inner"><div class="day-visual"><img src="images/temples.webp" alt="Ancient Egyptian temple architecture" title="Day two: the ancient west bank" width="1000" height="750" loading="lazy"><span class="image-note">BENEATH THE DESERT SKY</span><span class="day-number" aria-hidden="true">02</span></div><div class="day-copy"><p class="eyebrow">DAY TWO · THE WEST BANK</p><h3 id="day-title-2">Stories written<br><em>in stone.</em></h3><p class="day-intro">Cross to the quiet side of the river, where desert hills hold the secrets of kings and the landscape feels almost still.</p><details><summary>Day two itinerary <span aria-hidden="true">＋</span></summary><div class="activities"><div><span>07:00 / MORNING</span><p>Visit the Valley of the Kings and the terraced Temple of Hatshepsut.</p></div><div><span>13:00 / AFTERNOON</span><p>Return to the boat for lunch as the journey south begins, passing fields and villages.</p></div><div><span>19:00 / EVENING</span><p>Watch the banks drift past at sunset and enjoy a quiet dinner on board.</p></div></div></details><span class="day-footnote">Ancient wonders · A slower afternoon</span></div></div></article>
+        <article class="day" id="day-3" aria-labelledby="day-title-3"><div class="day-inner"><div class="day-visual"><img src="images/river.webp" alt="River scenery along the Nile at Aswan" title="Day three: life along the river" width="1000" height="750" loading="lazy"><span class="image-note">LET THE CURRENT LEAD</span><span class="day-number" aria-hidden="true">03</span></div><div class="day-copy"><p class="eyebrow">DAY THREE · EDFU &amp; KOM OMBO</p><h3 id="day-title-3">In the rhythm<br><em>of the river.</em></h3><p class="day-intro">A day of remarkable temples and simple pleasures. Between each discovery, there is room to watch the world go by.</p><details><summary>Day three itinerary <span aria-hidden="true">＋</span></summary><div class="activities"><div><span>08:00 / MORNING</span><p>Step into the beautifully preserved Temple of Horus at Edfu.</p></div><div><span>14:00 / AFTERNOON</span><p>Sail south, then visit the twin sanctuaries of the riverside Kom Ombo Temple.</p></div><div><span>19:30 / EVENING</span><p>Share dinner on deck beneath an open sky as the boat continues toward Aswan.</p></div></div></details><span class="day-footnote">Temple discoveries · Time on deck</span></div></div></article>
+        <article class="day" id="day-4" aria-labelledby="day-title-4"><div class="day-inner"><div class="day-visual"><img src="images/aswan.webp" alt="Aswan's riverside landscape and Nile waters" title="Day four: Aswan" width="1000" height="750" loading="lazy"><span class="image-note">SOME PLACES STAY WITH YOU</span><span class="day-number" aria-hidden="true">04</span></div><div class="day-copy"><p class="eyebrow">DAY FOUR · ASWAN</p><h3 id="day-title-4">Leave a little<br><em>of yourself.</em></h3><p class="day-intro">Island temples, warm welcomes and one last moment on the water. An ending that feels more like a promise to return.</p><details><summary>Day four itinerary <span aria-hidden="true">＋</span></summary><div class="activities"><div><span>08:00 / MORNING</span><p>Take a small boat to Philae and explore its island temple with your guide.</p></div><div><span>13:00 / AFTERNOON</span><p>Disembark and enjoy a leisurely lunch, with time to explore Aswan’s market.</p></div><div><span>17:00 / EVENING</span><p>Choose an optional felucca sail before your onward transfer or an extra night in Aswan.</p></div></div></details><span class="day-footnote">Island temples · A memorable farewell</span></div></div></article>
+      </div></div>
+      <div class="journey-bottom"><span class="journey-instruction">SCROLL TO FOLLOW THE RIVER</span><nav class="day-nav" aria-label="Jump to itinerary day"><a href="#day-1" aria-label="Day one, Luxor" aria-current="step">01</a><a href="#day-2" aria-label="Day two, west bank">02</a><a href="#day-3" aria-label="Day three, Edfu and Kom Ombo">03</a><a href="#day-4" aria-label="Day four, Aswan">04</a></nav><div class="journey-progress" aria-hidden="true"><span></span></div></div>
+    </section>
+
+    <!-- Scene 03: pointer-only tilt keeps touch scrolling and keyboard use natural. -->
+    <section id="moments" class="moments" aria-labelledby="moments-title"><div class="moments-heading"><p class="eyebrow">NOT EVERY MOMENT NEEDS A PLAN</p><h2 id="moments-title">Stay for <em>the feeling.</em></h2><p>The quiet in between is part of the journey.</p></div><div class="moment-grid">
+      <article class="moment-card"><div class="moment-tilt"><img src="images/river.webp" alt="Still waters and sunlit riverbanks along the Nile" title="Life at the pace of the Nile" width="800" height="1000" loading="lazy"><div class="moment-overlay"><span class="eyebrow">01 / SLOW DOWN</span><h3>Nothing to rush.</h3><p>A river view, an open afternoon, and the rare pleasure of simply being here.</p></div></div></article>
+      <article class="moment-card"><div class="moment-tilt"><img src="images/luxor.webp" alt="Stone columns at an ancient Egyptian temple" title="The details of ancient Egypt" width="800" height="1000" loading="lazy"><div class="moment-overlay"><span class="eyebrow">02 / LOOK CLOSER</span><h3>Wonder in the details.</h3><p>A carved line. A changing shadow. History becomes something you can feel.</p></div></div></article>
+      <article class="moment-card"><div class="moment-tilt"><img src="images/aswan.webp" alt="The Nile landscape near Aswan" title="An unforgettable view of Aswan" width="800" height="1000" loading="lazy"><div class="moment-overlay"><span class="eyebrow">03 / TAKE IT WITH YOU</span><h3>A different perspective.</h3><p>Some journeys bring you somewhere new. Others bring you back to yourself.</p></div></div></article>
+    </div></section>
+    <section class="closing" aria-labelledby="closing-title"><p class="eyebrow">YOUR STORY STARTS HERE</p><h2 id="closing-title">Shall we follow <em>the river?</em></h2><p>Four days / Luxor to Aswan / Your own pace</p><a class="booking-link" href="../tailor-made.html">Make this journey yours <span aria-hidden="true">↗</span></a><p class="sample-note">An inspirational itinerary. Sailing times, visits and optional experiences are confirmed when you enquire.</p></section>
+  </main>
+  <footer><a class="brand" href="../index.html">NILE <span>&amp;</span> WONDER</a><span>Travel a little deeper.</span><a href="#top">Back to the beginning ↑</a></footer>
+  <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="false" aria-label="Enable ambient sound"><span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="sound-label">Sound off</span></button>
+  <span id="audio-status" class="sr-only" role="status"></span>
+  <!-- A locally generated, seamless water-like soundscape. Never auto-plays. -->
+  <audio id="ambient-audio" src="audio/river-ambience.wav" loop preload="none"></audio>
+</body>
+</html>
