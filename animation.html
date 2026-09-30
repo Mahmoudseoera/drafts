@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hicode - Digital Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        .matrix-container {
+            position: relative;
+            height: 100vh;
+            background: rgba(0, 20, 0, 0.9);
+        }
+
+        .digital-column {
+            position: absolute;
+            top: -50px;
+            color: #0f0;
+            font-size: 24px;
+            text-shadow: 0 0 5px #0f0;
+            writing-mode: vertical-rl;
+            opacity: 0.8;
+            animation: fall 8s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        .header {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hicode-title {
+            color: #0f0;
+            font-size: 5em;
+            text-shadow: 0 0 15px #0f0;
+            margin-bottom: 20px;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            2% {
+                text-shadow: 3px 0 0 red, -3px 0 0 blue;
+            }
+
+            96% {
+                text-shadow: none;
+            }
+        }
+
+        .subtitle {
+            color: #0f0;
+            font-size: 1.5em;
+            letter-spacing: 4px;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            animation: sparkle 1s infinite;
+        }
+
+        @keyframes sparkle {
+            50% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="matrix-container" id="matrix"></div>
+    <div class="header">
+        <h1 class="hicode-title">HICODE</h1>
+        <p class="subtitle">DIGITAL TRANSFORMATION AGENCY</p>
+    </div>
+
+    <script>
+        const characters = ['const', '=>', 'func()', 'SEO', 'dev', '{}', 'npm', 'git', '404', 'CSS', 'HTML'];
+
+        /**
+         * Creates a matrix of characters that represent a digital
+         * transformation. The characters are randomly selected from an
+         * array of strings and are placed in a column, with each column
+         * having a random animation delay.
+         */
+        function createMatrix() {
+            const container = document.getElementById('matrix');
+            const cols = Math.floor(window.innerWidth / 30);
+
+            for (let i = 0; i < cols; i++) {
+                const col = document.createElement('div');
+                col.className = 'digital-column';
+                col.style.left = `${(i * 30) + 10}px`;
+                col.style.animationDelay = `${Math.random() * 5}s`;
+
+                // Generate random characters
+                let content = '';
+                for (let j = 0; j < 30; j++) {
+                    content += characters[Math.floor(Math.random() * characters.length)] + ' ';
+                }
+
+                col.textContent = content;
+                container.appendChild(col);
+            }
+        }
+
+        // Mouse interaction
+        document.addEventListener('mousemove', (e) => {
+            const cols = document.querySelectorAll('.digital-column');
+            const mouseX = e.clientX;
+
+            cols.forEach(col => {
+                const colX = col.getBoundingClientRect().left;
+                const distance = Math.abs(mouseX - colX);
+
+                if (distance < 150) {
+                    col.style.animationDuration = `${3 + (distance / 50)}s`;
+                    col.style.opacity = `${0.8 - (distance / 200)}`;
+                }
+            });
+        });
+
+        // Initialize
+        createMatrix();
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            document.getElementById('matrix').innerHTML = '';
+            createMatrix();
+        });
+    </script>
+</body>
+
+</html>

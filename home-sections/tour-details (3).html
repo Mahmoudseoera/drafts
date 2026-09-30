@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radamis — Pyramids &amp; Sphinx Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lightgallery-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/librairies/flatpickr.min.css" />
+  <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    :root {
+      --color-primary: #273d7f;
+      --color-primary-dark: #1d2f66;
+      --color-primary-light: #3a5599;
+      --color-secondary: #6bcef5;
+      --color-secondary-dark: #4bb8e8;
+      --color-secondary-light: #9edff9;
+      --color-accent: #f2b705;
+      --color-accent-light: #ffd166;
+      --color-accent-dark: #d99e04;
+      --color-white: #ffffff;
+      --color-off-white: #f8fafc;
+      --color-gray-100: #f3f4f6;
+      --color-gray-200: #e5e7eb;
+      --color-gray-300: #d1d5db;
+      --color-gray-400: #9ca3af;
+      --color-gray-500: #6b7280;
+      --color-gray-700: #374151;
+      --color-gray-900: #1f2937;
+      --gradient-main: linear-gradient(135deg, #273d7f, #6bcef5);
+      --gradient-accent: linear-gradient(135deg, #273d7f, #6bcef5, #f2b705);
+      --gradient-hover: linear-gradient(135deg, #9edff9 0%, #6bcef5 50%, #4bb8e8 100%);
+      --shadow-sm: 0 2px 6px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --font-heading: "Outfit", sans-serif;
+      --font-body: "Plus Jakarta Sans", sans-serif;
+      --clr-btn: var(--color-primary);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-gray-900); background: var(--color-off-white); }
+
+    /* ── TOUR HERO TOP (breadcrumb + title + tags) ── */
+    .td-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-gray-200);
+      padding: 28px 0 0;
+    }
+    .td-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .td-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--color-gray-500);
+      margin-bottom: 14px;
+    }
+    .td-breadcrumb a { color: var(--color-primary); font-weight: 500; text-decoration: none; }
+    .td-breadcrumb a:hover { text-decoration: underline; }
+    .td-breadcrumb-sep { color: var(--color-gray-400); }
+
+    .td-title {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 800;
+      color: var(--color-gray-900);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .td-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .td-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1.5px solid var(--color-gray-300);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-gray-700);
+      background: var(--color-white);
+    }
+    .td-tag i { color: var(--color-primary); font-size: 11px; }
+
+    .td-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 0 16px;
+    }
+    .td-meta-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .td-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-gray-700);
+    }
+    .td-location i { color: var(--color-primary); }
+    .td-stars { display: flex; align-items: center; gap: 6px; }
+    .td-stars i { color: var(--color-accent); font-size: 13px; }
+    .td-review-count { font-size: 13px; color: var(--color-gray-500); }
+    .td-actions { display: flex; align-items: center; gap: 10px; }
+    .td-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: 1.5px solid var(--color-gray-300);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-gray-700);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .td-action-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    /* ── GALLERY ── */
+    .td-gallery-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; }
+    .td-gallery {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: 220px 220px;
+      gap: 10px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .td-gallery-cell {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .td-gallery-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+      display: block;
+    }
+    .td-gallery-cell:hover img { transform: scale(1.05); }
+    /* Col-1: two stacked cells */
+    .td-gallery-cell:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .td-gallery-cell:nth-child(2) { grid-column: 1; grid-row: 2; }
+    /* Col-2: big center spanning both rows */
+    .td-gallery-cell:nth-child(3) { grid-column: 2; grid-row: 1 / 3; }
+    /* Col-3: two stacked */
+    .td-gallery-cell:nth-child(4) { grid-column: 3; grid-row: 1; }
+    .td-gallery-cell:nth-child(5) { grid-column: 3; grid-row: 2; }
+
+    /* Gallery overlay tools (center cell) */
+    .td-gallery-tools {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+    .td-gallery-tool {
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(6px);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: var(--color-gray-700);
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .td-gallery-tool:hover { background: var(--color-primary); color: #fff; }
+
+    /* View All overlay on last cell */
+    .td-view-all-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(39,61,127,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .td-view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.95);
+      color: var(--color-gray-900);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .td-view-all-btn:hover { background: var(--color-white); }
+
+    /* ── QUICK INFO BAR below gallery ── */
+    .td-quick-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .td-quick-bar-inner {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .td-qi-item {
+      flex: 1;
+      min-width: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 18px 16px;
+      border-right: 1px solid var(--color-gray-200);
+      text-align: center;
+    }
+    .td-qi-item:last-child { border-right: none; }
+    .td-qi-icon { font-size: 18px; color: var(--color-primary); margin-bottom: 2px; }
+    .td-qi-label { font-size: 11px; color: var(--color-gray-400); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .td-qi-value { font-size: 14px; font-weight: 700; color: var(--color-gray-900); }
+    .td-qi-value.price { color: var(--color-primary); font-size: 16px; }
+    .td-qi-stars i { color: var(--color-accent); font-size: 11px; }
+
+    /* ── MAIN LAYOUT ── */
+    .td-layout {
+      max-width: 1200px;
+      margin: 28px auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ── TABS ── */
+    .td-tabs-nav {
+      position: sticky;
+      top: 0;
+      background: var(--color-white);
+      z-index: 50;
+      border-bottom: 2px solid var(--color-gray-200);
+      display: flex;
+      gap: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .td-tab-btn {
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      border: none;
+      background: transparent;
+      color: var(--color-gray-500);
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .td-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .td-tab-btn:hover:not(.active) { color: var(--color-gray-700); }
+
+    .td-tab-panel { display: none; }
+    .td-tab-panel.active { display: block; }
+
+    /* ── CONTENT CARDS ── */
+    .td-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-gray-100);
+    }
+    .td-card-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .td-card-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 22px;
+      border-radius: 2px;
+      background: var(--gradient-main);
+      flex-shrink: 0;
+    }
+
+    /* Overview */
+    .td-overview-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--color-gray-700);
+      margin-bottom: 20px;
+    }
+    .td-overview-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .td-overview-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-off-white);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-gray-700);
+    }
+    .td-overview-badge i { color: var(--color-primary); }
+
+    /* Highlights */
+    .td-highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .td-highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--color-gray-700);
+      line-height: 1.5;
+    }
+    .td-highlight-item::before {
+      content: '';
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-secondary);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Included / Excluded */
+    .td-included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .td-inc-col-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+    .td-inc-col-title.yes { color: #16a34a; }
+    .td-inc-col-title.no { color: #dc2626; }
+    .td-inc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .td-inc-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--color-gray-700);
+    }
+    .td-inc-list li::before {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .td-inc-list.yes li::before { content: '\f00c'; color: #16a34a; }
+    .td-inc-list.no li::before { content: '\f00d'; color: #dc2626; }
+
+    /* Tour Plan / Accordion */
+    .td-plan-item {
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 10px;
+      transition: box-shadow .2s;
+    }
+    .td-plan-item:hover { box-shadow: var(--shadow-md); }
+    .td-plan-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      background: var(--color-white);
+      user-select: none;
+    }
+    .td-plan-item.open .td-plan-header { background: var(--color-off-white); }
+    .td-plan-day-badge {
+      background: var(--gradient-main);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .td-plan-day-title {
+      flex: 1;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+    }
+    .td-plan-toggle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--color-gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--color-gray-500);
+      flex-shrink: 0;
+      transition: background .2s, color .2s, transform .3s;
+    }
+    .td-plan-item.open .td-plan-toggle {
+      background: var(--color-primary);
+      color: #fff;
+      transform: rotate(45deg);
+    }
+    .td-plan-body {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--color-gray-200);
+    }
+    .td-plan-item.open .td-plan-body { display: block; }
+    .td-plan-body img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      margin: 16px 0 14px;
+    }
+    .td-plan-desc { font-size: 14px; line-height: 1.7; color: var(--color-gray-700); }
+    .td-plan-desc ul { padding-left: 20px; margin-top: 10px; }
+    .td-plan-desc li { margin-bottom: 4px; }
+
+    /* Pricing Table */
+    .td-pricing-table-wrap { overflow-x: auto; }
+    .td-pricing-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .td-pricing-table th {
+      background: var(--gradient-main);
+      color: #fff;
+      padding: 12px 18px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 13px;
+    }
+    .td-pricing-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+    .td-pricing-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+    .td-pricing-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--color-gray-200);
+      color: var(--color-gray-700);
+      font-weight: 500;
+    }
+    .td-pricing-table tr:last-child td { border-bottom: none; }
+    .td-pricing-table tr:nth-child(even) td { background: var(--color-gray-100); }
+    .td-pricing-table td:not(:first-child) { font-weight: 700; color: var(--color-primary); }
+
+    /* Trip Notes tab */
+    .td-trip-note {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+    .td-trip-note:last-child { border-bottom: none; }
+    .td-trip-note-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(39,61,127,.1), rgba(107,206,245,.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .td-trip-note-text h4 { font-size: 14px; font-weight: 700; color: var(--color-gray-900); margin-bottom: 3px; }
+    .td-trip-note-text p { font-size: 13px; color: var(--color-gray-500); line-height: 1.6; }
+
+    /* Why Us */
+    .td-why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .td-why-card {
+      background: linear-gradient(135deg, rgba(39,61,127,.04), rgba(107,206,245,.06));
+      border: 1px solid rgba(39,61,127,.1);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .td-why-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .td-why-card h4 { font-size: 14px; font-weight: 700; color: var(--color-gray-900); margin-bottom: 4px; }
+    .td-why-card p { font-size: 13px; color: var(--color-gray-500); line-height: 1.6; }
+
+    /* FAQ */
+    .td-faq-item {
+      border-bottom: 1px solid var(--color-gray-200);
+      padding: 4px 0;
+    }
+    .td-faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-gray-900);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-body);
+    }
+    .td-faq-q .td-faq-icon { font-size: 12px; color: var(--color-primary); transition: transform .3s; flex-shrink: 0; }
+    .td-faq-item.open .td-faq-icon { transform: rotate(180deg); }
+    .td-faq-a { display: none; padding: 0 0 16px; font-size: 14px; color: var(--color-gray-500); line-height: 1.75; }
+    .td-faq-item.open .td-faq-a { display: block; }
+
+    /* ── SIDEBAR ── */
+    .td-sidebar { position: sticky; top: 70px; }
+    .td-avail-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 32px rgba(39,61,127,.12);
+      overflow: hidden;
+      border: 1px solid var(--color-gray-200);
+    }
+    .td-avail-header {
+      background: var(--gradient-main);
+      padding: 22px 24px;
+      color: #fff;
+    }
+    .td-avail-header h3 {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .td-avail-header p { font-size: 13px; opacity: .85; }
+    .td-avail-body { padding: 24px; }
+
+    /* Form styles */
+    .ff-wrap { margin-bottom: 14px; position: relative; }
+    .ff-err-msg { font-size: 11.5px; color: #dc2626; margin-top: 4px; display: block; min-height: 14px; }
+    .ff-wrap.ff-error .form-input,
+    .ff-wrap.ff-error .form-select { border-color: #dc2626; }
+    .ff-wrap.ff-valid .form-input,
+    .ff-wrap.ff-valid .form-select { border-color: #16a34a; }
+
+    .form-field { position: relative; }
+    .form-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-gray-500);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      border: 1.5px solid var(--color-gray-300);
+      border-radius: var(--radius-sm);
+      padding: 10px 13px;
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--color-gray-900);
+      background: var(--color-white);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(39,61,127,.1);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .form-row--phone { grid-template-columns: 110px 1fr; }
+
+    .date-input-wrap { position: relative; }
+    .date-input-wrap .fp-ico {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--color-gray-400);
+    }
+    .date-input-wrap .fp-ico svg { width: 16px; height: 16px; stroke: currentColor; }
+    .date-input-wrap .form-input { padding-right: 36px; }
+
+    .counter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1.5px solid var(--color-gray-300);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .counter-btn {
+      width: 36px;
+      height: 38px;
+      border: none;
+      background: var(--color-gray-100);
+      color: var(--color-gray-700);
+      cursor: pointer;
+      font-size: 13px;
+      transition: background .2s;
+    }
+    .counter-btn:hover { background: var(--color-gray-200); }
+    .counter-val {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-gray-900);
+      padding: 8px 0;
+    }
+
+    .btn-request {
+      width: 100%;
+      background: var(--gradient-main);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      margin-top: 6px;
+    }
+    .btn-request:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* Reviews */
+    .td-review-summary {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 20px;
+      background: var(--color-off-white);
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      border: 1px solid var(--color-gray-200);
+    }
+    .td-review-big-score {
+      font-family: var(--font-heading);
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+    .td-review-stars-row { display: flex; gap: 3px; margin: 6px 0; }
+    .td-review-stars-row i { color: var(--color-accent); font-size: 14px; }
+    .td-review-based { font-size: 12px; color: var(--color-gray-400); }
+    .td-review-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .td-review-bar-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--color-gray-500); }
+    .td-review-bar-track { flex: 1; height: 6px; background: var(--color-gray-200); border-radius: 3px; overflow: hidden; }
+    .td-review-bar-fill { height: 100%; background: var(--gradient-main); border-radius: 3px; }
+    .td-review-bar-pct { width: 30px; text-align: right; font-weight: 600; color: var(--color-gray-700); }
+
+    .td-review-card {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+    .td-review-card:last-child { border-bottom: none; }
+    .td-reviewer-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .td-reviewer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .td-reviewer-name { font-size: 14px; font-weight: 700; color: var(--color-gray-900); }
+    .td-reviewer-date { font-size: 12px; color: var(--color-gray-400); }
+    .td-review-text { font-size: 14px; line-height: 1.7; color: var(--color-gray-600); }
+
+    /* Mobile booking bar */
+    .td-mob-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-gray-200);
+      padding: 12px 20px;
+      z-index: 100;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 -4px 16px rgba(0,0,0,.1);
+    }
+    .td-mob-price-label { font-size: 11px; color: var(--color-gray-400); }
+    .td-mob-price { font-size: 20px; font-weight: 800; color: var(--color-primary); font-family: var(--font-heading); }
+    .td-mob-price span { font-size: 13px; color: var(--color-gray-400); font-weight: 400; }
+    .td-mob-book-btn {
+      background: var(--gradient-main);
+      color: #fff;
+      border: none;
+      padding: 11px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Related tours */
+    .td-related { background: var(--color-white); padding: 60px 0; }
+    .td-related-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .td-related-title {
+      font-family: var(--font-heading);
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 28px;
+      color: var(--color-gray-900);
+    }
+    .td-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .td-tour-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      background: var(--color-white);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .td-tour-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .td-tour-img { position: relative; height: 200px; overflow: hidden; }
+    .td-tour-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .td-tour-card:hover .td-tour-img img { transform: scale(1.08); }
+    .td-tour-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255,255,255,.95);
+      color: var(--color-primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+    .td-tour-body { padding: 16px; }
+    .td-tour-loc { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-gray-500); margin-bottom: 6px; }
+    .td-tour-loc i { color: var(--color-primary); }
+    .td-tour-name { font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--color-gray-900); margin-bottom: 8px; line-height: 1.35; }
+    .td-tour-price { font-size: 18px; font-weight: 800; color: var(--color-primary); font-family: var(--font-heading); }
+    .td-tour-price span { font-size: 12px; color: var(--color-gray-400); font-weight: 400; }
+
+    /* FAQ section */
+    .td-faq-section { background: var(--color-off-white); padding: 60px 0; }
+    .td-faq-section-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .td-faq-eyebrow { font-size: 12px; font-weight: 700; color: var(--color-secondary-dark); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .td-faq-eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--color-secondary-dark); border-radius: 2px; }
+    .td-faq-section-title { font-family: var(--font-heading); font-size: 30px; font-weight: 800; color: var(--color-gray-900); margin-bottom: 8px; }
+    .td-faq-section-title span { color: var(--color-primary); }
+    .td-faq-subtitle { font-size: 15px; color: var(--color-gray-500); margin-bottom: 32px; line-height: 1.7; }
+    .td-faq-img-main { border-radius: var(--radius-lg); overflow: hidden; position: relative; height: 340px; }
+    .td-faq-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .td-faq-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255,255,255,.95);
+      padding: 8px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .td-faq-badge i { color: var(--color-accent); }
+    .td-faq-img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .td-faq-img-sm { border-radius: var(--radius-md); overflow: hidden; height: 140px; }
+    .td-faq-img-sm img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Footer */
+    .site-footer { background: var(--color-primary-dark); color: rgba(255,255,255,.75); padding: 60px 0 0; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+    .footer-brand-tagline { font-size: 14px; line-height: 1.75; margin: 14px 0 20px; color: rgba(255,255,255,.6); }
+    .footer-contact-item a { display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,.65); text-decoration: none; font-size: 13px; margin-bottom: 10px; transition: color .2s; }
+    .footer-contact-item a:hover { color: #fff; }
+    .footer-contact-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .footer-contact-icon svg { width: 14px; height: 14px; fill: none; stroke: rgba(255,255,255,.8); }
+    .footer-col-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #fff; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.1); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,.45); }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social-link { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; transition: background .2s; }
+    .footer-social-link:hover { background: var(--color-secondary-dark); }
+    .footer-social-link svg { width: 16px; height: 16px; fill: rgba(255,255,255,.8); }
+
+    /* Mobile fixed footer nav */
+    .mob-footer-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-gray-200);
+      z-index: 200;
+      padding: 6px 0;
+    }
+    .mob-footer-nav-inner { display: flex; align-items: stretch; justify-content: space-around; }
+    .mob-footer-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--color-gray-500);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: color .2s;
+    }
+    .mob-footer-link svg { width: 22px; height: 22px; }
+    .mob-footer-link.book { color: var(--color-primary); background: rgba(39,61,127,.06); }
+    .mob-footer-link:hover { color: var(--color-primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .td-layout { grid-template-columns: 1fr; }
+      .td-sidebar { position: static; }
+      .td-related-grid { grid-template-columns: 1fr 1fr; }
+      .td-faq-section-inner { grid-template-columns: 1fr; }
+      .td-faq-right { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .td-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 160px 160px 200px; }
+      .td-gallery-cell:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .td-gallery-cell:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .td-gallery-cell:nth-child(3) { grid-column: 1 / 3; grid-row: 2 / 4; }
+      .td-gallery-cell:nth-child(4),
+      .td-gallery-cell:nth-child(5) { display: none; }
+      .td-quick-bar-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+      .td-qi-item { border-right: none; border-bottom: 1px solid var(--color-gray-200); }
+      .td-qi-item:nth-child(3n) { border-right: none; }
+      .td-highlights-grid { grid-template-columns: 1fr; }
+      .td-included-grid { grid-template-columns: 1fr; }
+      .td-why-grid { grid-template-columns: 1fr; }
+      .td-tabs-nav { overflow-x: auto; }
+      .td-tab-btn { padding: 12px 16px; font-size: 13px; }
+      .td-related-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .td-mob-bar { display: flex; }
+      body { padding-bottom: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- ============================================================ TOUR HEADER ============================================================ -->
+  <div class="td-header">
+    <div class="td-header-inner">
+      <!-- Breadcrumb -->
+      <nav class="td-breadcrumb">
+        <a href="index.html">Go travel </a>
+        <span class="td-breadcrumb-sep">›</span>
+        <a href="category.html">Egypt Packages</a>
+        <span class="td-breadcrumb-sep">›</span>
+        <span>Pyramids &amp; Sphinx Tour</span>
+      </nav>
+
+      <!-- Title -->
+      <h1 class="td-title">Pyramids &amp; Sphinx Full-Day Tour<br>with Expert Egyptologist Guide</h1>
+
+      <!-- Tags -->
+      <div class="td-tags">
+        <span class="td-tag"><i class="fa-solid fa-globe"></i> English / Arabic / French</span>
+        <span class="td-tag"><i class="fa-solid fa-user-tie"></i> Meet with guide</span>
+        <span class="td-tag"><i class="fa-regular fa-clock"></i> 6 to 8 Hours</span>
+        <span class="td-tag"><i class="fa-solid fa-van-shuttle"></i> Transfers Included</span>
+      </div>
+
+      <!-- Meta row -->
+      <div class="td-meta-row">
+        <div class="td-meta-left">
+          <div class="td-location"><i class="fa-solid fa-location-dot"></i> Giza, Cairo — Egypt</div>
+          <div class="td-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <span class="td-review-count">( 24 Reviews )</span>
+          </div>
+        </div>
+        <div class="td-actions">
+          <button class="td-action-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+          <button class="td-action-btn"><i class="fa-regular fa-heart"></i> Wishlist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ GALLERY ============================================================ -->
+  <div class="td-gallery-wrap">
+    <div id="lightgallery" class="td-gallery">
+      <!-- Cell 1: top-left -->
+      <a href="assets/images/tours/49-webp.webp" class="td-gallery-cell" data-lg-size="1400-933">
+        <img src="assets/images/tours/49-webp.webp" alt="Karnak Temple" />
+      </a>
+      <!-- Cell 2: bottom-left -->
+      <a href="assets/images/tours/alexandria banner5646.jpg" class="td-gallery-cell" data-lg-size="1400-933">
+        <img src="assets/images/tours/alexandria banner5646.jpg" alt="Nile View" />
+      </a>
+      <!-- Cell 3: big center -->
+      <a href="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1400&q=90" class="td-gallery-cell" data-lg-size="1400-933" id="galleryCenter">
+        <img src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=900&q=80" alt="Pyramids at Giza" />
+        <div class="td-gallery-tools">
+          <button class="td-gallery-tool" id="galleryOpenAll" title="View All Photos"><i class="fa-regular fa-image"></i></button>
+          <button class="td-gallery-tool" title="View Map"><i class="fa-regular fa-map"></i></button>
+        </div>
+      </a>
+      <!-- Cell 4: top-right -->
+      <a href="assets/images/tours/aswan banner6546.jpg" class="td-gallery-cell" data-lg-size="1400-933">
+        <img src="assets/images/tours/aswan banner6546.jpg" alt="Sahara Desert" />
+      </a>
+      <!-- Cell 5: bottom-right — View All -->
+      <a href="https://images.unsplash.com/photo-1593352215910-75e1d4c60cbc?w=1400&q=90" class="td-gallery-cell" data-lg-size="1400-933">
+        <img src="https://images.unsplash.com/photo-1593352215910-75e1d4c60cbc?w=600&q=80" alt="Abu Simbel" />
+        <div class="td-view-all-overlay">
+          <button class="td-view-all-btn"><i class="fa-regular fa-images"></i> View All</button>
+        </div>
+      </a>
+      <!-- Hidden extras for lightgallery -->
+      <a href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400&q=90" class="td-gallery-cell" style="display:none" data-lg-size="1400-933">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Red Sea" />
+      </a>
+      <a href="https://www.youtube.com/watch?v=hTGJfRPLe08" class="td-gallery-cell" style="display:none" data-lg-size="1280-720" data-youtube="hTGJfRPLe08">
+        <img src="https://img.youtube.com/vi/hTGJfRPLe08/hqdefault.jpg" alt="Pyramids Video Tour" />
+      </a>
+    </div>
+  </div>
+
+  <!-- ============================================================ QUICK INFO BAR ============================================================ -->
+  <div class="td-quick-bar">
+    <div class="td-quick-bar-inner">
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-solid fa-tag"></i></div>
+        <div class="td-qi-label">From</div>
+        <div class="td-qi-value price">$85 <small style="font-size:12px;color:var(--color-gray-400);font-weight:400">/person</small></div>
+      </div>
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-regular fa-clock"></i></div>
+        <div class="td-qi-label">Duration</div>
+        <div class="td-qi-value">6 – 8 Hours</div>
+      </div>
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="td-qi-label">Group Size</div>
+        <div class="td-qi-value">Max 15</div>
+      </div>
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-regular fa-calendar-days"></i></div>
+        <div class="td-qi-label">Runs</div>
+        <div class="td-qi-value">Mon / Wed / Fri</div>
+      </div>
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="td-qi-label">Location</div>
+        <div class="td-qi-value">Giza, Egypt</div>
+      </div>
+      <div class="td-qi-item">
+        <div class="td-qi-icon"><i class="fa-solid fa-star"></i></div>
+        <div class="td-qi-label">Rating</div>
+        <div class="td-qi-value">
+          <span class="td-qi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+          <small style="color:var(--color-gray-400);font-weight:400;font-size:11px"> (24)</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ MAIN LAYOUT ============================================================ -->
+  <div class="td-layout">
+
+    <!-- LEFT: TABBED CONTENT -->
+    <div>
+      <!-- TABS NAV -->
+      <div class="td-tabs-nav">
+        <button class="td-tab-btn active" data-tab="itinerary">Itinerary</button>
+        <button class="td-tab-btn" data-tab="trip-notes">Trip Notes</button>
+        <button class="td-tab-btn" data-tab="why-us">Why Us</button>
+        <button class="td-tab-btn" data-tab="reviews">Reviews</button>
+        <button class="td-tab-btn" data-tab="book-now">Book Now</button>
+      </div>
+
+      <!-- ── TAB: ITINERARY ── -->
+      <div class="td-tab-panel active" id="tab-itinerary">
+        <!-- Overview -->
+        <div class="td-card" style="margin-top:20px">
+          <h2 class="td-card-title">Tour Overview</h2>
+          <p class="td-overview-desc">Step into one of the world's greatest civilisations on this full-day guided tour of the Giza Plateau. Your expert Egyptologist will lead you through the Great Pyramid of Khufu, the enigmatic Sphinx, and the ancient Valley Temple — bringing 4,500 years of history to life with stories, legends, and scholarly insight. Comfortable air-conditioned transport, a welcome lunch, and all entrance fees are included so you can focus entirely on the experience.</p>
+          <div class="td-overview-badges">
+            <div class="td-overview-badge"><i class="fa-solid fa-shield-halved"></i> Free cancellation up to 24h</div>
+            <div class="td-overview-badge"><i class="fa-solid fa-headset"></i> 24/7 customer support</div>
+            <div class="td-overview-badge"><i class="fa-solid fa-award"></i> Certified Egyptologist guide</div>
+          </div>
+        </div>
+
+        <!-- Highlights & Included -->
+        <div class="td-card">
+          <h2 class="td-card-title">Highlights</h2>
+          <div class="td-highlights-grid">
+            <div class="td-highlight-item">Explore scenic landscapes and breathtaking views</div>
+            <div class="td-highlight-item">Enjoy authentic local food experiences</div>
+            <div class="td-highlight-item">Capture unforgettable travel moments daily</div>
+            <div class="td-highlight-item">Witness breathtaking sunrise and sunset</div>
+            <div class="td-highlight-item">Relax on beautiful tropical beaches</div>
+            <div class="td-highlight-item">Immerse in unique cultural traditions</div>
+            <div class="td-highlight-item">Visit ancient temples and ruins</div>
+            <div class="td-highlight-item">Take part in fun activities for all ages</div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-gray-200);margin:24px 0 20px"></div>
+          <h2 class="td-card-title">Included / Excluded</h2>
+          <div class="td-included-grid">
+            <div>
+              <div class="td-inc-col-title yes"><i class="fa-solid fa-circle-check" style="margin-right:6px"></i>Included</div>
+              <ul class="td-inc-list yes">
+                <li>Guided Tour Service</li>
+                <li>Hotel Accommodation Stay</li>
+                <li>Luggage Handling Assistance</li>
+                <li>Scenic Boat Ride</li>
+                <li>Airport Transfers</li>
+                <li>Egyptologist Guide</li>
+                <li>Bottled Water</li>
+              </ul>
+            </div>
+            <div>
+              <div class="td-inc-col-title no"><i class="fa-solid fa-circle-xmark" style="margin-right:6px"></i>Excluded</div>
+              <ul class="td-inc-list no">
+                <li>Personal Travel Insurance</li>
+                <li>Alcoholic Beverages</li>
+                <li>International Flights</li>
+                <li>Visa Fees</li>
+                <li>Gratuities</li>
+                <li>Personal Expenses</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour Plan -->
+        <div class="td-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h2 class="td-card-title" style="margin-bottom:0">Tour Plan</h2>
+            <button id="toggleAllPlans" style="font-size:13px;font-weight:600;padding:7px 14px;border-radius:6px;border:1.5px solid var(--color-gray-300);background:transparent;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--color-gray-700)">
+              <i class="fa-solid fa-layer-group"></i> <span>Expand All</span>
+            </button>
+          </div>
+          <div id="tourPlan">
+            <!-- Day 01 -->
+            <div class="td-plan-item open" data-plan-idx="0">
+              <div class="td-plan-header">
+                <div class="td-plan-day-badge">Day 01</div>
+                <div class="td-plan-day-title">City Arrival &amp; Pyramids</div>
+                <div class="td-plan-toggle"><i class="fa-solid fa-plus"></i></div>
+              </div>
+              <div class="td-plan-body">
+                <img src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=800&q=80" alt="Pyramids at Giza" loading="lazy" />
+                <div class="td-plan-desc">
+                  <p>Discover the perfect escape with our carefully curated travel packages. Whether you're seeking adventure, relaxation, or cultural discovery, our tours are designed to offer unforgettable experiences.</p>
+                  <ul>
+                    <li>Morning: Pickup from your Cairo hotel</li>
+                    <li>Visit the Great Pyramid of Khufu &amp; Sphinx</li>
+                    <li>Lunch at a local restaurant overlooking the Pyramids</li>
+                    <li>Afternoon: Valley Temple &amp; Solar Boat Museum</li>
+                    <li>Evening: Return to hotel</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Day 02 -->
+            <div class="td-plan-item" data-plan-idx="1">
+              <div class="td-plan-header">
+                <div class="td-plan-day-badge">Day 02</div>
+                <div class="td-plan-day-title">Coastal Journey — Nile Cruise</div>
+                <div class="td-plan-toggle"><i class="fa-solid fa-plus"></i></div>
+              </div>
+              <div class="td-plan-body">
+                <img src="assets/images/tours/alexandria banner5646.jpg" alt="Nile Cruise" loading="lazy" />
+                <div class="td-plan-desc">
+                  <p>Sail serenely down the legendary Nile. Our tours are designed to offer unforgettable experiences. Explore breath-taking landscapes.</p>
+                  <ul>
+                    <li>Morning: Board your traditional felucca at Aswan</li>
+                    <li>Sail past Elephantine Island &amp; Kitchener's Island</li>
+                    <li>Visit Philae Temple by motorboat</li>
+                    <li>Afternoon: Free time in Aswan souk</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Day 03 -->
+            <div class="td-plan-item" data-plan-idx="2">
+              <div class="td-plan-header">
+                <div class="td-plan-day-badge">Day 03</div>
+                <div class="td-plan-day-title">Nature Exploration — Siwa Oasis</div>
+                <div class="td-plan-toggle"><i class="fa-solid fa-plus"></i></div>
+              </div>
+              <div class="td-plan-body">
+                <img src="assets/images/tours/aswan banner6546.jpg" alt="Siwa Oasis" loading="lazy" />
+                <div class="td-plan-desc">
+                  <p>Journey into the Sahara to the remote Siwa Oasis — a timeless haven of freshwater springs, ancient oracles, and golden dunes under a star-filled sky.</p>
+                  <ul>
+                    <li>Morning: Drive to Siwa from Marsa Matruh</li>
+                    <li>Visit the Oracle Temple of Amun</li>
+                    <li>Swim in Cleopatra's Pool</li>
+                    <li>Sunset dune safari by 4×4</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Day 04 -->
+            <div class="td-plan-item" data-plan-idx="3">
+              <div class="td-plan-header">
+                <div class="td-plan-day-badge" style="background:linear-gradient(135deg,#f2b705,#d99e04);color:#fff">Day 04</div>
+                <div class="td-plan-day-title">Historic Return — Luxor Temples</div>
+                <div class="td-plan-toggle"><i class="fa-solid fa-plus"></i></div>
+              </div>
+              <div class="td-plan-body">
+                <img src="assets/images/tours/aswan4545.jpg" alt="Luxor Temple" loading="lazy" style="background:#ddd" />
+                <div class="td-plan-desc">
+                  <p>Visit the breathtaking Karnak Temple complex before returning to Cairo for your departure flight.</p>
+                  <ul>
+                    <li>Morning: Valley of the Kings</li>
+                    <li>Visit the Temple of Hatshepsut</li>
+                    <li>Afternoon: Karnak Temple Complex</li>
+                    <li>Evening flight back to Cairo</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Table -->
+        <div class="td-card">
+          <h2 class="td-card-title">Travel Tour Packages</h2>
+          <p style="font-size:14px;color:var(--color-gray-500);margin-bottom:18px">Explore our exclusive tour packages with the best prices and destinations</p>
+          <div class="td-pricing-table-wrap">
+            <table class="td-pricing-table">
+              <thead>
+                <tr>
+                  <th>Package Type</th>
+                  <th>May to Sep.</th>
+                  <th>Oct. to Apr.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Single</td><td>$3,130</td><td>$1,500</td></tr>
+                <tr><td>Double</td><td>$2,000</td><td>$3,200</td></tr>
+                <tr><td>Triple</td><td>$2,000</td><td>$2,300</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /#tab-itinerary -->
+
+      <!-- ── TAB: TRIP NOTES ── -->
+      <div class="td-tab-panel" id="tab-trip-notes">
+        <div class="td-card" style="margin-top:20px">
+          <h2 class="td-card-title">Trip Notes &amp; Important Info</h2>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Meeting Point &amp; Time</h4>
+              <p>Your Egyptologist guide will meet you at your Cairo or Giza hotel lobby at 8:00 AM. Please be ready 10 minutes before departure.</p>
+            </div>
+          </div>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-shirt"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Dress Code</h4>
+              <p>Comfortable, breathable clothing recommended. Shoulders and knees should be covered when entering mosques. Sunscreen and a hat are strongly advised.</p>
+            </div>
+          </div>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-camera"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Photography</h4>
+              <p>Photography is permitted at most sites. Interior camera permits may be required at an additional local fee. No photography in certain temple chambers.</p>
+            </div>
+          </div>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Accessibility</h4>
+              <p>This tour involves moderate walking on uneven terrain. Wheelchair access is limited at some sites. Please inform us of any mobility requirements in advance.</p>
+            </div>
+          </div>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-utensils"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Meals &amp; Dietary Requirements</h4>
+              <p>Lunch is included at a quality restaurant. Vegetarian and vegan options are available. Please notify us of any food allergies at the time of booking.</p>
+            </div>
+          </div>
+          <div class="td-trip-note">
+            <div class="td-trip-note-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="td-trip-note-text">
+              <h4>Health &amp; Safety</h4>
+              <p>Bring personal medications and a small first-aid kit. Stay hydrated throughout the day. Our guides carry a first-aid kit and emergency contacts at all times.</p>
+            </div>
+          </div>
+        </div>
+      </div><!-- /#tab-trip-notes -->
+
+      <!-- ── TAB: WHY US ── -->
+      <div class="td-tab-panel" id="tab-why-us">
+        <div class="td-card" style="margin-top:20px">
+          <h2 class="td-card-title">Why Choose Radamis Travel?</h2>
+          <p style="font-size:15px;color:var(--color-gray-500);margin-bottom:24px;line-height:1.75">We've been crafting authentic Egypt experiences for over 15 years. Here's what sets us apart from the rest.</p>
+          <div class="td-why-grid">
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div>
+                <h4>Expert Egyptologist Guides</h4>
+                <p>All our guides hold university degrees in Egyptology and speak fluent English, French, and Arabic.</p>
+              </div>
+            </div>
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div>
+                <h4>Fully Licensed &amp; Insured</h4>
+                <p>Radamis Travel is fully registered with the Egyptian Tourism Authority and internationally accredited.</p>
+              </div>
+            </div>
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-tags"></i></div>
+              <div>
+                <h4>Best Price Guarantee</h4>
+                <p>Find a lower price for the same tour and we'll match it — no questions asked, no hidden fees.</p>
+              </div>
+            </div>
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-headset"></i></div>
+              <div>
+                <h4>24/7 Support</h4>
+                <p>Our dedicated team is available around the clock via WhatsApp, phone, and email for any query.</p>
+              </div>
+            </div>
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-sliders"></i></div>
+              <div>
+                <h4>Fully Customisable</h4>
+                <p>Every tour can be tailored to your pace, interests, and budget — just ask our travel planners.</p>
+              </div>
+            </div>
+            <div class="td-why-card">
+              <div class="td-why-icon"><i class="fa-solid fa-earth-africa"></i></div>
+              <div>
+                <h4>10,000+ Happy Travelers</h4>
+                <p>Over a decade of five-star reviews from travelers across 80+ countries trust Radamis Travel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /#tab-why-us -->
+
+      <!-- ── TAB: REVIEWS ── -->
+      <div class="td-tab-panel" id="tab-reviews">
+        <div class="td-card" style="margin-top:20px">
+          <h2 class="td-card-title">Traveler Reviews</h2>
+          <!-- Summary -->
+          <div class="td-review-summary">
+            <div>
+              <div class="td-review-big-score">4.9</div>
+              <div class="td-review-stars-row"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <div class="td-review-based">Based on 24 reviews</div>
+            </div>
+            <div class="td-review-bars">
+              <div class="td-review-bar-row">5 <i class="fa-solid fa-star" style="color:var(--color-accent);font-size:10px"></i> <div class="td-review-bar-track"><div class="td-review-bar-fill" style="width:85%"></div></div> <span class="td-review-bar-pct">85%</span></div>
+              <div class="td-review-bar-row">4 <i class="fa-solid fa-star" style="color:var(--color-accent);font-size:10px"></i> <div class="td-review-bar-track"><div class="td-review-bar-fill" style="width:10%"></div></div> <span class="td-review-bar-pct">10%</span></div>
+              <div class="td-review-bar-row">3 <i class="fa-solid fa-star" style="color:var(--color-accent);font-size:10px"></i> <div class="td-review-bar-track"><div class="td-review-bar-fill" style="width:5%"></div></div> <span class="td-review-bar-pct">5%</span></div>
+              <div class="td-review-bar-row">2 <i class="fa-solid fa-star" style="color:var(--color-accent);font-size:10px"></i> <div class="td-review-bar-track"><div class="td-review-bar-fill" style="width:0%"></div></div> <span class="td-review-bar-pct">0%</span></div>
+              <div class="td-review-bar-row">1 <i class="fa-solid fa-star" style="color:var(--color-accent);font-size:10px"></i> <div class="td-review-bar-track"><div class="td-review-bar-fill" style="width:0%"></div></div> <span class="td-review-bar-pct">0%</span></div>
+            </div>
+          </div>
+          <!-- Reviews list -->
+          <div class="td-review-card">
+            <div class="td-reviewer-row">
+              <div class="td-reviewer-avatar">SL</div>
+              <div>
+                <div class="td-reviewer-name">Sarah L.</div>
+                <div class="td-reviewer-date"><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i> &nbsp;·&nbsp; March 2025</div>
+              </div>
+            </div>
+            <p class="td-review-text">Absolutely incredible experience! Our Egyptologist guide Ahmed was phenomenal — incredibly knowledgeable and brought every stone to life. The logistics were seamless and the Pyramids are even more breathtaking in person.</p>
+          </div>
+          <div class="td-review-card">
+            <div class="td-reviewer-row">
+              <div class="td-reviewer-avatar" style="background:linear-gradient(135deg,#f2b705,#d99e04)">MK</div>
+              <div>
+                <div class="td-reviewer-name">Marco K.</div>
+                <div class="td-reviewer-date"><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i> &nbsp;·&nbsp; February 2025</div>
+              </div>
+            </div>
+            <p class="td-review-text">We did this as a family with two teenagers and it was perfect. The guide adjusted the pace and kept the kids engaged the whole time. The lunch spot was fantastic. Highly recommend Radamis for any Egypt trip!</p>
+          </div>
+          <div class="td-review-card">
+            <div class="td-reviewer-row">
+              <div class="td-reviewer-avatar" style="background:linear-gradient(135deg,#6bcef5,#4bb8e8)">RP</div>
+              <div>
+                <div class="td-reviewer-name">Rachel P.</div>
+                <div class="td-reviewer-date"><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-solid fa-star" style="color:var(--color-accent);font-size:11px"></i><i class="fa-regular fa-star" style="color:var(--color-accent);font-size:11px"></i> &nbsp;·&nbsp; January 2025</div>
+              </div>
+            </div>
+            <p class="td-review-text">Well-organised tour with excellent transport and a very professional guide. The Sphinx was the highlight for me. Would definitely book with Radamis again for our next Egypt adventure.</p>
+          </div>
+        </div>
+      </div><!-- /#tab-reviews -->
+
+      <!-- ── TAB: BOOK NOW ── -->
+      <div class="td-tab-panel" id="tab-book-now">
+        <div class="td-card" style="margin-top:20px;max-width:600px">
+          <h2 class="td-card-title">Request This Trip</h2>
+          <p style="font-size:14px;color:var(--color-gray-500);margin-bottom:20px">Fill in your details and our team will confirm your booking within 24 hours.</p>
+          <form id="reservationForm2" novalidate>
+            <div class="ff-wrap">
+              <div class="form-field">
+                <label>Full Name *</label>
+                <input type="text" id="res-name2" class="form-input" placeholder="Enter your full name" required maxlength="100" data-validate="name" />
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field">
+                <label>Email Address *</label>
+                <input type="email" id="res-email2" class="form-input" placeholder="your@email.com" required maxlength="254" data-validate="email" />
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field">
+                <label>Nationality *</label>
+                <select id="res-nationality2" class="form-select" required><option value="">Select nationality…</option></select>
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="form-row form-row--phone">
+              <div class="ff-wrap ff-wrap--code">
+                <div class="form-field">
+                  <label>Code *</label>
+                  <select id="res-phone-code2" class="form-select" required><option value="">Code</option></select>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+              <div class="ff-wrap ff-wrap--phone">
+                <div class="form-field">
+                  <label>Phone *</label>
+                  <input type="tel" id="res-phone2" class="form-input" placeholder="123 456 7890" required maxlength="20" data-validate="tel" />
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+            </div>
+            <div class="form-row form-row--dates">
+              <div class="ff-wrap">
+                <div class="form-field">
+                  <label>Check In *</label>
+                  <div class="date-input-wrap">
+                    <input type="text" id="res-checkin2" class="form-input flatpickr-input" placeholder="Select date" required readonly />
+                    <span class="fp-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  </div>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+              <div class="ff-wrap">
+                <div class="form-field">
+                  <label>Check Out *</label>
+                  <div class="date-input-wrap">
+                    <input type="text" id="res-checkout2" class="form-input flatpickr-input" placeholder="Select date" required readonly />
+                    <span class="fp-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  </div>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Adults</label>
+                <div class="counter-wrap">
+                  <button type="button" class="counter-btn" data-counter="adults2" data-dir="-1"><i class="fa-solid fa-minus"></i></button>
+                  <span class="counter-val" id="adults2-val">1</span>
+                  <button type="button" class="counter-btn" data-counter="adults2" data-dir="1"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+              <div class="form-field">
+                <label>Children</label>
+                <div class="counter-wrap">
+                  <button type="button" class="counter-btn" data-counter="children2" data-dir="-1"><i class="fa-solid fa-minus"></i></button>
+                  <span class="counter-val" id="children2-val">0</span>
+                  <button type="button" class="counter-btn" data-counter="children2" data-dir="1"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field">
+                <label>Message (Optional)</label>
+                <textarea class="form-textarea" placeholder="Any special requests or questions…"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn-request">Request This Trip &nbsp;→</button>
+          </form>
+        </div>
+      </div><!-- /#tab-book-now -->
+
+    </div><!-- /tabbed left col -->
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="td-sidebar">
+      <div class="td-avail-card">
+        <div class="td-avail-header">
+          <h3>Check Availability</h3>
+          <p>Fill in your details to request this trip</p>
+        </div>
+        <div class="td-avail-body">
+          <form id="reservationForm" novalidate>
+            <div class="ff-wrap">
+              <div class="form-field input-box">
+                <label>Full Name *</label>
+                <input type="text" id="res-name" class="form-input" placeholder="Enter your full name" required maxlength="100" data-validate="name" />
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field input-box">
+                <label>Email Address *</label>
+                <input type="email" id="res-email" class="form-input" placeholder="your@email.com" required maxlength="254" data-validate="email" />
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field input-box">
+                <label>Nationality *</label>
+                <select id="res-nationality" class="form-select" required><option value="">Select nationality…</option></select>
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <div class="form-row form-row--phone">
+              <div class="ff-wrap ff-wrap--code">
+                <div class="form-field input-box">
+                  <label>Code *</label>
+                  <select id="res-phone-code" class="form-select" required><option value="">Code</option></select>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+              <div class="ff-wrap ff-wrap--phone">
+                <div class="form-field input-box">
+                  <label>Phone *</label>
+                  <input type="tel" id="res-phone" class="form-input" placeholder="123 456 7890" required maxlength="20" data-validate="tel" />
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+            </div>
+            <div class="form-row form-row--dates">
+              <div class="ff-wrap">
+                <div class="form-field">
+                  <label>Check In *</label>
+                  <div class="date-input-wrap">
+                    <input type="text" id="res-checkin" class="form-input flatpickr-input" placeholder="Select date" required readonly />
+                    <span class="fp-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  </div>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+              <div class="ff-wrap">
+                <div class="form-field">
+                  <label>Check Out *</label>
+                  <div class="date-input-wrap">
+                    <input type="text" id="res-checkout" class="form-input flatpickr-input" placeholder="Select date" required readonly />
+                    <span class="fp-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  </div>
+                </div>
+                <span class="ff-err-msg"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Adults</label>
+                <div class="counter-wrap">
+                  <button type="button" class="counter-btn" data-counter="adults" data-dir="-1"><i class="fa-solid fa-minus"></i></button>
+                  <span class="counter-val" id="adults-val">1</span>
+                  <button type="button" class="counter-btn" data-counter="adults" data-dir="1"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+              <div class="form-field">
+                <label>Children</label>
+                <div class="counter-wrap">
+                  <button type="button" class="counter-btn" data-counter="children" data-dir="-1"><i class="fa-solid fa-minus"></i></button>
+                  <span class="counter-val" id="children-val">0</span>
+                  <button type="button" class="counter-btn" data-counter="children" data-dir="1"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="ff-wrap">
+              <div class="form-field">
+                <label>Message (Optional)</label>
+                <textarea id="res-message" class="form-textarea" placeholder="Any special requests…" maxlength="1000"></textarea>
+              </div>
+              <span class="ff-err-msg"></span>
+            </div>
+            <button type="submit" class="btn-request">Request This Trip &nbsp;→</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div><!-- /.td-layout -->
+
+  <!-- Mobile booking bar -->
+  <div class="td-mob-bar">
+    <div>
+      <div class="td-mob-price-label">Starting from</div>
+      <div class="td-mob-price">$85 <span>/person</span></div>
+    </div>
+    <button class="td-mob-book-btn" onclick="document.querySelector('[data-tab=\'book-now\']').click()">Book Now →</button>
+  </div>
+
+  <!-- ============================================================ RELATED TOURS ============================================================ -->
+  <section class="td-related">
+    <div class="td-related-inner">
+      <h2 class="td-related-title">You May Also Like</h2>
+      <div class="td-related-grid">
+        <div class="td-tour-card">
+          <div class="td-tour-img">
+            <img src="assets/images/tours/luxor temple8678.jpg" alt="Valley of the Kings" />
+            <div class="td-tour-badge">Heritage</div>
+          </div>
+          <div class="td-tour-body">
+            <div class="td-tour-loc"><i class="fa-solid fa-location-dot"></i> Luxor, Egypt</div>
+            <div class="td-tour-name">Valley of the Kings &amp; Karnak</div>
+            <div class="td-tour-price">$75 <span>/person</span></div>
+          </div>
+        </div>
+        <div class="td-tour-card">
+          <div class="td-tour-img">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" alt="Nile Cruise" />
+            <div class="td-tour-badge">Cruise</div>
+          </div>
+          <div class="td-tour-body">
+            <div class="td-tour-loc"><i class="fa-solid fa-location-dot"></i> Aswan – Luxor</div>
+            <div class="td-tour-name">4-Night Luxury Nile Cruise</div>
+            <div class="td-tour-price">$540 <span>/person</span></div>
+          </div>
+        </div>
+        <div class="td-tour-card">
+          <div class="td-tour-img">
+            <img src="assets/images/tours/aswan banner6546.jpg" alt="Abu Simbel" />
+            <div class="td-tour-badge">Adventure</div>
+          </div>
+          <div class="td-tour-body">
+            <div class="td-tour-loc"><i class="fa-solid fa-location-dot"></i> Aswan, Egypt</div>
+            <div class="td-tour-name">Abu Simbel Sunrise Day Tour</div>
+            <div class="td-tour-price">$95 <span>/person</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ============================================================ FOOTER ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html"><img src="assets/images/radamis-logo.png" alt="radamis-logo" style="height:40px;margin-bottom:12px;filter:brightness(0) invert(1)"></a>
+          <p class="footer-brand-tagline">Discover the wonders of ancient Egypt with expertly curated tours to the Pyramids, Nile cruises, and historic temples.</p>
+          <div>
+            <div class="footer-contact-item"><a href="https://maps.app.goo.gl/WNyjgxs9PaCBkr9Z6" target="_blank"><div class="footer-contact-icon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span>Zahraa Almaadi, carrefour St, Cairo</span></a></div>
+            <div class="footer-contact-item"><a href="tel:+20212345678"><div class="footer-contact-icon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.91-1.14a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><span>+20 2 1234 5678</span></a></div>
+            <div class="footer-contact-item"><a href="mailto:info@radamis.com"><div class="footer-contact-icon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span>info@radamis.com</span></a></div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Destinations</h4>
+          <ul>
+            <li><a href="subcategory.html">Cairo &amp; Giza</a></li>
+            <li><a href="subcategory.html">Luxor &amp; Karnak</a></li>
+            <li><a href="subcategory.html">Aswan &amp; Nile</a></li>
+            <li><a href="subcategory.html">Sharm El-Sheikh</a></li>
+            <li><a href="subcategory.html">Siwa Oasis</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Tours</h4>
+          <ul>
+            <li><a href="subcategory.html">Pyramids &amp; Sphinx</a></li>
+            <li><a href="subcategory.html">Nile Cruises</a></li>
+            <li><a href="subcategory.html">Desert Safari</a></li>
+            <li><a href="subcategory.html">Red Sea Diving</a></li>
+            <li><a href="subcategory.html">Abu Simbel</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="free-page.html">Privacy Policy</a></li>
+          </ul>
+          <div style="margin-top:16px;display:flex;gap:12px">
+            <img src="assets/images/iata.png" alt="IATA" style="height:32px;opacity:.7">
+            <img src="assets/images/asta.webp" alt="ASTA" style="height:32px;opacity:.7">
+          </div>
+          <img src="assets/images/payment.webp" alt="payment methods" style="margin-top:12px;max-width:140px;opacity:.7">
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© <span id="year"></span> Radamis Travel. All Rights Reserved.</p>
+        <div class="footer-socials">
+          <a href="https://facebook.com" target="_blank" class="footer-social-link" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/></svg></a>
+          <a href="https://instagram.com" target="_blank" class="footer-social-link" aria-label="Instagram"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/></svg></a>
+          <a href="https://youtube.com" target="_blank" class="footer-social-link" aria-label="YouTube"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile fixed footer nav -->
+  <div class="mob-footer-nav" id="mobFooterNav">
+    <div class="mob-footer-nav-inner">
+      <a href="https://wa.me/201234567890" class="mob-footer-link" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.119 1.534 5.845L.057 23.5l5.797-1.522A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.359-.214-3.44.902.92-3.355-.234-.374A9.818 9.818 0 112 12a9.818 9.818 0 0110 9.818z"/></svg>
+        <span>WhatsApp</span>
+      </a>
+      <a href="tel:+201234567890" class="mob-footer-link" aria-label="Call">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.91-1.14a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>Call</span>
+      </a>
+      <a href="index.html" class="mob-footer-link" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="contact.html" class="mob-footer-link" aria-label="Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>Contact</span>
+      </a>
+      <a href="tailor-made.html" class="mob-footer-link book" aria-label="Book">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Book Now</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/lightgallery.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/video/lg-video.umd.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+  <script>
+    /* ── Year ── */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ── TABS ── */
+    document.querySelectorAll('.td-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.td-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.td-tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = document.getElementById('tab-' + btn.dataset.tab);
+        if (panel) panel.classList.add('active');
+      });
+    });
+
+    /* ── TOUR PLAN ACCORDION ── */
+    document.querySelectorAll('.td-plan-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.closest('.td-plan-item');
+        item.classList.toggle('open');
+      });
+    });
+
+    /* ── EXPAND ALL ── */
+    let allOpen = false;
+    document.getElementById('toggleAllPlans')?.addEventListener('click', function () {
+      allOpen = !allOpen;
+      document.querySelectorAll('.td-plan-item').forEach(item => {
+        if (allOpen) item.classList.add('open');
+        else item.classList.remove('open');
+      });
+      this.querySelector('span').textContent = allOpen ? 'Collapse All' : 'Expand All';
+    });
+
+    /* ── FAQ ── */
+    document.querySelectorAll('.td-faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.td-faq-item');
+        item.classList.toggle('open');
+      });
+    });
+
+    /* ── LightGallery ── */
+    if (typeof lightGallery !== 'undefined') {
+      const lg = lightGallery(document.getElementById('lightgallery'), {
+        plugins: [lgZoom, lgThumbnail, lgVideo],
+        speed: 500,
+        selector: '.td-gallery-cell:not([style*="display:none"])',
+      });
+      document.getElementById('galleryOpenAll')?.addEventListener('click', e => {
+        e.preventDefault();
+        lg.openGallery(0);
+      });
+    }
+
+    /* ── Counter ── */
+    const counts = { adults: 1, children: 0, adults2: 1, children2: 0 };
+    document.querySelectorAll('.counter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const field = btn.dataset.counter;
+        const dir = parseInt(btn.dataset.dir);
+        counts[field] = Math.max(field.startsWith('adults') ? 1 : 0, (counts[field] || 0) + dir);
+        const el = document.getElementById(field + '-val');
+        if (el) el.textContent = counts[field];
+      });
+    });
+
+    /* ── Flatpickr ── */
+    if (typeof flatpickr !== 'undefined') {
+      const opts = { minDate: 'today', dateFormat: 'Y-m-d', altInput: true, altFormat: 'd M Y' };
+      ['res-checkin', 'res-checkin2'].forEach(id => { if (document.getElementById(id)) flatpickr('#' + id, opts); });
+      ['res-checkout', 'res-checkout2'].forEach(id => {
+        if (document.getElementById(id)) flatpickr('#' + id, { ...opts, minDate: new Date(Date.now() + 86400000) });
+      });
+    }
+
+    /* ── Form submit ── */
+    ['reservationForm', 'reservationForm2'].forEach(id => {
+      const form = document.getElementById(id);
+      if (form) form.addEventListener('submit', e => { e.preventDefault(); window.location.href = 'thanks.html'; });
+    });
+
+    /* ── Nationalities ── */
+    const NATIONALITIES = [
+      {name:"American",code:"+1"},{name:"British",code:"+44"},{name:"French",code:"+33"},
+      {name:"German",code:"+49"},{name:"Italian",code:"+39"},{name:"Spanish",code:"+34"},
+      {name:"Egyptian",code:"+20"},{name:"Saudi Arabian",code:"+966"},{name:"Emirati",code:"+971"},
+      {name:"Australian",code:"+61"},{name:"Canadian",code:"+1"},{name:"Japanese",code:"+81"},
+      {name:"Chinese",code:"+86"},{name:"Russian",code:"+7"},{name:"Brazilian",code:"+55"},
+      {name:"Indian",code:"+91"},{name:"South African",code:"+27"},{name:"Mexican",code:"+52"},
+    ];
+    ['res-nationality','res-nationality2'].forEach(id => {
+      const sel = document.getElementById(id);
+      if (!sel) return;
+      NATIONALITIES.forEach(n => {
+        const o = document.createElement('option');
+        o.value = n.name; o.textContent = n.name;
+        if (n.code) o.dataset.code = n.code;
+        sel.appendChild(o);
+      });
+    });
+    ['res-phone-code','res-phone-code2'].forEach(id => {
+      const sel = document.getElementById(id);
+      if (!sel) return;
+      NATIONALITIES.filter(n => n.code).forEach(n => {
+        const o = document.createElement('option');
+        o.value = n.code; o.textContent = n.code + ' ' + n.name;
+        sel.appendChild(o);
+      });
+    });
+
+    /* ── Mobile footer: show only on mobile ── */
+    function checkMob() {
+      const nav = document.getElementById('mobFooterNav');
+      if (nav) nav.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+    }
+    checkMob();
+    window.addEventListener('resize', checkMob);
+  </script>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<style>
+  /* ── Filter Nav ── */
+  .nav-wrap {
+    width: fit-content;
+    margin: 2rem auto 2.5rem;
+    border-radius: 500px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, .15);
+    background: linear-gradient(0deg, #141414, #242424);
+    box-shadow: inset 10px 0 10px rgba(0, 0, 0, .6);
+  }
+
+  .nav-wrap::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .15), #212121);
+    border-radius: 500px;
+    z-index: -1;
+  }
+
+  .filter-nav {
+    display: flex;
+    margin: 7px;
+    position: relative;
+  }
+
+  .filter-bubble {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 500px;
+    background: linear-gradient(180deg, #f2f2f2, #b3b3b3);
+    box-shadow: inset 0 2px 7px #fff;
+    z-index: 2;
+    transition: left .25s cubic-bezier(.4, 0, .2, 1), width .25s cubic-bezier(.4, 0, .2, 1);
+    pointer-events: none;
+  }
+
+  .filter-nav a {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    padding: 14px 32px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 500px;
+    white-space: nowrap;
+    transition: color .2s;
+    cursor: pointer;
+  }
+
+  .filter-nav a.active {
+    color: #111
+  }
+
+  /* ── Cards grid ── */
+  .cards-section {
+    padding: 0 1rem 2rem
+  }
+
+  .tc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+  }
+
+  /* ── Tour card (same as before) ── */
+  .tc {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    transition: box-shadow .4s ease, transform .3s ease, opacity .35s ease, max-height .4s ease;
+    cursor: pointer;
+    min-height: 400px;
+    max-height: 400px;
+  }
+
+  .tc:hover {
+    box-shadow: 0 14px 40px rgba(39, 61, 127, .22);
+    transform: translateY(-2px)
+  }
+
+  .tc.hidden {
+    opacity: 0;
+    pointer-events: none;
+    max-height: 0;
+    min-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0
+  }
+
+  .tc-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: height .5s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .tc:hover .tc-img {
+    height: 200px
+  }
+
+  .tc-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    background: rgba(39, 61, 127, .82);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 11px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    letter-spacing: .4px;
+  }
+
+  .tc-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 16px 14px;
+    background: linear-gradient(to top, rgba(15, 25, 60, .78) 0%, transparent 100%);
+    z-index: 5;
+    transition: opacity .35s ease;
+  }
+
+  .tc:hover .tc-overlay {
+    opacity: 0;
+    pointer-events: none
+  }
+
+  .tc-title-static {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+
+  .tc-static-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .88);
+  }
+
+  .tc-static-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px
+  }
+
+  .tc-static-price {
+    color: #f2b705;
+    font-weight: 600
+  }
+
+  .tc-body {
+    padding: 14px 16px 16px;
+    position: relative;
+    z-index: 6;
+    background: #fff;
+  }
+
+  .tc-title-hover {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .tc-meta-hover {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0 0 8px;
+  }
+
+  .tc-meta-hover span {
+    display: flex;
+    align-items: center;
+    gap: 3px
+  }
+
+  .tc-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-bottom: 0;
+    transition: max-height .4s cubic-bezier(.4, 0, .2, 1), opacity .35s ease, margin .3s ease;
+  }
+
+  .tc:hover .tc-desc {
+    max-height: 72px;
+    opacity: 1;
+    margin-bottom: 12px
+  }
+
+  .tc-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .4s cubic-bezier(.4, 0, .2, 1) .05s, opacity .35s ease .05s;
+  }
+
+  .tc:hover .tc-bottom {
+    max-height: 60px;
+    opacity: 1
+  }
+
+  .tc-price {
+    font-size: 12px;
+    color: #6b7280
+  }
+
+  .tc-price strong {
+    font-size: 20px;
+    font-weight: 600;
+    color: #273d7f;
+    display: block;
+    line-height: 1.1
+  }
+
+  .tc-cta {
+    background: #273d7f;
+    color: #fff;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background .2s;
+  }
+
+  .tc-cta:hover {
+    background: #1d2f66
+  }
+
+  .cta-arr {
+    transition: transform .2s
+  }
+
+  .tc-cta:hover .cta-arr {
+    transform: translateX(3px)
+  }
+
+  /* page bg */
+  body {
+    background: #0f0f0f
+  }
+</style>
+
+<!-- Filter Nav -->
+<div class="nav-wrap">
+  <nav class="filter-nav" id="filterNav">
+    <div class="filter-bubble" id="bubble"></div>
+    <a href="#" class="active" data-filter="all">All Tours</a>
+    <a href="#" data-filter="classic">Classic</a>
+    <a href="#" data-filter="adventure">Adventure</a>
+    <a href="#" data-filter="luxury">Luxury</a>
+  </nav>
+</div>
+
+<!-- Cards -->
+<div class="cards-section">
+  <div class="tc-grid" id="cardGrid">
+
+    <div class="tc" data-category="classic">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=700&q=80" alt="Pyramids">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Pyramids &amp; Nile Classic</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>7 nights</span>
+          <span class="tc-static-price">From $890<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Pyramids &amp; Nile Classic</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>Cairo · Luxor</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>7 nights</span>
+        </div>
+        <p class="tc-desc">Explore the iconic Pyramids of Giza, cruise the legendary Nile, and uncover the temples of
+          Luxor.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$890</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" data-category="adventure">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=700&q=80" alt="Aswan">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Aswan &amp; Abu Simbel Explorer</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>5 nights</span>
+          <span class="tc-static-price">From $650<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Aswan &amp; Abu Simbel Explorer</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>Aswan · Abu Simbel</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>5 nights</span>
+        </div>
+        <p class="tc-desc">Sail a traditional felucca, visit the majestic temples of Abu Simbel, and enjoy tranquil
+          Aswan.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$650</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" data-category="luxury">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=700&q=80" alt="Luxury Nile">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Luxury Nile Cruise</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>10 nights</span>
+          <span class="tc-static-price">From $1,800<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Luxury Nile Cruise</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>Cairo → Aswan</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>10 nights</span>
+        </div>
+        <p class="tc-desc">A fully curated 5-star Nile cruise with private guides, gourmet dining, and exclusive temple
+          access.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$1,800</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" data-category="classic">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=700&q=80" alt="Luxor">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Valley of the Kings</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>4 nights</span>
+          <span class="tc-static-price">From $520<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Valley of the Kings</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>Luxor · Karnak</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>4 nights</span>
+        </div>
+        <p class="tc-desc">Walk through the royal tombs of ancient pharaohs and discover the grandeur of Karnak temple
+          complex.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$520</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" data-category="adventure">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80" alt="Sinai">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Sinai &amp; Red Sea Escape</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>6 nights</span>
+          <span class="tc-static-price">From $740<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Sinai &amp; Red Sea Escape</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>Sharm · Dahab</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>6 nights</span>
+        </div>
+        <p class="tc-desc">Dive into the crystal Red Sea, hike Mount Sinai at sunrise, and experience Bedouin
+          hospitality in Dahab.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$740</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" data-category="luxury">
+      <span class="tc-badge">Egypt</span>
+      <img class="tc-img" src="https://images.unsplash.com/photo-1652214764880-0f58e1bc8ef5?w=700&q=80"
+        alt="Desert Luxury">
+      <div class="tc-overlay">
+        <h3 class="tc-title-static">Desert Luxury Camp</h3>
+        <div class="tc-static-meta">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>8 nights</span>
+          <span class="tc-static-price">From $2,200<small
+              style="font-size:11px;font-weight:400;color:rgba(255,255,255,.8)"> /person</small></span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <h3 class="tc-title-hover">Desert Luxury Camp</h3>
+        <div class="tc-meta-hover">
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>White Desert · Siwa</span>
+          <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>8 nights</span>
+        </div>
+        <p class="tc-desc">Sleep under the stars in a private luxury camp, explore the surreal White Desert and bathe in
+          Siwa's natural springs.</p>
+        <div class="tc-bottom">
+          <div class="tc-price"><strong>$2,200</strong><small>/person</small></div>
+          <a href="#" class="tc-cta">Book now <span class="cta-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.filter-nav a');
+  const bubble = document.getElementById('bubble');
+  const cards = document.querySelectorAll('.tc');
+
+  function moveBubble(el) {
+    bubble.style.left = el.offsetLeft + 'px';
+    bubble.style.width = el.offsetWidth + 'px';
+    bubble.style.height = el.offsetHeight + 'px';
+    bubble.style.top = el.offsetTop + 'px';
+  }
+
+  function filterCards(cat) {
+    cards.forEach(c => {
+      if (cat === 'all' || c.dataset.category === cat) {
+        c.classList.remove('hidden');
+      } else {
+        c.classList.add('hidden');
+      }
+    });
+  }
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      moveBubble(link);
+      filterCards(link.dataset.filter);
+    });
+  });
+
+  // init bubble position
+  window.addEventListener('load', () => {
+    const active = document.querySelector('.filter-nav a.active');
+    if (active) moveBubble(active);
+  });
+</script>

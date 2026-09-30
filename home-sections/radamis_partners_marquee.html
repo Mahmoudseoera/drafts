@@ -1,0 +1,367 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  :root{
+    --color-primary:#273d7f;
+    --color-primary-dark:#1d2f66;
+    --color-secondary:#6bcef5;
+    --color-accent:#f2b705;
+    --color-white:#ffffff;
+  }
+
+  .partners-section{
+    font-family:'Poppins',sans-serif;
+    position:relative;
+    width:100%;
+    padding:48px 0 44px;
+    background-color:#0d1a3a;
+    background-image:url('/mnt/user-data/uploads/client-bg-1_4e992227.png');
+    background-repeat:repeat;
+    background-size:auto;
+    overflow:hidden;
+  }
+
+  /* subtle navy overlay so pattern doesn't compete */
+  .partners-section::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(13,26,58,0.72);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* top accent line */
+  .partners-section::after{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+    background:linear-gradient(90deg,transparent,var(--color-secondary),var(--color-accent),var(--color-secondary),transparent);
+    z-index:1;
+  }
+
+  .section-label{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    margin-bottom:30px;
+  }
+  .section-label span{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--color-accent);
+    background:rgba(242,183,5,0.1);
+    border:1px solid rgba(242,183,5,0.3);
+    padding:5px 18px;
+    border-radius:999px;
+    display:inline-block;
+  }
+
+  /* marquee container */
+  .marquee-wrap{
+    position:relative;
+    z-index:2;
+    width:100%;
+    overflow:hidden;
+  }
+
+  /* fade masks on left & right */
+  .marquee-wrap::before,
+  .marquee-wrap::after{
+    content:'';
+    position:absolute;
+    top:0;bottom:0;
+    width:120px;
+    z-index:3;
+    pointer-events:none;
+  }
+  .marquee-wrap::before{
+    left:0;
+    background:linear-gradient(to right,#0d1a3a,transparent);
+  }
+  .marquee-wrap::after{
+    right:0;
+    background:linear-gradient(to left,#0d1a3a,transparent);
+  }
+
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    gap:16px;
+    animation:marquee 32s linear infinite;
+  }
+  .marquee-track:hover{
+    animation-play-state:paused;
+  }
+
+  .marquee-text{
+    display:flex;
+    gap:16px;
+  }
+
+  @keyframes marquee{
+    0%{transform:translateX(0%);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* each partner card */
+  .partner-card{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:14px 28px;
+    border-radius:14px;
+    border:1px solid rgba(107,206,245,0.18);
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(4px);
+    white-space:nowrap;
+    cursor:pointer;
+    transition:border-color 0.25s, background 0.25s, transform 0.2s;
+    flex-shrink:0;
+  }
+  .partner-card:hover{
+    border-color:rgba(242,183,5,0.5);
+    background:rgba(242,183,5,0.06);
+    transform:translateY(-3px);
+  }
+
+  /* logo placeholder using inline SVG icons + name */
+  .partner-icon{
+    width:36px;height:36px;
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .partner-icon svg{display:block;}
+
+  .partner-name{
+    font-size:13px;
+    font-weight:600;
+    color:rgba(255,255,255,0.85);
+    letter-spacing:0.3px;
+  }
+  .partner-sub{
+    font-size:10px;
+    color:rgba(107,206,245,0.7);
+    font-weight:400;
+    display:block;
+    margin-top:1px;
+  }
+
+  /* uploaded bg as card bg */
+  .card-img-bg{
+    width:110px;
+    height:68px;
+    border-radius:12px;
+    overflow:hidden;
+    border:1.5px solid rgba(107,206,245,0.2);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#0d1a3a;
+    transition:border-color 0.25s, transform 0.2s;
+  }
+  .card-img-bg img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+    filter:brightness(0.9) saturate(0.8);
+    transition:filter 0.25s, transform 0.25s;
+  }
+  .partner-card:hover .card-img-bg{
+    border-color:rgba(242,183,5,0.5);
+  }
+  .partner-card:hover .card-img-bg img{
+    filter:brightness(1.05) saturate(1.1);
+    transform:scale(1.04);
+  }
+</style>
+
+<div class="partners-section">
+  <div class="section-label">
+    <span>✦ Trusted Partners &amp; Certifications</span>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+
+      <!-- SET 1 -->
+      <div class="marquee-text">
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Tripadvisor_svg_logo.svg/320px-Tripadvisor_svg_logo.svg.png" alt="TripAdvisor">
+          </div>
+          <div>
+            <div class="partner-name">TripAdvisor</div>
+            <span class="partner-sub">Certified Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/IATA_logo.svg/320px-IATA_logo.svg.png" alt="IATA">
+          </div>
+          <div>
+            <div class="partner-name">IATA</div>
+            <span class="partner-sub">Accredited Agency</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#1a3a5c;">
+            <img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=200&h=120&fit=crop" alt="Egypt Tourism">
+          </div>
+          <div>
+            <div class="partner-name">Egypt Tourism</div>
+            <span class="partner-sub">Official Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Egypt_Air_Logo.svg/320px-Egypt_Air_Logo.svg.png" alt="EgyptAir">
+          </div>
+          <div>
+            <div class="partner-name">EgyptAir</div>
+            <span class="partner-sub">Airline Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#0e2240;">
+            <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=200&h=120&fit=crop" alt="Nile Cruises">
+          </div>
+          <div>
+            <div class="partner-name">Nile Cruises</div>
+            <span class="partner-sub">Luxury Fleet Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Booking.com_logo.svg/320px-Booking.com_logo.svg.png" alt="Booking.com">
+          </div>
+          <div>
+            <div class="partner-name">Booking.com</div>
+            <span class="partner-sub">Preferred Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#102a50;">
+            <img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=200&h=120&fit=crop" alt="Cairo Hotels">
+          </div>
+          <div>
+            <div class="partner-name">Cairo Hotels</div>
+            <span class="partner-sub">Accommodation Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Visa_Inc._logo.svg/320px-Visa_Inc._logo.svg.png" alt="Visa">
+          </div>
+          <div>
+            <div class="partner-name">Visa</div>
+            <span class="partner-sub">Secure Payments</span>
+          </div>
+        </div>
+
+      </div><!-- /marquee-text SET 1 -->
+
+      <!-- SET 2 — duplicate for seamless loop -->
+      <div class="marquee-text">
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Tripadvisor_svg_logo.svg/320px-Tripadvisor_svg_logo.svg.png" alt="TripAdvisor">
+          </div>
+          <div>
+            <div class="partner-name">TripAdvisor</div>
+            <span class="partner-sub">Certified Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/IATA_logo.svg/320px-IATA_logo.svg.png" alt="IATA">
+          </div>
+          <div>
+            <div class="partner-name">IATA</div>
+            <span class="partner-sub">Accredited Agency</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#1a3a5c;">
+            <img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=200&h=120&fit=crop" alt="Egypt Tourism">
+          </div>
+          <div>
+            <div class="partner-name">Egypt Tourism</div>
+            <span class="partner-sub">Official Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Egypt_Air_Logo.svg/320px-Egypt_Air_Logo.svg.png" alt="EgyptAir">
+          </div>
+          <div>
+            <div class="partner-name">EgyptAir</div>
+            <span class="partner-sub">Airline Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#0e2240;">
+            <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=200&h=120&fit=crop" alt="Nile Cruises">
+          </div>
+          <div>
+            <div class="partner-name">Nile Cruises</div>
+            <span class="partner-sub">Luxury Fleet Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Booking.com_logo.svg/320px-Booking.com_logo.svg.png" alt="Booking.com">
+          </div>
+          <div>
+            <div class="partner-name">Booking.com</div>
+            <span class="partner-sub">Preferred Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg" style="background:#102a50;">
+            <img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=200&h=120&fit=crop" alt="Cairo Hotels">
+          </div>
+          <div>
+            <div class="partner-name">Cairo Hotels</div>
+            <span class="partner-sub">Accommodation Partner</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="card-img-bg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Visa_Inc._logo.svg/320px-Visa_Inc._logo.svg.png" alt="Visa">
+          </div>
+          <div>
+            <div class="partner-name">Visa</div>
+            <span class="partner-sub">Secure Payments</span>
+          </div>
+        </div>
+
+      </div><!-- /marquee-text SET 2 -->
+
+    </div><!-- /marquee-track -->
+  </div><!-- /marquee-wrap -->
+</div>

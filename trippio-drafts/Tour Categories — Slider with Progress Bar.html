@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tour Categories Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.10/swiper-bundle.min.js"></script>
+<style>
+:root{
+  --main-color:#082844;--main-color-dark:#061d35;--main-color-light:#0d385a;
+  --color-second:#16507d;--color-second-light:#1d689f;
+  --accent-color:#c99b3d;--accent-color-light:#e3bd68;
+  --white-color:#ffffff;--color-off-white:#fcfbf8;
+  --color-gray-300:#d5dbe2;--color-gray-500:#6c7782;--color-gray-700:#394552;--color-gray-900:#1c2733;
+  --shadow-md:0 8px 24px rgba(6,29,53,.12);--shadow-lg:0 20px 50px rgba(6,29,53,.18);
+  --radius-md:12px;--radius-lg:20px;
+  --font-heading:"Lora",serif;--font-body:"Manrope",sans-serif;
+  --container:1240px;box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;font-family:var(--font-body);background:var(--color-off-white);color:var(--color-gray-900)}
+
+.categories-section{padding:72px 24px}
+.categories-section .container{max-width:var(--container);margin:0 auto}
+
+/* ---- Section header (matches blog section) ---- */
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px;flex-wrap:wrap}
+.section-header .pill{display:inline-flex;align-items:center;padding:6px 16px;border:1px solid var(--color-gray-300);border-radius:999px;font-size:13px;font-weight:600;color:var(--color-second);background:var(--white-color);margin-bottom:14px}
+.section-header h2{font-family:var(--font-heading);font-size:clamp(26px,3vw,34px);font-weight:600;color:var(--main-color);margin:0 0 8px}
+.section-header p{margin:0;color:var(--color-gray-500);font-size:15.5px;max-width:520px}
+.nav-arrows{display:flex;gap:10px}
+.arrow-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--color-gray-300);background:var(--white-color);color:var(--main-color);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s,opacity .2s}
+.arrow-btn.next{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+.arrow-btn:hover{background:var(--main-color);border-color:var(--main-color);color:var(--white-color)}
+.arrow-btn:disabled{opacity:.35;cursor:default}
+.arrow-btn:disabled:hover{background:var(--white-color);border-color:var(--color-gray-300);color:var(--main-color)}
+.arrow-btn.next:disabled:hover{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+
+/* ---- Progress bar ---- */
+.progress-track{position:relative;width:100%;height:4px;background:var(--color-gray-300);border-radius:999px;margin-bottom:32px;overflow:hidden}
+.progress-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--accent-color),var(--color-second));border-radius:999px;transition:width .1s linear}
+
+/* ---- Slider shell ---- */
+.categories-swiper{overflow:hidden}
+.categories-swiper .swiper-slide{width:270px;height:420px}
+
+/* ---- Category card ---- */
+.category-card{position:relative;display:block;width:100%;height:100%;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-md);text-decoration:none;color:inherit;perspective:1200px}
+.category-card .card-media{position:absolute;inset:0}
+.category-card .card-media svg{width:100%;height:100%;display:block}
+
+.category-info{position:absolute;left:0;right:0;bottom:0;padding:20px;z-index:2;background:linear-gradient(to top,rgba(6,29,53,.88) 15%,rgba(6,29,53,0) 75%);transition:opacity .35s}
+.cat-name{font-family:var(--font-heading);font-size:19px;font-weight:600;color:var(--white-color);margin:0 0 4px}
+.cat-count{font-size:13px;font-weight:600;color:var(--accent-color-light)}
+
+.category-reveal{position:absolute;inset:0;z-index:3;background:var(--white-color);padding:26px;display:flex;flex-direction:column;justify-content:flex-end;
+  transform-origin:left center;transform:perspective(1200px) rotateY(-95deg);opacity:0;
+  transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s ease .05s}
+.category-card:hover .category-reveal{transform:perspective(1200px) rotateY(0deg);opacity:1}
+.category-card:hover .category-info{opacity:0}
+.reveal-name{font-family:var(--font-heading);font-size:19px;font-weight:600;color:var(--main-color);margin:0 0 6px}
+.reveal-count{font-size:13px;font-weight:600;color:var(--color-second);margin-bottom:12px;display:block}
+.reveal-desc{font-size:14px;line-height:1.65;color:var(--color-gray-700);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<defs>
+<linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d689f"/><stop offset="1" stop-color="#061d35"/></linearGradient>
+
+<symbol id="scene-felucca" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/><circle cx="80" cy="60" r="28" fill="#e3bd68"/>
+  <path d="M0,220 Q100,195 200,220 T400,220 V300 H0 Z" fill="#0d385a"/>
+  <path d="M0,245 Q100,222 200,245 T400,245 V300 H0 Z" fill="#061d35"/>
+  <polygon points="150,235 150,140 205,235" fill="#c99b3d"/><line x1="150" y1="235" x2="150" y2="130" stroke="#e3bd68" stroke-width="3"/>
+</symbol>
+
+<symbol id="scene-luxor" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/><circle cx="60" cy="55" r="26" fill="#e3bd68"/>
+  <rect x="0" y="250" width="400" height="50" fill="#061d35"/>
+  <g fill="#082844">
+    <rect x="40" y="140" width="26" height="110"/><rect x="30" y="128" width="46" height="16"/>
+    <rect x="140" y="120" width="26" height="130"/><rect x="130" y="105" width="46" height="18"/>
+    <rect x="240" y="140" width="26" height="110"/><rect x="230" y="128" width="46" height="16"/>
+    <rect x="330" y="120" width="26" height="130"/><rect x="320" y="105" width="46" height="18"/>
+  </g>
+</symbol>
+
+<symbol id="scene-desert" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/><circle cx="320" cy="65" r="30" fill="#e3bd68"/>
+  <path d="M0,220 Q120,150 250,210 T400,190 V300 H0 Z" fill="#0d385a"/>
+  <path d="M0,250 Q140,200 260,245 T400,230 V300 H0 Z" fill="#061d35"/>
+  <path d="M180,240 q6,-22 16,-22 q4,0 4,8 q10,-6 14,2 q6,-4 8,4 q6,16 -8,16 q-2,4 -8,4 h-20 q-8,0 -6,-12" fill="#082844"/>
+</symbol>
+
+<symbol id="scene-redsea" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/>
+  <ellipse cx="90" cy="90" rx="46" ry="16" fill="#1d689f" opacity=".5"/>
+  <ellipse cx="300" cy="150" rx="60" ry="20" fill="#1d689f" opacity=".4"/>
+  <path d="M0,230 Q100,205 200,230 T400,230 V300 H0 Z" fill="#0d385a"/>
+  <path d="M0,255 Q100,235 200,255 T400,255 V300 H0 Z" fill="#061d35"/>
+  <polygon points="230,180 260,195 230,210" fill="#e3bd68"/><polygon points="150,120 178,134 150,148" fill="#c99b3d"/>
+</symbol>
+
+<symbol id="scene-pyramids" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/><circle cx="320" cy="70" r="34" fill="#e3bd68"/>
+  <rect x="0" y="230" width="400" height="70" fill="#0d385a"/>
+  <polygon points="70,230 150,120 230,230" fill="#082844"/>
+  <polygon points="150,230 220,150 290,230" fill="#0d385a"/>
+  <polygon points="220,230 270,170 320,230" fill="#061d35"/>
+</symbol>
+</defs>
+</svg>
+
+<section class="categories-section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="pill">Tour Categories</span>
+        <h2>Explore Egypt by experience</h2>
+        <p>From the Nile to the desert, pick the kind of journey that fits how you like to travel.</p>
+      </div>
+      <div class="nav-arrows" id="cArrows">
+        <button class="arrow-btn prev" aria-label="Previous category">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="arrow-btn next" aria-label="Next category">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="progress-track"><div class="progress-fill" id="catProgress"></div></div>
+
+    <div class="swiper categories-swiper" id="categoriesSwiper">
+      <div class="swiper-wrapper">
+        <!-- @foreach($categories as $category) in Blade -->
+        <div class="swiper-slide"><a href="#" class="category-card">
+          <div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-felucca"></use></svg></div>
+          <div class="category-info"><h3 class="cat-name">Nile Cruises</h3><span class="cat-count">18 Tours</span></div>
+          <div class="category-reveal">
+            <span class="reveal-name">Nile Cruises</span><span class="reveal-count">18 Tours</span>
+            <p class="reveal-desc">Sail between Luxor and Aswan aboard a boutique cruise ship, stopping at temples along the riverbank each morning and evening.</p>
+          </div>
+        </a></div>
+        <div class="swiper-slide"><a href="#" class="category-card">
+          <div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-desert"></use></svg></div>
+          <div class="category-info"><h3 class="cat-name">Desert Safaris</h3><span class="cat-count">12 Tours</span></div>
+          <div class="category-reveal">
+            <span class="reveal-name">Desert Safaris</span><span class="reveal-count">12 Tours</span>
+            <p class="reveal-desc">4x4 dune rides, overnight desert camps, and stargazing far from city lights across Siwa and the Western Desert.</p>
+          </div>
+        </a></div>
+        <div class="swiper-slide"><a href="#" class="category-card">
+          <div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-luxor"></use></svg></div>
+          <div class="category-info"><h3 class="cat-name">Ancient Temples</h3><span class="cat-count">24 Tours</span></div>
+          <div class="category-reveal">
+            <span class="reveal-name">Ancient Temples</span><span class="reveal-count">24 Tours</span>
+            <p class="reveal-desc">Guided visits to Karnak, Luxor Temple, and the Valley of the Kings with Egyptologist-led storytelling at every stop.</p>
+          </div>
+        </a></div>
+        <div class="swiper-slide"><a href="#" class="category-card">
+          <div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-redsea"></use></svg></div>
+          <div class="category-info"><h3 class="cat-name">Red Sea Diving</h3><span class="cat-count">9 Tours</span></div>
+          <div class="category-reveal">
+            <span class="reveal-name">Red Sea Diving</span><span class="reveal-count">9 Tours</span>
+            <p class="reveal-desc">Reef dives and snorkeling trips out of Hurghada and Sharm El-Sheikh, suited to first-timers and certified divers alike.</p>
+          </div>
+        </a></div>
+        <div class="swiper-slide"><a href="#" class="category-card">
+          <div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-pyramids"></use></svg></div>
+          <div class="category-info"><h3 class="cat-name">Luxury Getaways</h3><span class="cat-count">15 Tours</span></div>
+          <div class="category-reveal">
+            <span class="reveal-name">Luxury Getaways</span><span class="reveal-count">15 Tours</span>
+            <p class="reveal-desc">Private guides, five-star stays, and skip-the-line access to Giza and Cairo's museums for a slower, more comfortable pace.</p>
+          </div>
+        </a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var arrows = document.getElementById('cArrows');
+  var prevBtn = arrows.querySelector('.prev');
+  var nextBtn = arrows.querySelector('.next');
+  var fill = document.getElementById('catProgress');
+
+  var swiper = new Swiper('#categoriesSwiper', {
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    navigation: { nextEl: nextBtn, prevEl: prevBtn },
+    on: {
+      progress: function (s, progress) { fill.style.width = (progress * 100) + '%'; },
+      slideChange: updateArrowState,
+      reachEnd: updateArrowState,
+      reachBeginning: updateArrowState
+    }
+  });
+
+  function updateArrowState(){
+    prevBtn.disabled = swiper.isBeginning;
+    nextBtn.disabled = swiper.isEnd;
+  }
+  updateArrowState();
+})();
+</script>
+</body>
+</html>

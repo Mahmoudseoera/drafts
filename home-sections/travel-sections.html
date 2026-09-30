@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Tour – About & Destinations</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========================
+       🎨 Design Tokens
+    ======================== */
+    :root {
+      --color-primary:        #273d7f;
+      --color-primary-dark:   #1d2f66;
+      --color-primary-light:  #3a5599;
+      --color-secondary:      #6bcef5;
+      --color-secondary-dark: #4bb8e8;
+      --color-secondary-light:#9edff9;
+
+      --color-accent:         #f2b705;
+      --color-accent-light:   #ffd166;
+      --color-accent-dark:    #d99e04;
+
+      --color-white:          #ffffff;
+      --color-off-white:      #f8fafc;
+      --color-gray-100:       #f3f4f6;
+      --color-gray-200:       #e5e7eb;
+      --color-gray-300:       #d1d5db;
+      --color-gray-400:       #9ca3af;
+      --color-gray-500:       #6b7280;
+      --color-gray-700:       #374151;
+      --color-gray-900:       #1f2937;
+
+      --text-primary:         var(--color-primary);
+      --text-secondary:       var(--color-gray-500);
+      --text-light:           var(--color-white);
+
+      --btn-primary-bg:       var(--color-primary);
+      --btn-primary-hover:    var(--color-primary-dark);
+      --btn-primary-text:     var(--color-white);
+      --btn-secondary-bg:     var(--color-secondary);
+      --btn-secondary-hover:  var(--color-secondary-dark);
+      --btn-secondary-text:   var(--color-white);
+      --btn-accent-bg:        var(--color-accent);
+      --btn-accent-hover:     var(--color-accent-dark);
+      --btn-accent-text:      var(--color-primary);
+
+      --gradient-main:        linear-gradient(135deg, #273d7f, #6bcef5);
+      --gradient-accent:      linear-gradient(135deg, #273d7f, #6bcef5, #f2b705);
+
+      --border-color:         var(--color-gray-200);
+      --shadow-sm:            0 2px 6px rgba(0,0,0,.05);
+      --shadow-md:            0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg:            0 8px 24px rgba(0,0,0,.12);
+
+      --radius-sm:            6px;
+      --radius-md:            12px;
+      --radius-lg:            20px;
+    }
+
+    /* ========================
+       🔡 Base
+    ======================== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--color-off-white);
+      color: var(--color-gray-700);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ========================
+       🏨 ABOUT SECTION
+    ======================== */
+    .about-section {
+      background-color: var(--color-gray-900);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(39,61,127,.55) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(107,206,245,.15) 0%, transparent 55%);
+      color: var(--color-white);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* subtle grid texture overlay */
+    .about-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg,   transparent, transparent 39px, rgba(255,255,255,.03) 40px),
+        repeating-linear-gradient(90deg,  transparent, transparent 39px, rgba(255,255,255,.03) 40px);
+      pointer-events: none;
+    }
+
+    .about-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Logo badge */
+    .about-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      position: relative;
+    }
+
+    .about-logo::before,
+    .about-logo::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    .about-logo::before { right: calc(100% + 6px); }
+    .about-logo::after  { left:  calc(100% + 6px); }
+
+    .about-heading {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.2;
+    }
+
+    .about-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .about-divider span {
+      display: block;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .about-divider span:first-child { width: 40px; }
+    .about-divider span:last-child  { width: 20px; }
+
+    .about-divider .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    .about-body {
+      font-size: .95rem;
+      line-height: 1.8;
+      color: var(--color-gray-300);
+    }
+
+    /* Arch image frame */
+    .arch-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .arch-frame {
+      position: relative;
+      width: min(280px, 88vw);
+      border-radius: 999px 999px 0 0;
+      overflow: hidden;
+      border: 3px solid rgba(242,183,5,.35);
+      box-shadow: 0 0 60px rgba(39,61,127,.6), inset 0 0 30px rgba(0,0,0,.3);
+    }
+
+    .arch-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Rotating text ring around arch */
+    .arch-ring-text {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(310px, 96vw);
+      height: min(310px, 96vw);
+      pointer-events: none;
+      animation: spin 18s linear infinite;
+    }
+
+    @keyframes spin { to { transform: translateX(-50%) rotate(360deg); } }
+
+    .arch-ring-text textPath {
+      fill: var(--color-accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+    }
+
+    /* Feature cards */
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--color-accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-white);
+      margin: 0 0 4px;
+    }
+
+    .feature-sub {
+      font-size: .82rem;
+      color: var(--color-gray-400);
+      margin: 0;
+    }
+
+    /* ========================
+       🗺️ DESTINATIONS SECTION
+    ======================== */
+    .dest-section {
+      background-color: var(--color-off-white);
+    }
+
+    .dest-subtitle {
+      color: var(--color-accent);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .dest-heading {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      color: var(--text-primary);
+      margin: .4rem 0 .6rem;
+    }
+
+    .dest-desc {
+      color: var(--text-secondary);
+      font-size: .9rem;
+      max-width: 480px;
+    }
+
+    /* Card grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .cards-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Destination card */
+    .dest-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .dest-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dest-card-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      transition: transform .45s ease;
+    }
+
+    .dest-card:hover .dest-card-img {
+      transform: scale(1.06);
+    }
+
+    /* Default (not-hovered) overlay – bottom label */
+    .card-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 18px 16px;
+      background: linear-gradient(to top, rgba(15,20,40,.85) 0%, transparent 100%);
+      transition: opacity .3s ease;
+    }
+
+    .card-label-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--color-white);
+      margin: 0 0 4px;
+    }
+
+    .card-label-pkg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      color: var(--color-secondary-light);
+    }
+
+    .card-label-pkg svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--color-secondary-light);
+    }
+
+    /* Hover overlay – full info */
+    .card-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,20,45,.88);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 20px 22px;
+      opacity: 0;
+      transition: opacity .35s ease;
+    }
+
+    .dest-card:hover .card-hover-overlay { opacity: 1; }
+    .dest-card:hover .card-label         { opacity: 0; }
+
+    .hover-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--color-white);
+      margin: 0 0 4px;
+    }
+
+    .hover-pkg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      color: var(--color-secondary);
+      margin-bottom: 10px;
+    }
+
+    .hover-pkg svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--color-secondary);
+    }
+
+    .hover-desc {
+      font-size: .8rem;
+      color: var(--color-gray-300);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .hover-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-book {
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-size: .82rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background .25s;
+    }
+
+    .btn-book:hover { background: var(--btn-primary-hover); }
+
+    .btn-learn {
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-white);
+      font-size: .82rem;
+      font-weight: 600;
+      border: 1.5px solid rgba(255,255,255,.5);
+      cursor: pointer;
+      transition: border-color .25s, background .25s;
+    }
+
+    .btn-learn:hover {
+      border-color: var(--color-secondary);
+      background: rgba(107,206,245,.12);
+    }
+
+    /* accent underline for section heading */
+    .heading-accent {
+      position: relative;
+      display: inline-block;
+    }
+
+    .heading-accent::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 60%;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--gradient-accent);
+    }
+
+    /* ========================
+       🌀 Scroll reveal
+    ======================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .35s; }
+  </style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     SECTION 1 – ABOUT US
+====================================================== -->
+<section class="about-section py-16 md:py-24">
+  <div class="about-inner max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+
+    <!-- 3-column layout: text | arch image | features -->
+    <div class="flex flex-col lg:flex-row items-center lg:items-stretch gap-12 lg:gap-8">
+
+      <!-- Left: copy -->
+      <div class="flex flex-col gap-6 lg:w-5/12 reveal">
+
+        <!-- Logo badge -->
+        <div class="about-logo">R</div>
+
+        <div>
+          <h2 class="about-heading">About <span class="text-[var(--color-accent)]">Rotal</span></h2>
+          <div class="about-divider mt-3">
+            <span></span>
+            <div class="dot"></div>
+            <span></span>
+          </div>
+        </div>
+
+        <p class="about-body">
+          Rotal Hotels &amp; Resorts is passionate about "creating moments" and understands that
+          little things have a significant impact on our visitors, owners, and employees.
+          We carry out routine tasks in exceptional ways.
+        </p>
+
+        <p class="about-body">
+          Rotal with its nice restaurant ensure healthily, delicious &amp; different cuisines
+          to our beloved clients. Warmly welcome to Uniresort &amp; enjoy our luxurious suites
+          &amp; sea views.
+        </p>
+      </div>
+
+      <!-- Center: arch photo -->
+      <div class="arch-wrapper lg:w-2/12 py-4 reveal reveal-delay-1">
+        <div class="arch-frame" style="height: 340px;">
+          <img
+            src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80"
+            alt="Luxury hotel skyline"
+          />
+        </div>
+
+        <!-- Rotating arc text (SVG) -->
+        <svg class="arch-ring-text" viewBox="0 0 310 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <path id="circle-path"
+              d="M 155,155 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"
+            />
+          </defs>
+          <text>
+            <textPath href="#circle-path">
+              ★ WELCOME TO CARMELINA LUXURY HOTEL ★ WELCOME TO CARMELINA LUXURY HOTEL
+            </textPath>
+          </text>
+        </svg>
+      </div>
+
+      <!-- Right: feature cards -->
+      <div class="flex flex-col justify-center gap-8 lg:w-5/12 reveal reveal-delay-2">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <!-- Serenity icon (spa/leaf) -->
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Serenity and bliss</p>
+            <p class="feature-sub">Your comfort zone away from home</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <!-- Luggage icon -->
+            <svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="13" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Store Luggage</p>
+            <p class="feature-sub">Hospitality Meets Home</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <!-- Bed / room service icon -->
+            <svg viewBox="0 0 24 24"><path d="M3 12h18M3 12V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 12v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/><path d="M7 12V9h5v3"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Room Services</p>
+            <p class="feature-sub">Hospitality meets home</p>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /flex -->
+  </div>
+</section>
+
+
+<!-- ======================================================
+     SECTION 2 – POPULAR DESTINATIONS
+====================================================== -->
+<section class="dest-section py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+
+    <!-- Section header -->
+    <div class="text-center mb-10 md:mb-14 reveal">
+      <p class="dest-subtitle">Explore the world</p>
+      <h2 class="dest-heading heading-accent">Popular Destinations</h2>
+      <p class="dest-desc mx-auto mt-4">
+        Explore our top destinations right from our beloved clients' reviews.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-grid">
+
+      <!-- Card 1 – Italy -->
+      <div class="dest-card reveal reveal-delay-1">
+        <img
+          class="dest-card-img"
+          src="https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=600&q=80"
+          alt="Italy"
+        />
+        <div class="card-label">
+          <p class="card-label-name">Italy</p>
+          <span class="card-label-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+        </div>
+        <div class="card-hover-overlay">
+          <p class="hover-name">Italy</p>
+          <span class="hover-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+          <p class="hover-desc">Italy, officially the Italian Republic, is a country in Southern and Western Europe. With a rich history spanning millennia, it is the cradle of Western civilisation.</p>
+          <div class="hover-actions">
+            <button class="btn-book">Book Now</button>
+            <button class="btn-learn">Learn More</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 – Switzerland (featured / center) -->
+      <div class="dest-card reveal reveal-delay-2">
+        <img
+          class="dest-card-img"
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+          alt="Switzerland"
+        />
+        <div class="card-label">
+          <p class="card-label-name">Switzerland</p>
+          <span class="card-label-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+        </div>
+        <div class="card-hover-overlay">
+          <p class="hover-name">Switzerland</p>
+          <span class="hover-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+          <p class="hover-desc">Switzerland, officially the Swiss Confederation, is a landlocked country located at the northern part of Europe. Famous for its Alps, watches, and chocolate.</p>
+          <div class="hover-actions">
+            <button class="btn-book">Book Now</button>
+            <button class="btn-learn">Learn More</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 – Greece -->
+      <div class="dest-card reveal reveal-delay-3">
+        <img
+          class="dest-card-img"
+          src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80"
+          alt="Greece"
+        />
+        <div class="card-label">
+          <p class="card-label-name">Greece</p>
+          <span class="card-label-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+        </div>
+        <div class="card-hover-overlay">
+          <p class="hover-name">Greece</p>
+          <span class="hover-pkg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            20 Packages
+          </span>
+          <p class="hover-desc">Greece is a country in southeastern Europe known for its history, the birthplace of democracy and Western philosophy, and its stunning Aegean islands.</p>
+          <div class="hover-actions">
+            <button class="btn-book">Book Now</button>
+            <button class="btn-learn">Learn More</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </div>
+</section>
+
+
+<script>
+  /* Scroll reveal observer */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

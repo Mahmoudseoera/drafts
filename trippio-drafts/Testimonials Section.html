@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Testimonials Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.10/swiper-bundle.min.js"></script>
+<style>
+:root{
+  --main-color:#082844;--main-color-dark:#061d35;--main-color-light:#0d385a;
+  --color-second:#16507d;--color-second-dark:#0d385a;--color-second-light:#1d689f;
+  --accent-color:#c99b3d;--accent-color-light:#e3bd68;--accent-color-dark:#b78830;
+  --white-color:#ffffff;--color-off-white:#fcfbf8;--color-blue-tint:#eef4f9;
+  --color-gray-300:#d5dbe2;--color-gray-400:#9aa7b3;--color-gray-500:#6c7782;--color-gray-700:#394552;--color-gray-900:#1c2733;
+  --shadow-md:0 8px 24px rgba(6,29,53,.12);--shadow-lg:0 20px 50px rgba(6,29,53,.18);
+  --radius-md:12px;--radius-lg:20px;
+  --font-heading:"Lora",serif;--font-body:"Manrope",sans-serif;
+  --container:1240px;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;font-family:var(--font-body);background:var(--color-off-white);color:var(--color-gray-900)}
+
+.testimonials-section{padding:80px 24px;background:var(--color-blue-tint)}
+.testimonials-section .container{max-width:var(--container);margin:0 auto}
+.testimonials-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+@media (max-width:860px){.testimonials-grid{grid-template-columns:1fr;gap:48px}}
+
+/* ---- Left content ---- */
+.pill{display:inline-flex;align-items:center;padding:6px 16px;border:1px solid var(--color-gray-300);border-radius:999px;font-size:13px;font-weight:600;color:var(--color-second);background:var(--white-color);margin-bottom:16px}
+.testimonials-content h2{font-family:var(--font-heading);font-size:clamp(28px,3.2vw,36px);font-weight:600;color:var(--main-color);margin:0 0 16px;line-height:1.25}
+.testimonials-content p{margin:0 0 32px;color:var(--color-gray-500);font-size:16px;line-height:1.65;max-width:460px}
+.testimonials-actions{display:flex;align-items:center;gap:18px}
+.nav-arrows{display:flex;gap:10px}
+.arrow-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--color-gray-300);background:var(--white-color);color:var(--main-color);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s,opacity .2s}
+.arrow-btn.next{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+.arrow-btn:hover{background:var(--main-color);border-color:var(--main-color);color:var(--white-color)}
+.arrow-btn:disabled{opacity:.35;cursor:default}
+.arrow-btn:disabled:hover{background:var(--white-color);border-color:var(--color-gray-300);color:var(--main-color)}
+.arrow-btn.next:disabled:hover{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+.btn-dark{font-family:var(--font-body);font-weight:600;font-size:14.5px;color:var(--white-color);background:var(--main-color);border:none;border-radius:999px;padding:14px 26px;cursor:pointer;transition:background .2s}
+.btn-dark:hover{background:var(--main-color-dark)}
+
+/* ---- Slider ---- */
+.testimonials-visual{display:flex;justify-content:center}
+.testimonial-swiper{width:100%;max-width:380px;height:400px;position:relative;overflow:visible}
+.testimonial-swiper .swiper-wrapper{display:flex;position:relative;width:100%;height:100%}
+.testimonial-swiper .swiper-slide{flex-shrink:0;width:100%;height:100%;position:relative}
+
+.testimonial-card{background:var(--white-color);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:32px;height:100%;display:flex;flex-direction:column}
+.stars{display:flex;gap:4px;margin-bottom:18px}
+.stars svg{width:16px;height:16px;fill:var(--accent-color)}
+.t-title{font-family:var(--font-heading);font-size:19px;font-weight:600;color:var(--main-color);margin:0 0 12px}
+.t-desc{font-size:14.5px;line-height:1.7;color:var(--color-gray-700);margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.t-reviewer{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--color-gray-300)}
+.t-avatar{width:38px;height:38px;border-radius:50%;background:var(--main-color);color:var(--white-color);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:600;font-size:15px;flex-shrink:0}
+.t-name{font-weight:600;color:var(--main-color);font-size:14.5px;display:block}
+.t-role{font-size:12.5px;color:var(--color-gray-500)}
+</style>
+</head>
+<body>
+
+<section class="testimonials-section">
+  <div class="container testimonials-grid">
+    <div class="testimonials-content">
+      <span class="pill">Testimonials</span>
+      <h2>What our travelers say</h2>
+      <p>Real stories from guests who explored Egypt with us — from the pyramids to the Nile and beyond.</p>
+      <div class="testimonials-actions">
+        <div class="nav-arrows" id="tArrows">
+          <button class="arrow-btn prev" aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="arrow-btn next" aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <button class="btn-dark">See All Reviews</button>
+      </div>
+    </div>
+
+    <div class="testimonials-visual">
+      <div class="swiper testimonial-swiper" id="testimonialSwiper">
+        <div class="swiper-wrapper">
+          <!-- @foreach($reviews as $review) in Blade -->
+          <div class="swiper-slide"><div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <h3 class="t-title">An unforgettable journey</h3>
+            <p class="t-desc">Our guide knew the history of every temple by heart and paced the days so we never felt rushed. Booking, transfers, and the Nile cruise itself were seamless from start to finish.</p>
+            <div class="t-reviewer"><div class="t-avatar">SM</div><div><span class="t-name">Sarah Mitchell</span><span class="t-role">Cairo &amp; Luxor, Sep 2026</span></div></div>
+          </div></div>
+          <div class="swiper-slide"><div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <h3 class="t-title">Exceeded every expectation</h3>
+            <p class="t-desc">From the moment we landed, everything was handled — private drivers, skip-the-line entry at Giza, and a felucca sunset sail we still talk about. Worth every pound.</p>
+            <div class="t-reviewer"><div class="t-avatar">DK</div><div><span class="t-name">David Kim</span><span class="t-role">Nile Cruise, Aug 2026</span></div></div>
+          </div></div>
+          <div class="swiper-slide"><div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <h3 class="t-title">Felt safe and well cared for</h3>
+            <p class="t-desc">Travelling with my parents, safety was our biggest concern. Every hotel and site was vetted, and our rep checked in daily. Abu Simbel at sunrise was the highlight.</p>
+            <div class="t-reviewer"><div class="t-avatar">RA</div><div><span class="t-name">Rana Al-Sayed</span><span class="t-role">Aswan &amp; Abu Simbel, Jul 2026</span></div></div>
+          </div></div>
+          <div class="swiper-slide"><div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <h3 class="t-title">Siwa Oasis was magic</h3>
+            <p class="t-desc">Not the typical Egypt itinerary — the desert camp under the stars in Siwa was arranged perfectly, and our driver knew every shortcut through the dunes.</p>
+            <div class="t-reviewer"><div class="t-avatar">JT</div><div><span class="t-name">James Turner</span><span class="t-role">Siwa Desert Trip, Jun 2026</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var swiperEl = document.getElementById('testimonialSwiper');
+  var arrows = document.getElementById('tArrows');
+  var prevBtn = arrows.querySelector('.prev');
+  var nextBtn = arrows.querySelector('.next');
+
+  var swiper = new Swiper(swiperEl, {
+    effect: 'cards',
+    grabCursor: true,
+    cardsEffect: { perSlideOffset: 9, perSlideRotate: 3, rotate: true, slideShadows: false },
+    navigation: { nextEl: nextBtn, prevEl: prevBtn }
+  });
+
+  function updateArrowState(){
+    prevBtn.disabled = swiper.isBeginning;
+    nextBtn.disabled = swiper.isEnd;
+  }
+  swiper.on('slideChange', updateArrowState);
+  swiper.on('reachEnd', updateArrowState);
+  swiper.on('reachBeginning', updateArrowState);
+  updateArrowState();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ – Go Travel Egypt</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      --color-primary:         #273d7f;
+      --color-primary-dark:    #1d2f66;
+      --color-primary-light:   #3a5599;
+      --color-secondary:       #6bcef5;
+      --color-secondary-dark:  #4bb8e8;
+      --color-secondary-light: #9edff9;
+      --color-accent:          #f2b705;
+      --color-accent-light:    #ffd166;
+      --color-accent-dark:     #d99e04;
+      --color-white:           #ffffff;
+      --color-off-white:       #f8fafc;
+      --color-gray-100:        #f3f4f6;
+      --color-gray-200:        #e5e7eb;
+      --color-gray-300:        #d1d5db;
+      --color-gray-400:        #9ca3af;
+      --color-gray-500:        #6b7280;
+      --color-gray-700:        #374151;
+      --color-gray-900:        #1f2937;
+      --gradient-main:         linear-gradient(135deg,#273d7f,#6bcef5);
+      --gradient-accent:       linear-gradient(135deg,#273d7f,#6bcef5,#f2b705);
+      --shadow-sm:             0 2px 6px  rgba(0,0,0,.05);
+      --shadow-md:             0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg:             0 8px 24px rgba(0,0,0,.12);
+      --radius-sm:             6px;
+      --radius-md:             12px;
+      --radius-lg:             20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--color-off-white);
+      color: var(--color-gray-700);
+    }
+
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+    /* ============================================
+       FAQ SECTION
+    ============================================ */
+    .faq-section {
+      padding: 80px 24px;
+      background: var(--color-off-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle dot-grid background */
+    .faq-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(39,61,127,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .faq-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ---- Section header ---- */
+    .faq-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .faq-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow-icon {
+      font-size: 1rem;
+    }
+
+    .faq-title {
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .faq-subtitle {
+      font-size: .93rem;
+      color: var(--color-gray-500);
+      line-height: 1.7;
+    }
+
+    /* ---- Two-column layout ---- */
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (min-width: 768px) {
+      .faq-layout {
+        grid-template-columns: 1fr 320px;
+        gap: 32px;
+      }
+    }
+
+    /* ============================================
+       ACCORDION
+    ============================================ */
+    .accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-item {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .accordion-item:hover {
+      border-color: var(--color-secondary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Active / open state */
+    .accordion-item.open {
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 20px rgba(39,61,127,.12);
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      text-align: left;
+      transition: background .25s;
+    }
+
+    /* Open trigger gets primary bg */
+    .accordion-item.open .accordion-trigger {
+      background: var(--color-primary);
+    }
+
+    /* Icon circle */
+    .acc-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .3s, background .3s, transform .35s ease;
+    }
+
+    .acc-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-primary);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      transition: stroke .3s;
+    }
+
+    /* Open: icon becomes accent circle with × */
+    .accordion-item.open .acc-icon {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      transform: rotate(45deg);
+    }
+
+    .accordion-item.open .acc-icon svg {
+      stroke: var(--color-primary-dark);
+    }
+
+    .acc-question {
+      flex: 1;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      line-height: 1.35;
+      transition: color .3s;
+    }
+
+    .accordion-item.open .acc-question {
+      color: var(--color-white);
+    }
+
+    /* chevron on right */
+    .acc-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-gray-400);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      transition: transform .35s ease, stroke .3s;
+    }
+
+    .accordion-item.open .acc-chevron {
+      transform: rotate(180deg);
+      stroke: rgba(255,255,255,.7);
+    }
+
+    /* Accordion body */
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1), padding .3s;
+    }
+
+    .accordion-item.open .accordion-body {
+      max-height: 300px;
+    }
+
+    .accordion-body-inner {
+      padding: 0 22px 20px 68px;
+      font-size: .88rem;
+      line-height: 1.75;
+      color: var(--color-gray-500);
+    }
+
+    /* ============================================
+       SIDEBAR CARD
+    ============================================ */
+    .faq-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--color-gray-100);
+      border: 1.5px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle inner glow */
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,206,245,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-card-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-card-icon svg {
+      width: 26px; height: 26px;
+      stroke: var(--color-primary);
+      fill: none;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* star badge on icon */
+    .contact-card-icon::after {
+      content: '✦';
+      position: absolute;
+      top: 20px; right: 18px;
+      font-size: .65rem;
+      color: var(--color-accent);
+    }
+
+    .contact-card { position: relative; }
+
+    .contact-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .contact-card-email {
+      font-size: .82rem;
+      color: var(--color-gray-500);
+      margin-bottom: 0;
+    }
+
+    .contact-card-email a {
+      color: var(--color-secondary-dark);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .contact-card-email a:hover { color: var(--color-primary); }
+
+    /* Read All FAQs card */
+    .readall-card {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .readall-card p {
+      font-size: .83rem;
+      color: var(--color-gray-500);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .btn-readall {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      background: var(--color-accent);
+      color: var(--color-primary-dark);
+      font-weight: 700;
+      font-size: .85rem;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(242,183,5,.35);
+      transition: background .25s, transform .2s, box-shadow .25s;
+    }
+
+    .btn-readall:hover {
+      background: var(--color-accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 22px rgba(242,183,5,.45);
+    }
+
+    .btn-readall-arrow {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .25s, transform .25s;
+    }
+
+    .btn-readall:hover .btn-readall-arrow {
+      background: var(--color-primary-dark);
+      transform: translate(2px, -2px);
+    }
+
+    .btn-readall-arrow svg {
+      width: 13px; height: 13px;
+      stroke: var(--color-white);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+
+    /* ============================================
+       STATS ROW (bonus strip above accordion)
+    ============================================ */
+    .faq-stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 32px;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-stat {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      position: relative;
+    }
+
+    .faq-stat + .faq-stat::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 15%; height: 70%;
+      width: 1px;
+      background: var(--color-gray-200);
+    }
+
+    .stat-icon-box {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      background: rgba(39,61,127,.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-icon-box svg {
+      width: 18px; height: 18px;
+      stroke: var(--color-primary);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .stat-info-num { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-primary); line-height: 1; }
+    .stat-info-lbl { font-size: .7rem; color: var(--color-gray-400); margin-top: 2px; font-weight: 500; }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+  </style>
+</head>
+
+<body>
+
+<section class="faq-section">
+  <div class="faq-inner">
+
+    <!-- ── Header ── -->
+    <div class="faq-header reveal">
+      <div class="faq-eyebrow">
+        <span class="eyebrow-icon">✦</span>
+        FAQ's
+      </div>
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      <p class="faq-subtitle">Travel planning has never been easier — find answers to the most common questions about your Egypt adventure.</p>
+    </div>
+
+    <!-- ── Stats strip ── -->
+    <div class="faq-stats reveal reveal-d1">
+      <div class="faq-stat">
+        <div class="stat-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="stat-info-num">12,400+</div>
+          <div class="stat-info-lbl">Happy Travellers</div>
+        </div>
+      </div>
+      <div class="faq-stat">
+        <div class="stat-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="stat-info-num">85+</div>
+          <div class="stat-info-lbl">Destinations</div>
+        </div>
+      </div>
+      <div class="faq-stat">
+        <div class="stat-icon-box">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <div class="stat-info-num">4.9 ★</div>
+          <div class="stat-info-lbl">Avg. Rating</div>
+        </div>
+      </div>
+      <div class="faq-stat">
+        <div class="stat-icon-box">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="stat-info-num">24/7</div>
+          <div class="stat-info-lbl">Support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Two-column layout ── -->
+    <div class="faq-layout">
+
+      <!-- Left: Accordion -->
+      <div class="accordion-list reveal reveal-d2">
+
+        <!-- Item 1 – open by default -->
+        <div class="accordion-item open">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">How do I book a tour with Go Travel Egypt?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              You can book directly through our website by selecting your preferred tour, dates, and number of travellers, then completing our secure checkout process. Alternatively, contact our team via email or phone for a personalised booking experience.
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">Can I customise my Egypt itinerary?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              Absolutely! All our packages are fully tailor-made. Tell us your interests, budget, and travel dates and our Egypt specialists will craft a bespoke itinerary just for you — from Nile cruises to desert safaris.
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">Are international flights included in the packages?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              Our standard packages cover domestic transfers, hotels, meals, and guided tours within Egypt. International flights can be added as an optional extra — our team works with EgyptAir and major carriers to find you the best fares.
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">How many people are in a typical group tour?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              Our small-group tours typically have 8–16 travellers, ensuring a personalised experience with your expert local guide. Private tours are also available for solo travellers, couples, and families of any size.
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">What is your cancellation and refund policy?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              We offer free cancellation up to 30 days before departure for a full refund. Cancellations between 15–30 days receive a 50% refund. We also offer flexible date-change options at no extra cost within 60 days of booking.
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="acc-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="acc-question">Do I need a visa to visit Egypt?</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              Most nationalities can obtain an Egypt e-visa online before travel or a visa on arrival at Cairo International Airport. Our team will advise you on the exact requirements for your passport and help with the application process.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /accordion-list -->
+
+      <!-- Right: Sidebar -->
+      <div class="faq-sidebar reveal reveal-d3">
+
+        <!-- Contact card -->
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              <line x1="9" y1="10" x2="15" y2="10"/>
+              <line x1="9" y1="14" x2="13" y2="14"/>
+            </svg>
+          </div>
+          <h3 class="contact-card-title">Let us guide you — reach out anytime.</h3>
+          <p class="contact-card-email">
+            <a href="mailto:info@gotravel-egypt.com">info@gotravel-egypt.com</a>
+          </p>
+        </div>
+
+        <!-- Read all FAQs card -->
+        <div class="readall-card">
+          <p>Got more questions? Find complete answers on our dedicated FAQ page.</p>
+          <a href="#" class="btn-readall">
+            Read All FAQ's
+            <span class="btn-readall-arrow">
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Phone card -->
+        <div class="contact-card" style="padding:20px 24px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="stat-icon-box" style="flex-shrink:0;">
+              <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--color-primary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:.7rem;color:var(--color-gray-400);font-weight:500;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Call Us Directly</div>
+              <a href="tel:+201270496896" style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--color-primary);text-decoration:none;">+20 127 049 6896</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sidebar -->
+
+    </div><!-- /faq-layout -->
+  </div><!-- /faq-inner -->
+</section>
+
+
+<script>
+  /* Accordion toggle */
+  function toggleAccordion(btn) {
+    const item = btn.closest('.accordion-item');
+    const isOpen = item.classList.contains('open');
+
+    /* Close all */
+    document.querySelectorAll('.accordion-item.open').forEach(el => el.classList.remove('open'));
+
+    /* Open clicked (if it wasn't already open) */
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* Scroll reveal */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

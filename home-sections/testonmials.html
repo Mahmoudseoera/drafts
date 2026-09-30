@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials Swiper Full</title>
+
+<!-- Google Font -->
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- Swiper CSS -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+
+/* ================= ROOT COLORS ================= */
+:root {
+  --color-primary:#273d7f;
+  --color-secondary:#6bcef5;
+  --color-accent:#f2b705;
+  --color-white:#ffffff;
+}
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:"Montserrat",sans-serif;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1140px;
+  margin:auto;
+  padding:0 15px;
+}
+
+/* SECTION */
+.testimonial-area{
+  background:var(--color-primary);
+  padding:80px 0;
+}
+
+/* TITLE */
+.sec-title{
+  margin-bottom:50px;
+  padding-bottom:15px;
+  position:relative;
+}
+
+.sec-title::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100px;
+  height:3px;
+  background:var(--color-accent);
+}
+
+.sec-title h2{
+  font-size:60px;
+  font-weight:900;
+  text-transform:uppercase;
+  color:var(--color-white);
+}
+
+.sec-title p{
+  color:var(--color-white);
+}
+
+/* SWIPER */
+.testimonial-slider{
+  padding:0 40px 60px;
+}
+
+/* CARD */
+.single-testimonial{
+  border:7px solid var(--color-white);
+  border-radius:45px;
+  position:relative;
+  text-align:center;
+}
+
+/* TEXT */
+.single-testimonial p{
+  color:var(--color-white);
+  padding:50px;
+  padding-bottom:30px;
+  position:relative;
+  z-index:3;
+  font-size:15px;
+  line-height:24px;
+}
+
+/* QUOTES */
+.single-testimonial::before{
+  content:"";
+  position:absolute;
+  left:-35px;
+  top:-35px;
+  background:url(https://cdn-icons-png.flaticon.com/512/4338/4338294.png)
+  no-repeat var(--color-primary);
+  background-size:60%;
+  width:126px;
+  height:100px;
+  transform:rotate(180deg);
+  background-position:34px 15px;
+}
+
+.single-testimonial::after{
+  content:"";
+  position:absolute;
+  right:-35px;
+  bottom:-35px;
+  background:url(https://cdn-icons-png.flaticon.com/512/4338/4338294.png)
+  no-repeat var(--color-primary);
+  background-size:60%;
+  width:126px;
+  height:100px;
+  background-position:34px 19px;
+}
+
+/* DECORATIVE CORNERS */
+.round{
+  width:100%;
+  height:100%;
+  position:absolute;
+  z-index:1;
+}
+
+.round-1::before{
+  content:"";
+  position:absolute;
+  left:88px;
+  top:-7px;
+  width:50px;
+  height:7px;
+  background:var(--color-white);
+  border-radius:30px;
+}
+
+.round-1::after{
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:62px;
+  width:7px;
+  height:50px;
+  background:var(--color-white);
+  border-radius:30px;
+}
+
+.round-2::before{
+  content:"";
+  position:absolute;
+  right:87px;
+  bottom:-7px;
+  width:50px;
+  height:7px;
+  background:var(--color-white);
+  border-radius:30px;
+}
+
+.round-2::after{
+  content:"";
+  position:absolute;
+  right:-7px;
+  bottom:62px;
+  width:7px;
+  height:50px;
+  background:var(--color-white);
+  border-radius:30px;
+}
+
+/* CLIENT */
+.client-info{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding-bottom:50px;
+}
+
+.client-video{
+  padding-right:15px;
+}
+
+.client-info a{
+  width:40px;
+  height:40px;
+  border-radius:100px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 0 16px rgba(0,0,0,0.16);
+  background:var(--color-accent);
+}
+
+.client-info img{
+  filter:invert(1);
+  width:22px;
+}
+
+.client-info h6{
+  color:#fff;
+  font-size:18px;
+}
+
+.client-info span{
+  color:#fff;
+  font-size:12px;
+}
+
+/* PAGINATION */
+.swiper-pagination{
+  text-align:center;
+  margin-top:40px;
+}
+
+.swiper-pagination-bullet{
+  background:#fff;
+  width:10px;
+  height:10px;
+  border-radius:26px;
+  margin:0 5px;
+  transition:0.3s;
+}
+
+.swiper-pagination-bullet-active{
+  width:30px;
+  background:var(--color-accent);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="testimonial-area">
+  <div class="container">
+
+```
+<div class="sec-title">
+  <h2>Testimonials</h2>
+  <p>What Client Say About Us?</p>
+</div>
+
+<div class="swiper testimonial-slider">
+  <div class="swiper-wrapper">
+
+    <!-- Slide 1 -->
+    <div class="swiper-slide">
+      <div class="single-testimonial">
+        <div class="round-1 round"></div>
+        <div class="round-2 round"></div>
+
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        </p>
+
+        <div class="client-info">
+          <div class="client-video">
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/8029/8029490.png"></a>
+          </div>
+          <div class="client-details">
+            <h6>Yeasin Arafat</h6>
+            <span>Developer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="swiper-slide">
+      <div class="single-testimonial">
+        <div class="round-1 round"></div>
+        <div class="round-2 round"></div>
+
+        <p>
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+        </p>
+
+        <div class="client-info">
+          <div class="client-video">
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/8029/8029490.png"></a>
+          </div>
+          <div class="client-details">
+            <h6>Mahmoud Abozeid</h6>
+            <span>Frontend Developer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="swiper-slide">
+      <div class="single-testimonial">
+        <div class="round-1 round"></div>
+        <div class="round-2 round"></div>
+
+        <p>
+          It has survived not only five centuries, but also the leap into electronic typesetting.
+        </p>
+
+        <div class="client-info">
+          <div class="client-video">
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/8029/8029490.png"></a>
+          </div>
+          <div class="client-details">
+            <h6>Ahmed Ali</h6>
+            <span>Designer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- Swiper JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+new Swiper(".testimonial-slider", {
+  loop: true,
+  spaceBetween: 50,
+  slidesPerView: 1,
+
+  breakpoints: {
+    768: {
+      slidesPerView: 2
+    }
+  },
+
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+
+  speed: 800,
+});
+</script>
+
+</body>
+</html>

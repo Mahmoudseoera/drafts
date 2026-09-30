@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Go Travel Egypt – Header</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
+    :root {
+      --color-primary:         #273d7f;
+      --color-primary-dark:    #1d2f66;
+      --color-primary-light:   #3a5599;
+      --color-secondary:       #6bcef5;
+      --color-secondary-dark:  #4bb8e8;
+      --color-secondary-light: #9edff9;
+      --color-accent:          #f2b705;
+      --color-accent-light:    #ffd166;
+      --color-accent-dark:     #d99e04;
+      --color-white:           #ffffff;
+      --color-off-white:       #f8fafc;
+      --color-gray-100:        #f3f4f6;
+      --color-gray-200:        #e5e7eb;
+      --color-gray-300:        #d1d5db;
+      --color-gray-400:        #9ca3af;
+      --color-gray-500:        #6b7280;
+      --color-gray-700:        #374151;
+      --color-gray-900:        #1f2937;
+      --gradient-main:         linear-gradient(135deg, #273d7f, #6bcef5);
+      --gradient-accent:       linear-gradient(135deg, #273d7f, #6bcef5, #f2b705);
+      --shadow-sm:             0 2px 6px rgba(0,0,0,.05);
+      --shadow-md:             0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg:             0 8px 24px rgba(0,0,0,.12);
+      --radius-sm:             6px;
+      --radius-md:             12px;
+      --radius-lg:             20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--color-off-white);
+      min-height: 100vh;
+    }
+
+    /* =============================================
+       TOP BAR
+    ============================================= */
+    .top-bar {
+      background: var(--color-primary-dark);
+      padding: 7px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle diagonal shimmer */
+    .top-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        105deg,
+        transparent,
+        transparent 40px,
+        rgba(107,206,245,.04) 40px,
+        rgba(107,206,245,.04) 41px
+      );
+      pointer-events: none;
+    }
+
+    .top-bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* contact items */
+    .top-contacts {
+      display: none;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+    }
+
+    @media (min-width: 768px) { .top-contacts { display: flex; } }
+
+    .top-contacts li {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 16px;
+      position: relative;
+      font-size: .78rem;
+      font-weight: 500;
+    }
+
+    .top-contacts li + li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10%; height: 80%;
+      width: 1px;
+      background: rgba(255,255,255,.18);
+    }
+
+    .top-contacts li i {
+      color: var(--color-accent);
+      font-size: .8rem;
+    }
+
+    .top-contacts li a {
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .top-contacts li a:hover { color: var(--color-white); }
+
+    /* right side */
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    /* dropdowns */
+    .top-dropdown {
+      position: relative;
+    }
+
+    .top-dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,.8);
+      font-size: .75rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background .2s, border-color .2s;
+    }
+
+    .top-dropdown-btn i { color: var(--color-secondary); font-size: .72rem; }
+    .top-dropdown-btn .chevron { font-size: .6rem; color: rgba(255,255,255,.5); transition: transform .25s; }
+
+    .top-dropdown:hover .top-dropdown-btn {
+      background: rgba(255,255,255,.14);
+      border-color: rgba(107,206,245,.3);
+    }
+
+    .top-dropdown:hover .chevron { transform: rotate(180deg); }
+
+    .top-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 130px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 28px rgba(0,0,0,.14);
+      border: 1px solid var(--color-gray-200);
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity .25s, transform .25s, visibility .25s;
+      z-index: 200;
+    }
+
+    .top-dropdown:hover .top-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .top-dropdown-menu a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--color-gray-700);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-gray-100);
+      transition: background .2s, color .2s;
+    }
+
+    .top-dropdown-menu a:last-child { border-bottom: none; }
+    .top-dropdown-menu a:hover {
+      background: var(--color-gray-100);
+      color: var(--color-primary);
+    }
+
+    .top-dropdown-menu img { width: 20px; height: 14px; border-radius: 2px; object-fit: cover; }
+
+    /* socials */
+    .top-socials {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,.15);
+      margin-left: 4px;
+    }
+
+    @media (min-width: 640px) { .top-socials { display: flex; } }
+
+    .top-socials li a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.65);
+      font-size: .72rem;
+      text-decoration: none;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+
+    .top-socials li a:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-primary-dark);
+    }
+
+    /* =============================================
+       MAIN NAV
+    ============================================= */
+    .main-nav {
+      background: var(--color-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background .35s, box-shadow .35s;
+    }
+
+    .main-nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 24px rgba(39,61,127,.1);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: stretch;
+      height: 72px;
+      gap: 0;
+    }
+
+    /* ---- LOGO ---- */
+    .nav-logo-wrap {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      position: relative;
+      padding-right: 32px;
+      flex-shrink: 0;
+    }
+
+    /* inverted border on right side of logo block */
+    .nav-logo-wrap::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 28px; height: 100%;
+      background: var(--color-primary);
+      clip-path: polygon(0 0, 0% 100%, 100% 100%);
+      opacity: .06;
+      pointer-events: none;
+    }
+
+    .logo-icon {
+      width: 42px; height: 42px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(39,61,127,.3);
+    }
+
+    .logo-icon svg {
+      width: 22px; height: 22px;
+      fill: var(--color-white);
+    }
+
+    .logo-text {
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -.2px;
+    }
+
+    .logo-sub {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-top: 2px;
+    }
+
+    /* ---- NAV LINKS ---- */
+    .nav-links {
+      display: none;
+      align-items: stretch;
+      list-style: none;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    @media (min-width: 1024px) { .nav-links { display: flex; } }
+
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 18px;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--color-gray-700);
+      text-decoration: none;
+      position: relative;
+      transition: color .25s;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* animated underline */
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 18px;
+      width: calc(100% - 36px);
+      height: 2px;
+      background: var(--gradient-main);
+      border-radius: 2px 2px 0 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+
+    .nav-item:hover .nav-link,
+    .nav-item.active .nav-link { color: var(--color-primary); }
+
+    .nav-item:hover .nav-link::after,
+    .nav-item.active .nav-link::after { transform: scaleX(1); }
+
+    .nav-link .chevron {
+      font-size: .6rem;
+      transition: transform .25s;
+      color: var(--color-gray-400);
+    }
+
+    .nav-item:hover .nav-link .chevron { transform: rotate(180deg); }
+
+    /* ---- DROPDOWN ---- */
+    .dropdown-panel {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      min-width: 210px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: 0 16px 44px rgba(39,61,127,.14);
+      border: 1px solid var(--color-gray-200);
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .28s, transform .28s, visibility .28s;
+      z-index: 300;
+
+      /* inverted corner accent at top */
+      border-top: 3px solid var(--color-primary);
+    }
+
+    /* inverted border notch on top-left */
+    .dropdown-panel::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: 0;
+      width: 6px; height: 6px;
+      background: var(--color-primary);
+      border-bottom-right-radius: 6px;
+    }
+
+    .nav-item:hover .dropdown-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown-panel a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 18px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--color-gray-700);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-gray-100);
+      transition: background .2s, color .2s, padding-left .2s;
+      position: relative;
+    }
+
+    .dropdown-panel a:last-child { border-bottom: none; }
+
+    /* left accent bar */
+    .dropdown-panel a::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 3px; height: 100%;
+      background: var(--gradient-main);
+      transform: scaleY(0);
+      transition: transform .25s ease;
+    }
+
+    .dropdown-panel a:hover {
+      background: var(--color-gray-100);
+      color: var(--color-primary);
+      padding-left: 22px;
+    }
+
+    .dropdown-panel a:hover::before { transform: scaleY(1); }
+
+    .dropdown-panel a i {
+      color: var(--color-secondary-dark);
+      font-size: .8rem;
+      width: 16px;
+      text-align: center;
+    }
+
+    /* ---- BOOK NOW BUTTON ---- */
+    .nav-cta-wrap {
+      display: none;
+      align-items: center;
+      padding-left: 20px;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 1024px) { .nav-cta-wrap { display: flex; } }
+
+    .btn-book-now {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      font-size: .85rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: background .3s, transform .2s, box-shadow .3s;
+      box-shadow: 0 4px 16px rgba(39,61,127,.3);
+    }
+
+    .btn-book-now::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      transform: translateX(-101%);
+      transition: transform .4s cubic-bezier(.77,0,.18,1);
+      z-index: 0;
+    }
+
+    .btn-book-now:hover::before { transform: translateX(0); }
+
+    .btn-book-now:hover {
+      color: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(242,183,5,.4);
+    }
+
+    .btn-book-now span,
+    .btn-book-now i { position: relative; z-index: 1; }
+
+    .btn-book-now i { font-size: .8rem; transition: transform .3s; }
+    .btn-book-now:hover i { transform: translate(3px,-3px); }
+
+    /* ---- INVERTED BORDER ACCENT on CTA wrap ---- */
+    .nav-cta-wrap::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 36px;
+      background: var(--color-gray-200);
+      margin-right: 20px;
+    }
+
+    /* =============================================
+       HAMBURGER
+    ============================================= */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      padding: 4px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      margin-left: auto;
+      border-radius: var(--radius-sm);
+      transition: background .2s;
+    }
+
+    @media (min-width: 1024px) { .hamburger { display: none; } }
+
+    .hamburger:hover { background: var(--color-gray-100); }
+
+    .ham-bar {
+      display: block;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--color-primary);
+      transition: transform .35s, opacity .25s, width .3s;
+    }
+
+    .ham-bar:nth-child(1) { width: 100%; }
+    .ham-bar:nth-child(2) { width: 70%; }
+    .ham-bar:nth-child(3) { width: 100%; }
+
+    .hamburger.open .ham-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); width: 100%; }
+    .hamburger.open .ham-bar:nth-child(2) { opacity: 0; }
+    .hamburger.open .ham-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 100%; }
+
+    /* =============================================
+       MOBILE MENU
+    ============================================= */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(27,38,75,.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .mobile-menu.open { display: block; }
+
+    .mobile-panel {
+      position: absolute;
+      top: 0; right: 0;
+      width: min(340px, 88vw);
+      height: 100%;
+      background: var(--color-white);
+      box-shadow: -12px 0 40px rgba(0,0,0,.15);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      animation: slideIn .35s cubic-bezier(.77,0,.18,1) both;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to   { transform: translateX(0); }
+    }
+
+    .mobile-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .mobile-close {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--color-gray-200);
+      background: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--color-gray-700);
+      font-size: 1rem;
+      transition: background .2s, color .2s;
+    }
+
+    .mobile-close:hover { background: var(--color-primary); color: var(--color-white); }
+
+    .mobile-nav-list {
+      list-style: none;
+      padding: 12px 0;
+      flex: 1;
+    }
+
+    .mobile-nav-item { border-bottom: 1px solid var(--color-gray-100); }
+
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--color-gray-700);
+      text-decoration: none;
+      transition: color .2s, background .2s;
+      cursor: pointer;
+    }
+
+    .mobile-nav-link:hover { color: var(--color-primary); background: var(--color-gray-100); }
+    .mobile-nav-link i { font-size: .75rem; color: var(--color-gray-400); }
+
+    .mobile-sub {
+      display: none;
+      list-style: none;
+      background: var(--color-gray-100);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .mobile-sub.open { display: block; }
+
+    .mobile-sub a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px 11px 30px;
+      font-size: .83rem;
+      color: var(--color-gray-500);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .mobile-sub a i { color: var(--color-secondary-dark); font-size: .75rem; }
+    .mobile-sub a:hover { color: var(--color-primary); }
+
+    .mobile-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .mobile-book-btn {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: .9rem;
+      text-decoration: none;
+      margin-bottom: 14px;
+      transition: background .25s;
+    }
+
+    .mobile-book-btn:hover { background: var(--color-primary-dark); }
+
+    .mobile-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mobile-contacts a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: var(--color-gray-500);
+      text-decoration: none;
+    }
+
+    .mobile-contacts a i { color: var(--color-accent); }
+
+    /* inverted corner — decorative accent on mobile panel top-left */
+    .mobile-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 50px; height: 50px;
+      background: var(--color-primary);
+      opacity: .06;
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      pointer-events: none;
+    }
+
+    /* =============================================
+       ACCENT DOT DIVIDER
+    ============================================= */
+    .accent-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    /* =============================================
+       HERO PLACEHOLDER (so header looks in context)
+    ============================================= */
+    .hero-placeholder {
+      background: linear-gradient(135deg, #1d2f66 0%, #273d7f 60%, #4bb8e8 100%);
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .hero-placeholder h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--color-white);
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-placeholder p {
+      font-size: .95rem;
+      color: rgba(255,255,255,.65);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =============================================
+     TOP BAR
+============================================= -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+
+    <!-- Contact info -->
+    <ul class="top-contacts">
+      <li>
+        <i class="fa-solid fa-envelope"></i>
+        <a href="mailto:info@gotravel-egypt.com">info@gotravel-egypt.com</a>
+      </li>
+      <li>
+        <i class="fa-solid fa-phone-volume"></i>
+        <a href="tel:+201270496896">+20 127 049 6896</a>
+      </li>
+      <li>
+        <i class="fa-solid fa-location-dot"></i>
+        <a href="#">Cairo, Egypt</a>
+      </li>
+    </ul>
+
+    <!-- Right: lang + currency + socials -->
+    <div class="top-right">
+
+      <!-- Language -->
+      <div class="top-dropdown">
+        <button class="top-dropdown-btn">
+          <i class="fa-solid fa-globe"></i>
+          English
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </button>
+        <div class="top-dropdown-menu">
+          <a href="#">
+            <img src="https://flagcdn.com/w40/gb.png" alt="EN"/> English
+          </a>
+          <a href="#">
+            <img src="https://flagcdn.com/w40/eg.png" alt="AR"/> العربية
+          </a>
+          <a href="#">
+            <img src="https://flagcdn.com/w40/de.png" alt="DE"/> Deutsch
+          </a>
+        </div>
+      </div>
+
+      <!-- Currency -->
+      <div class="top-dropdown">
+        <button class="top-dropdown-btn">
+          <i class="fa-solid fa-coins"></i>
+          USD
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </button>
+        <div class="top-dropdown-menu">
+          <a href="#"><i class="fa-solid fa-dollar-sign" style="color:var(--color-secondary-dark);width:14px;"></i> USD</a>
+          <a href="#"><i class="fa-solid fa-euro-sign" style="color:var(--color-secondary-dark);width:14px;"></i> EUR</a>
+          <a href="#"><i class="fa-solid fa-sterling-sign" style="color:var(--color-secondary-dark);width:14px;"></i> GBP</a>
+          <a href="#"><i class="fa-solid fa-e" style="color:var(--color-accent);width:14px;font-style:normal;font-weight:700;">E£</i> EGP</a>
+        </div>
+      </div>
+
+      <!-- Socials -->
+      <ul class="top-socials">
+        <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     MAIN NAVBAR
+============================================= -->
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+
+    <!-- Logo -->
+    <a href="#" class="nav-logo-wrap">
+      <div class="logo-icon">
+        <!-- plane icon svg -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0 0 11.5 2 1.5 1.5 0 0 0 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Go Travel</span>
+        <span class="logo-sub">Egypt <span class="accent-dot"></span> Since 2010</span>
+      </div>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links">
+
+      <li class="nav-item active">
+        <a href="#" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          Destinations
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </a>
+        <div class="dropdown-panel">
+          <a href="#"><i class="fa-solid fa-landmark"></i> Luxor & Karnak Temple</a>
+          <a href="#"><i class="fa-solid fa-star-and-crescent"></i> Aswan & Nubia</a>
+          <a href="#"><i class="fa-solid fa-pyramid"></i> Cairo & Giza Pyramids</a>
+          <a href="#"><i class="fa-solid fa-water"></i> Red Sea & Hurghada</a>
+          <a href="#"><i class="fa-solid fa-umbrella-beach"></i> Sharm El-Sheikh</a>
+          <a href="#"><i class="fa-solid fa-map"></i> Siwa Oasis</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          Tour Packages
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </a>
+        <div class="dropdown-panel">
+          <a href="#"><i class="fa-solid fa-ship"></i> Nile Cruise Tours</a>
+          <a href="#"><i class="fa-solid fa-person-hiking"></i> Adventure Tours</a>
+          <a href="#"><i class="fa-solid fa-palette"></i> Cultural & Heritage</a>
+          <a href="#"><i class="fa-solid fa-heart"></i> Honeymoon Packages</a>
+          <a href="#"><i class="fa-solid fa-users"></i> Group Tours</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          Experiences
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </a>
+        <div class="dropdown-panel">
+          <a href="#"><i class="fa-solid fa-hot-tub-person"></i> Wellness & Spa</a>
+          <a href="#"><i class="fa-solid fa-utensils"></i> Egyptian Gastronomy</a>
+          <a href="#"><i class="fa-solid fa-masks-theater"></i> Sound & Light Shows</a>
+          <a href="#"><i class="fa-solid fa-horse"></i> Desert Safari</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          About
+          <i class="fa-solid fa-chevron-down chevron"></i>
+        </a>
+        <div class="dropdown-panel">
+          <a href="#"><i class="fa-solid fa-circle-info"></i> About Go Travel</a>
+          <a href="#"><i class="fa-solid fa-newspaper"></i> Travel Blog</a>
+          <a href="#"><i class="fa-solid fa-star"></i> Testimonials</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+
+    </ul>
+
+    <!-- Book Now CTA -->
+    <div class="nav-cta-wrap">
+      <a href="#" class="btn-book-now">
+        <span>Book Now</span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
+
+  </div>
+</nav>
+
+
+<!-- =============================================
+     MOBILE MENU OVERLAY
+============================================= -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-panel">
+    <div class="mobile-panel-head">
+      <div class="nav-logo-wrap" style="padding-right:0;">
+        <div class="logo-icon" style="width:34px;height:34px;">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0 0 11.5 2 1.5 1.5 0 0 0 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Go Travel</span>
+          <span class="logo-sub">Egypt</span>
+        </div>
+      </div>
+      <button class="mobile-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item">
+        <a href="#" class="mobile-nav-link">Home</a>
+      </li>
+      <li class="mobile-nav-item">
+        <div class="mobile-nav-link" onclick="toggleSub(this)">
+          Destinations <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="mobile-sub">
+          <li><a href="#"><i class="fa-solid fa-landmark"></i> Luxor & Karnak Temple</a></li>
+          <li><a href="#"><i class="fa-solid fa-star-and-crescent"></i> Aswan & Nubia</a></li>
+          <li><a href="#"><i class="fa-solid fa-pyramid"></i> Cairo & Giza Pyramids</a></li>
+          <li><a href="#"><i class="fa-solid fa-water"></i> Red Sea & Hurghada</a></li>
+          <li><a href="#"><i class="fa-solid fa-umbrella-beach"></i> Sharm El-Sheikh</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <div class="mobile-nav-link" onclick="toggleSub(this)">
+          Tour Packages <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="mobile-sub">
+          <li><a href="#"><i class="fa-solid fa-ship"></i> Nile Cruise Tours</a></li>
+          <li><a href="#"><i class="fa-solid fa-person-hiking"></i> Adventure Tours</a></li>
+          <li><a href="#"><i class="fa-solid fa-palette"></i> Cultural & Heritage</a></li>
+          <li><a href="#"><i class="fa-solid fa-heart"></i> Honeymoon Packages</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <div class="mobile-nav-link" onclick="toggleSub(this)">
+          Experiences <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="mobile-sub">
+          <li><a href="#"><i class="fa-solid fa-hot-tub-person"></i> Wellness & Spa</a></li>
+          <li><a href="#"><i class="fa-solid fa-utensils"></i> Egyptian Gastronomy</a></li>
+          <li><a href="#"><i class="fa-solid fa-masks-theater"></i> Sound & Light Shows</a></li>
+          <li><a href="#"><i class="fa-solid fa-horse"></i> Desert Safari</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <div class="mobile-nav-link" onclick="toggleSub(this)">
+          About <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="mobile-sub">
+          <li><a href="#"><i class="fa-solid fa-circle-info"></i> About Go Travel</a></li>
+          <li><a href="#"><i class="fa-solid fa-newspaper"></i> Travel Blog</a></li>
+          <li><a href="#"><i class="fa-solid fa-star"></i> Testimonials</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#" class="mobile-nav-link">Contact</a>
+      </li>
+    </ul>
+
+    <div class="mobile-footer">
+      <a href="#" class="mobile-book-btn">
+        <i class="fa-solid fa-calendar-check"></i> Book Your Egypt Tour
+      </a>
+      <div class="mobile-contacts">
+        <a href="mailto:info@gotravel-egypt.com"><i class="fa-solid fa-envelope"></i> info@gotravel-egypt.com</a>
+        <a href="tel:+201270496896"><i class="fa-solid fa-phone"></i> +20 127 049 6896</a>
+        <a href="#"><i class="fa-solid fa-location-dot"></i> Cairo, Egypt</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     HERO PLACEHOLDER
+============================================= -->
+<div class="hero-placeholder">
+  <h1>Discover the Wonders of <em style="color:var(--color-accent);">Egypt</em></h1>
+  <p>Scroll up to see the sticky navbar behaviour</p>
+</div>
+
+
+<!-- =============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+  /* sticky scroll */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* hamburger toggle */
+  const ham   = document.getElementById('hamburger');
+  const menu  = document.getElementById('mobileMenu');
+  const close = document.getElementById('mobileClose');
+
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  const closeMenu = () => {
+    ham.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  close.addEventListener('click', closeMenu);
+  menu.addEventListener('click', e => { if (e.target === menu) closeMenu(); });
+
+  /* mobile sub-menus */
+  function toggleSub(el) {
+    const sub     = el.nextElementSibling;
+    const chevron = el.querySelector('i');
+    const isOpen  = sub.classList.toggle('open');
+    chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+  }
+</script>
+
+</body>
+</html>

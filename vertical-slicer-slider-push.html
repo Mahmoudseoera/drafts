@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A vertical Swiper slider with a smooth five-slice push transition.">
+  <title>Vertical Slicer Slider — Push Effect</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    :root {
+      --surface: #0b0b0d;
+      --white: #fff;
+      --slice-ease: cubic-bezier(1, 0, .5, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+
+    body {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      /* padding: clamp(12px, 3vw, 32px); */
+      overflow-x: hidden;
+      color: var(--white);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button { font: inherit; }
+
+    .slicer-demo {
+      position: relative;
+      /* width: min(1120px, 100%);
+      height: min(760px, calc(100svh - clamp(24px, 6vw, 64px))); */
+      width: 100%;
+      height: 100vh;
+      min-height: 520px;
+      overflow: hidden;
+      isolation: isolate;
+      /* border-radius: clamp(12px, 2vw, 22px); */
+      background: #17171a;
+      box-shadow: 0 36px 90px -28px rgb(0 0 0 / 72%);
+    }
+
+    .slicer-demo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgb(0 0 0 / 28%) 0%, transparent 32%), linear-gradient(0deg, rgb(0 0 0 / 58%) 0%, transparent 58%);
+    }
+
+    .slicer-swiper, .slicer-swiper .swiper-wrapper, .slicer-swiper .swiper-slide {
+      width: 100%;
+      height: 100%;
+    }
+
+    .slicer-swiper {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      --swiper-theme-color: #fff;
+    }
+
+    .slicer-swiper .swiper-slide { position: relative; overflow: hidden; }
+
+    .swiper-slicer-image, .swiper-slicer-image-clones, .swiper-slicer-image-clone {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .swiper-slicer-image {
+      display: none;
+      max-width: none;
+      object-fit: cover;
+      object-position: center;
+      user-select: none;
+    }
+
+    .swiper-slicer-image-clone {
+      overflow: hidden;
+      will-change: transform;
+      backface-visibility: hidden;
+      transition-timing-function: var(--slice-ease);
+    }
+
+    .swiper-slicer-image-clone .swiper-slicer-image { display: block; }
+
+    .slide-copy {
+      position: absolute;
+      z-index: 5;
+      left: clamp(28px, 7.5%, 84px);
+      right: clamp(76px, 12%, 142px);
+      bottom: clamp(34px, 8.5%, 76px);
+      max-width: 680px;
+      pointer-events: none;
+      text-shadow: 0 3px 22px rgb(0 0 0 / 65%);
+    }
+
+    .slide-copy__eyebrow {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .88;
+    }
+
+    .slide-copy h1 {
+      margin: 0 0 14px;
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 650;
+      line-height: .92;
+      letter-spacing: -.045em;
+    }
+
+    .slide-copy p {
+      display: -webkit-box;
+      max-width: 560px;
+      margin: 0;
+      overflow: hidden;
+      font-size: clamp(14px, 1.6vw, 17px);
+      font-weight: 400;
+      line-height: 1.65;
+      opacity: .86;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+   .slider-counter, .progress-rail, .slider-arrows { position: absolute; z-index: 4; }
+
+    .slider-counter {
+      top: 28px;
+      right: 28px;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .08em;
+      opacity: .9;
+    }
+
+    .slider-counter__current { font-size: 17px; font-weight: 700; }
+    .slider-counter__divider { opacity: .5; }
+
+    .progress-rail {
+      top: 64px;
+      right: 30px;
+      bottom: 96px;
+      width: 2px;
+      overflow: hidden;
+      background: rgb(255 255 255 / 22%);
+    }
+
+    .progress-rail__fill {
+      width: 100%;
+      height: 0;
+      background: #fff;
+      transform-origin: top;
+      transition: height 600ms var(--slice-ease);
+    }
+
+    .slider-arrows { right: 18px; bottom: 22px; display: grid; gap: 8px; }
+
+    .slider-arrow {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgb(255 255 255 / 42%);
+      border-radius: 50%;
+      background: rgb(255 255 255 / 8%);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease, opacity 180ms ease;
+    }
+
+    .slider-arrow:hover { border-color: rgb(255 255 255 / 75%); background: rgb(255 255 255 / 18%); }
+    .slider-arrow:active { transform: scale(.92); }
+    .slider-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .slider-arrow.swiper-button-disabled { opacity: .32; cursor: default; pointer-events: none; }
+    .slider-arrow svg { width: 17px; height: 17px; }
+    .swiper-pagination { display: none; }
+
+    @media (max-width: 700px) {
+      .slicer-demo { height: calc(100svh - 24px); min-height: 460px; }
+      .slide-copy { left: 24px; right: 70px; bottom: 30px; }
+      .slide-copy h1 { font-size: clamp(42px, 15vw, 68px); }
+      .slider-hint { top: 20px; left: 22px; transform: none; }
+      .slider-counter { top: 18px; right: 20px; }
+      .progress-rail { display: none; }
+      .slider-arrows { right: 14px; bottom: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .swiper-slicer-image-clone, .progress-rail__fill, .slider-arrow { transition-duration: 1ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="slicer-demo" aria-roledescription="carousel" aria-label="Egypt destinations">
+    <!-- <div class="slider-hint">Scroll / Swipe</div> -->
+    <div class="slider-counter" aria-live="polite" aria-atomic="true">
+      <span class="slider-counter__current">01</span><span class="slider-counter__divider">/</span><span class="slider-counter__total">04</span>
+    </div>
+    <div class="progress-rail" aria-hidden="true"><div class="progress-rail__fill"></div></div>
+
+    <div class="swiper slicer-swiper">
+      <div class="swiper-wrapper">
+        <article class="swiper-slide" data-eyebrow="01 — Egypt" data-title="Cairo" data-description="Discover ancient monuments, timeless streets and the energy of modern Egypt.">
+          <img class="swiper-slicer-image" src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&amp;fit=crop&amp;w=1800&amp;q=85" alt="Historic Cairo skyline at sunset" title="Cairo, Egypt" fetchpriority="high">
+        </article>
+        <article class="swiper-slide" data-eyebrow="02 — Ancient Egypt" data-title="Pyramids" data-description="A dramatic journey through one of the world's most recognizable landscapes.">
+          <img class="swiper-slicer-image" src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&amp;fit=crop&amp;w=1800&amp;q=85" alt="The pyramids on the Giza plateau" title="The Pyramids of Giza" loading="eager">
+        </article>
+        <article class="swiper-slide" data-eyebrow="03 — Nile" data-title="The Nile" data-description="Slow down and experience Egypt from its most iconic natural landmark.">
+          <img class="swiper-slicer-image" src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1400&q=90" alt="A traditional boat sailing on the Nile" title="The Nile River" loading="eager">
+        </article>
+        <article class="swiper-slide" data-eyebrow="04 — Upper Egypt" data-title="Luxor" data-description="Temples, history and the unforgettable atmosphere of ancient Thebes.">
+          <img class="swiper-slicer-image" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&amp;fit=crop&amp;w=1800&amp;q=85" alt="Ancient Egyptian temple columns in Luxor" title="Luxor, Egypt" loading="eager">
+        </article>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="slide-copy"><span class="slide-copy__eyebrow"></span><h1></h1><p></p></div>
+
+    <div class="slider-arrows">
+      <button class="slider-arrow slider-arrow--previous" type="button" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>
+      </button>
+      <button class="slider-arrow slider-arrow--next" type="button" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const SPLIT_COUNT = 5;
+      const TRANSITION_SPEED = 600;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function SlicerEffect({ swiper, extendParams, on, emit }) {
+        extendParams({ slicerEffect: { split: SPLIT_COUNT } });
+        let isLoopFixing = false;
+
+        const completeVirtualTransition = (duration) => {
+          if (duration === 0) return;
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          const leadSlice = activeSlide?.querySelector('.swiper-slicer-image-clone:first-child');
+          if (!leadSlice) return;
+
+          let completed = false;
+          const finish = (event) => {
+            if (event.target !== leadSlice || completed || swiper.destroyed) return;
+            completed = true;
+            leadSlice.removeEventListener('transitionend', finish);
+            swiper.animating = false;
+            swiper.wrapperEl.dispatchEvent(new CustomEvent('transitionend', { bubbles: true, cancelable: true }));
+          };
+          leadSlice.addEventListener('transitionend', finish);
+        };
+
+        const createSlices = () => {
+          swiper.slides.forEach((slide) => {
+            if (slide.querySelector('.swiper-slicer-image-clones')) return;
+            const sourceImage = slide.querySelector('.swiper-slicer-image');
+            if (!sourceImage) return;
+
+            const slices = document.createElement('div');
+            slices.className = 'swiper-slicer-image-clones';
+            slices.setAttribute('aria-hidden', 'true');
+
+            for (let index = 0; index < swiper.params.slicerEffect.split; index += 1) {
+              const slice = document.createElement('div');
+              const imageClone = sourceImage.cloneNode(true);
+              slice.className = 'swiper-slicer-image-clone';
+              imageClone.alt = '';
+              imageClone.setAttribute('aria-hidden', 'true');
+              imageClone.removeAttribute('fetchpriority');
+              slice.append(imageClone);
+              slices.append(slice);
+            }
+            sourceImage.after(slices);
+          });
+        };
+
+        const sizeSlices = () => {
+          swiper.slides.forEach((slide) => {
+            slide.querySelectorAll('.swiper-slicer-image').forEach((image) => {
+              image.style.width = `${swiper.width}px`;
+              image.style.height = `${swiper.height}px`;
+            });
+
+            slide.querySelectorAll('.swiper-slicer-image-clone').forEach((slice, index) => {
+              const percentage = 100 / swiper.params.slicerEffect.split;
+              const image = slice.querySelector('.swiper-slicer-image');
+              slice.style.width = `${percentage}%`;
+              slice.style.left = `${percentage * index}%`;
+              image.style.left = `${-100 * index}%`;
+            });
+          });
+        };
+
+        const setTranslate = () => {
+          if (swiper.params.effect !== 'slicer') return;
+          swiper.slides.forEach((slide, index) => {
+            slide.style.transform = `translate3d(0, ${-index * 100}%, 0)`;
+            slide.querySelectorAll('.swiper-slicer-image-clone').forEach((slice) => {
+              slice.style.transform = `translate3d(0, ${-slide.progress * 100}%, 0)`;
+            });
+          });
+        };
+
+        const setTransition = (duration) => {
+          if (swiper.params.effect !== 'slicer') return;
+          swiper.slides.forEach((slide) => {
+            const slices = slide.querySelectorAll('.swiper-slicer-image-clone');
+            slices.forEach((slice, index) => {
+              const extraDuration = slices.length > 1 ? duration / (slices.length - 1) * (slices.length - index - 1) : 0;
+              if (duration === 0) {
+                slice.style.transitionTimingFunction = 'ease-out';
+                slice.style.transitionDuration = isLoopFixing ? '0ms' : `${swiper.params.speed + (swiper.params.speed / Math.max(slices.length - 1, 1)) * (slices.length - index - 1)}ms`;
+              } else {
+                slice.style.transitionTimingFunction = '';
+                slice.style.transitionDuration = `${duration + extraDuration}ms`;
+              }
+            });
+          });
+          completeVirtualTransition(duration);
+        };
+
+        on('beforeLoopFix', () => { isLoopFixing = true; });
+        on('loopFix', () => { isLoopFixing = false; });
+        on('setTranslate', setTranslate);
+        on('setTransition', (_instance, duration) => setTransition(duration));
+        on('slidesLengthChange', () => { createSlices(); sizeSlices(); });
+        on('beforeInit', () => {
+          if (swiper.params.effect !== 'slicer') return;
+          swiper.classNames.push('swiper-slicer');
+          const effectParams = { slidesPerView: 1, slidesPerGroup: 1, watchSlidesProgress: true, spaceBetween: 0, virtualTranslate: true };
+          Object.assign(swiper.params, effectParams);
+          Object.assign(swiper.originalParams, effectParams);
+        });
+        on('init', () => {
+          if (swiper.params.effect !== 'slicer') return;
+          createSlices();
+          sizeSlices();
+          emit('setTranslate', swiper, swiper.translate);
+        });
+        on('resize', sizeSlices);
+      }
+
+      const counterCurrent = document.querySelector('.slider-counter__current');
+      const counterTotal = document.querySelector('.slider-counter__total');
+      const progressFill = document.querySelector('.progress-rail__fill');
+      const copyEyebrow = document.querySelector('.slide-copy__eyebrow');
+      const copyTitle = document.querySelector('.slide-copy h1');
+      const copyDescription = document.querySelector('.slide-copy p');
+      const slideElements = Array.from(document.querySelectorAll('.slicer-swiper .swiper-slide'));
+      const pad = (number) => String(number).padStart(2, '0');
+
+      const renderSlideUi = (index) => {
+        const slide = slideElements[index];
+        const progress = slideElements.length > 1 ? index / (slideElements.length - 1) : 0;
+        counterCurrent.textContent = pad(index + 1);
+        counterTotal.textContent = pad(slideElements.length);
+        progressFill.style.height = `${progress * 100}%`;
+        copyEyebrow.textContent = slide.dataset.eyebrow;
+        copyTitle.textContent = slide.dataset.title;
+        copyDescription.textContent = slide.dataset.description;
+      };
+
+      const swiper = new Swiper('.slicer-swiper', {
+        modules: [SlicerEffect],
+        loop:true,
+        direction: 'vertical',
+        effect: 'slicer',
+        slicerEffect: { split: SPLIT_COUNT },
+        speed: reducedMotion ? 1 : TRANSITION_SPEED,
+        grabCursor: true,
+        preventInteractionOnTransition: true,
+        mousewheel: { forceToAxis: true, thresholdDelta: 18, thresholdTime: 450 },
+        keyboard: { enabled: true, onlyInViewport: true },
+        navigation: { prevEl: '.slider-arrow--previous', nextEl: '.slider-arrow--next' },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        on: {
+          init(instance) { renderSlideUi(instance.activeIndex); },
+          activeIndexChange(instance) { renderSlideUi(instance.activeIndex); }
+        }
+      });
+
+      window.slicerSwiper = swiper;
+    })();
+  </script>
+</body>
+</html>

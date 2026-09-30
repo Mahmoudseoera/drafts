@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Popular Destinations – Go Travel Egypt</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      --color-primary:         #273d7f;
+      --color-primary-dark:    #1d2f66;
+      --color-primary-light:   #3a5599;
+      --color-secondary:       #6bcef5;
+      --color-secondary-dark:  #4bb8e8;
+      --color-secondary-light: #9edff9;
+      --color-accent:          #f2b705;
+      --color-accent-light:    #ffd166;
+      --color-accent-dark:     #d99e04;
+      --color-white:           #ffffff;
+      --color-off-white:       #f8fafc;
+      --color-gray-100:        #f3f4f6;
+      --color-gray-200:        #e5e7eb;
+      --color-gray-300:        #d1d5db;
+      --color-gray-400:        #9ca3af;
+      --color-gray-500:        #6b7280;
+      --color-gray-700:        #374151;
+      --color-gray-900:        #1f2937;
+      --text-primary:          var(--color-primary);
+      --text-secondary:        var(--color-gray-500);
+      --btn-primary-bg:        var(--color-primary);
+      --btn-primary-hover:     var(--color-primary-dark);
+      --btn-primary-text:      var(--color-white);
+      --gradient-main:         linear-gradient(135deg,#273d7f,#6bcef5);
+      --gradient-accent:       linear-gradient(135deg,#273d7f,#6bcef5,#f2b705);
+      --shadow-sm:             0 2px 6px  rgba(0,0,0,.05);
+      --shadow-md:             0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg:             0 8px 32px rgba(0,0,0,.18);
+      --radius-sm:             6px;
+      --radius-md:             12px;
+      --radius-lg:             20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--color-off-white);
+      color: var(--color-gray-700);
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+    /* ============================================
+       SECTION
+    ============================================ */
+    .dest-section {
+      background: var(--color-off-white);
+      padding: 80px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle dot grid */
+    .dest-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(39,61,127,.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    /* ---- Header ---- */
+    .dest-header {
+      text-align: center;
+      margin-bottom: 52px;
+      padding: 0 24px;
+    }
+
+    .dest-subtitle {
+      color: var(--color-accent);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .dest-subtitle::before,
+    .dest-subtitle::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-accent);
+      border-radius: 2px;
+    }
+
+    .dest-heading {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--text-primary);
+      line-height: 1.15;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .dest-heading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 55%;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--gradient-accent);
+    }
+
+    .dest-desc {
+      color: var(--text-secondary);
+      font-size: .92rem;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 18px auto 0;
+    }
+
+    /* ============================================
+       SWIPER WRAPPER
+    ============================================ */
+    .dest-swiper-wrap {
+      position: relative;
+    }
+
+    /* full-width swiper */
+    .dest-swiper {
+      width: 100%;
+      padding: 20px 0 60px !important;
+      /* overflow visible so side slides peek */
+      overflow: visible !important;
+    }
+
+    /* Clip only vertically so side slides don't overflow page */
+    .dest-swiper-clip {
+      overflow: hidden;
+    }
+
+    /* ============================================
+       DESTINATION CARD
+    ============================================ */
+    .dest-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: transform .5s cubic-bezier(.4,0,.2,1),
+                  box-shadow .5s cubic-bezier(.4,0,.2,1),
+                  opacity .5s ease;
+      /* side slides: dimmed & slightly shrunk */
+      opacity: .55;
+      transform: scale(.92);
+    }
+
+    /* active / center slide: full size */
+    .swiper-slide-active .dest-card {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dest-card-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      transition: transform .55s ease;
+    }
+
+    .swiper-slide-active .dest-card:hover .dest-card-img,
+    .swiper-slide-active .dest-card .dest-card-img {
+      transform: scale(1.04);
+    }
+
+    /* ---- bottom label (default visible) ---- */
+    .card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 20px 18px;
+      background: linear-gradient(to top, rgba(15,20,40,.88) 0%, transparent 100%);
+      transition: opacity .35s ease;
+    }
+
+    /* hide label when overlay is shown */
+    .dest-card.overlay-active .card-label,
+    .swiper-slide-active .dest-card:hover .card-label {
+      opacity: 0;
+    }
+
+    .card-label-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--color-white);
+      margin-bottom: 5px;
+    }
+
+    .card-label-pkg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      color: var(--color-secondary-light);
+      font-weight: 500;
+    }
+
+    .card-label-pkg svg { width: 12px; height: 12px; fill: var(--color-secondary-light); }
+
+    /* ---- category badge top-left ---- */
+    .card-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(242,183,5,.92);
+      color: var(--color-primary-dark);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(242,183,5,.45);
+    }
+
+    /* ---- hover / active overlay ---- */
+    .card-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,20,45,.9);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 22px 24px;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+
+    /* Show overlay: hover on active slide OR JS-forced class */
+    .swiper-slide-active .dest-card:hover .card-hover-overlay,
+    .dest-card.overlay-active .card-hover-overlay {
+      opacity: 1;
+    }
+
+    /* prevent overlay on non-active slides */
+    .swiper-slide:not(.swiper-slide-active) .dest-card:hover .card-hover-overlay {
+      opacity: 0;
+    }
+
+    .hover-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--color-white);
+      margin-bottom: 4px;
+    }
+
+    .hover-pkg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      color: var(--color-secondary);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .hover-pkg svg { width: 12px; height: 12px; fill: var(--color-secondary); }
+
+    .hover-desc {
+      font-size: .82rem;
+      color: var(--color-gray-300);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .hover-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hover-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .72rem;
+      color: rgba(255,255,255,.65);
+      font-weight: 500;
+    }
+
+    .hover-meta-item svg {
+      width: 12px; height: 12px;
+      stroke: var(--color-accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .hover-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-book {
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-size: .83rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background .25s, transform .2s;
+    }
+
+    .btn-book:hover { background: var(--btn-primary-hover); transform: translateY(-1px); }
+
+    .btn-learn {
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-white);
+      font-size: .83rem;
+      font-weight: 600;
+      border: 1.5px solid rgba(255,255,255,.45);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color .25s, background .25s, transform .2s;
+    }
+
+    .btn-learn:hover {
+      border-color: var(--color-secondary);
+      background: rgba(107,206,245,.12);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================
+       CUSTOM NAV BUTTONS
+    ============================================ */
+    .dest-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .dest-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--color-gray-200);
+      background: var(--color-white);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .25s, border-color .25s, transform .2s, box-shadow .25s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dest-btn:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(39,61,127,.25);
+    }
+
+    .dest-btn svg {
+      width: 20px; height: 20px;
+      stroke: var(--color-primary);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke .25s;
+    }
+
+    .dest-btn:hover svg { stroke: var(--color-white); }
+
+    /* pagination dots */
+    .dest-pagination {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dest-pagination .swiper-pagination-bullet {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--color-gray-300);
+      transition: width .3s, background .3s;
+      opacity: 1;
+    }
+
+    .dest-pagination .swiper-pagination-bullet-active {
+      width: 24px;
+      background: var(--color-primary);
+    }
+
+    /* ============================================
+       SLIDE COUNT BADGE
+    ============================================ */
+    .slide-counter {
+      position: absolute;
+      bottom: 18px;
+      right: 24px;
+      z-index: 20;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--color-gray-400);
+      letter-spacing: 1px;
+    }
+
+    .slide-counter span { color: var(--color-primary); font-weight: 700; }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════════
+     POPULAR DESTINATIONS – SLIDER
+════════════════════════════════════════════ -->
+<section class="dest-section">
+  <div style="position:relative;z-index:1;">
+
+    <!-- Header -->
+    <div class="dest-header reveal">
+      <p class="dest-subtitle">Explore Egypt</p>
+      <h2 class="dest-heading">Popular Destinations</h2>
+      <p class="dest-desc">
+        Discover Egypt's most iconic experiences — from ancient temples to turquoise seas — handpicked from our travellers' favourite reviews.
+      </p>
+    </div>
+
+    <!-- Swiper clip -->
+    <div class="dest-swiper-clip reveal reveal-d1">
+      <div class="swiper dest-swiper" id="destSwiper">
+        <div class="swiper-wrapper">
+
+          <!-- ── Slide 1: Giza Pyramids Day Tour ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">⭐ Featured</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600&q=80"
+                alt="Giza Pyramids Day Tour"/>
+              <div class="card-label">
+                <p class="card-label-name">Giza Pyramids Day Tour</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  24 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Giza Pyramids Day Tour</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  24 Packages
+                </span>
+                <p class="hover-desc">Stand before the last surviving wonder of the ancient world. Visit the Great Pyramid, the Sphinx, and the Valley Temple on a fully guided day tour from Cairo.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Full Day</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 16 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $85/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Slide 2: Nile Cruise ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">🚢 Best Seller</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=600&q=80"
+                alt="Nile Cruise – Luxor to Aswan"/>
+              <div class="card-label">
+                <p class="card-label-name">Nile Cruise</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  18 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Nile Cruise</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  18 Packages
+                </span>
+                <p class="hover-desc">Sail the legendary Nile aboard a luxury cruise from Luxor to Aswan. Visit Karnak, Edfu, Kom Ombo, and Philae Temple while watching the golden desert landscape drift by.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5–7 Nights</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 20 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $599/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Slide 3: Luxor Day Tour ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">🏛️ Heritage</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=600&q=80"
+                alt="Luxor & Karnak Temple Tour"/>
+              <div class="card-label">
+                <p class="card-label-name">Luxor Day Tour</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  20 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Luxor Day Tour</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  20 Packages
+                </span>
+                <p class="hover-desc">Walk through the world's greatest open-air museum. Explore the Valley of the Kings, Hatshepsut Temple, and the magnificent Karnak Temple complex with an expert Egyptologist guide.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Full Day</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 12 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $120/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Slide 4: Red Sea Diving ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">🤿 Adventure</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1548786811-dd6e453ccca7?w=600&q=80"
+                alt="Red Sea Diving & Snorkelling"/>
+              <div class="card-label">
+                <p class="card-label-name">Red Sea Diving</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  15 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Red Sea Diving</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  15 Packages
+                </span>
+                <p class="hover-desc">Plunge into one of the world's top dive destinations. Explore vibrant coral reefs, colourful marine life, and sunken wrecks in the crystal-clear waters of Hurghada and Sharm El-Sheikh.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Half / Full Day</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 10 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $65/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Slide 5: Desert Safari ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">🐪 Desert</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1547948749-2d10dc51f5e9?w=600&q=80"
+                alt="Sahara Desert Safari"/>
+              <div class="card-label">
+                <p class="card-label-name">Desert Safari</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  12 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Desert Safari</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  12 Packages
+                </span>
+                <p class="hover-desc">Ride camels into the golden dunes of the Sahara, watch a breathtaking desert sunset, and spend the night under a sky full of stars at a Bedouin camp with traditional music and food.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Overnight</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 14 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $150/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Slide 6: Aswan & Abu Simbel ── -->
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <span class="card-badge">🌅 Iconic</span>
+              <img class="dest-card-img"
+                src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80"
+                alt="Aswan & Abu Simbel"/>
+              <div class="card-label">
+                <p class="card-label-name">Aswan &amp; Abu Simbel</p>
+                <span class="card-label-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  16 Packages
+                </span>
+              </div>
+              <div class="card-hover-overlay">
+                <p class="hover-name">Aswan &amp; Abu Simbel</p>
+                <span class="hover-pkg">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  16 Packages
+                </span>
+                <p class="hover-desc">Discover the serene beauty of Aswan — the High Dam, Philae Temple, and a relaxing felucca sail. Then fly to Abu Simbel to witness Ramesses II's colossal rock-cut temples at sunrise.</p>
+                <div class="hover-meta">
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 2–3 Days</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5"/><circle cx="9" cy="7" r="4"/></svg> Max 16 pax</span>
+                  <span class="hover-meta-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> From $220/pp</span>
+                </div>
+                <div class="hover-actions">
+                  <button class="btn-book">Book Now</button>
+                  <button class="btn-learn">Learn More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /swiper-wrapper -->
+      </div><!-- /dest-swiper -->
+    </div><!-- /dest-swiper-clip -->
+
+    <!-- Custom nav -->
+    <div class="dest-nav reveal reveal-d2">
+      <button class="dest-btn" id="destPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="swiper-pagination dest-pagination" id="destPagination"></div>
+
+      <button class="dest-btn" id="destNext" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter" id="slideCounter">
+      <span id="currentSlide">1</span> / <span id="totalSlides">6</span>
+    </div>
+
+  </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  /* ── Swiper init ── */
+  const swiper = new Swiper('#destSwiper', {
+    slidesPerView: 1.15,
+    centeredSlides: true,
+    spaceBetween: 20,
+    loop: true,
+    speed: 600,
+    grabCursor: true,
+
+    pagination: {
+      el: '#destPagination',
+      clickable: true,
+    },
+
+    navigation: {
+      nextEl: '#destNext',
+      prevEl: '#destPrev',
+    },
+
+    breakpoints: {
+      480: { slidesPerView: 1.4, spaceBetween: 24 },
+      768: { slidesPerView: 2.2, spaceBetween: 28 },
+      1024:{ slidesPerView: 2.8, spaceBetween: 32 },
+      1280:{ slidesPerView: 3.2, spaceBetween: 36 },
+    },
+
+    on: {
+      /* After every transition: add overlay-active to the active slide's card */
+      slideChangeTransitionEnd(sw) {
+        applyActiveOverlay(sw);
+        updateCounter(sw);
+      },
+      init(sw) {
+        applyActiveOverlay(sw);
+        updateCounter(sw);
+        document.getElementById('totalSlides').textContent = sw.slides.length / 2; // loop duplicates
+      }
+    }
+  });
+
+  /* Force show overlay on the centre card */
+  function applyActiveOverlay(sw) {
+    /* Remove from all */
+    document.querySelectorAll('.dest-card').forEach(c => c.classList.remove('overlay-active'));
+
+    /* Add to the real active slide's card */
+    const activeSlide = sw.slides[sw.activeIndex];
+    if (activeSlide) {
+      const card = activeSlide.querySelector('.dest-card');
+      if (card) card.classList.add('overlay-active');
+    }
+  }
+
+  /* Counter display */
+  function updateCounter(sw) {
+    const total = Math.round(sw.slides.length / 2); // halve loop dupes
+    const real  = ((sw.realIndex) % total) + 1;
+    document.getElementById('currentSlide').textContent = real;
+    document.getElementById('totalSlides').textContent  = total;
+  }
+
+  /* Scroll reveal */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

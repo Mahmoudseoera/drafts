@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blog Section Component</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.10/swiper-bundle.min.js"></script>
+<style>
+:root{
+  --main-color:#082844;--main-color-dark:#061d35;--main-color-light:#0d385a;
+  --color-second:#16507d;--color-second-dark:#0d385a;--color-second-light:#1d689f;
+  --accent-color:#c99b3d;--accent-color-light:#e3bd68;--accent-color-dark:#b78830;
+  --white-color:#ffffff;--color-off-white:#fcfbf8;--color-blue-tint:#eef4f9;
+  --color-bg-gold:rgb(227 189 104 / 4%);
+  --color-gray-100:#f5f6f7;--color-gray-200:#e7eaee;--color-gray-300:#d5dbe2;
+  --color-gray-400:#9aa7b3;--color-gray-500:#6c7782;--color-gray-700:#394552;--color-gray-900:#1c2733;
+  --gradient-main:linear-gradient(135deg,var(--main-color-dark),var(--main-color));
+  --gradient-hover:linear-gradient(135deg,var(--main-color-light) 0%,var(--color-second) 50%,var(--color-second-light) 100%);
+  --shadow-sm:0 2px 8px rgba(6,29,53,.08);--shadow-md:0 8px 24px rgba(6,29,53,.12);--shadow-lg:0 20px 50px rgba(6,29,53,.18);
+  --radius-sm:6px;--radius-md:12px;--radius-lg:20px;
+  --font-heading:"Lora",serif;--font-body:"Manrope",sans-serif;
+  --container:1240px;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;font-family:var(--font-body);background:var(--color-off-white);color:var(--color-gray-900)}
+
+.blog-section{padding:72px 24px}
+.blog-section .container{max-width:var(--container);margin:0 auto}
+
+/* ---- Section header ---- */
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px;flex-wrap:wrap}
+.section-header .pill{display:inline-flex;align-items:center;padding:6px 16px;border:1px solid var(--color-gray-300);border-radius:999px;font-size:13px;font-weight:600;color:var(--color-second);background:var(--white-color);margin-bottom:14px}
+.section-header h2{font-family:var(--font-heading);font-size:clamp(26px,3vw,34px);font-weight:600;color:var(--main-color);margin:0 0 8px}
+.section-header p{margin:0;color:var(--color-gray-500);font-size:15.5px;max-width:520px}
+.header-actions{display:flex;align-items:center;gap:14px}
+.btn-view-all{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-second);background:transparent;border:1px solid var(--color-second);border-radius:999px;padding:10px 20px;cursor:pointer;transition:background .2s,color .2s}
+.btn-view-all:hover{background:var(--color-second);color:var(--white-color)}
+.nav-arrows{display:flex;gap:10px}
+.arrow-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--color-gray-300);background:var(--white-color);color:var(--main-color);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s,opacity .2s}
+.arrow-btn.next{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+.arrow-btn:hover{background:var(--main-color);border-color:var(--main-color);color:var(--white-color)}
+.arrow-btn:disabled{opacity:.35;cursor:default}
+.arrow-btn:disabled:hover{background:var(--white-color);border-color:var(--color-gray-300);color:var(--main-color)}
+.arrow-btn.next:disabled:hover{background:var(--color-second);border-color:var(--color-second);color:var(--white-color)}
+.nav-arrows[hidden]{display:none}
+
+/* ---- Card grid / slider shell ---- */
+.blog-swiper .swiper-wrapper{display:flex}
+.blog-swiper.is-static .swiper-wrapper{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;transform:none !important}
+.blog-swiper.is-static .swiper-slide{width:auto !important}
+@media (max-width:900px){.blog-swiper.is-static .swiper-wrapper{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.blog-swiper.is-static .swiper-wrapper{grid-template-columns:1fr}}
+.swiper-slide{flex-shrink:0;height:auto}
+
+/* ---- Flip card ---- */
+.blog-card{perspective:1600px;height:380px}
+.blog-card-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;border-radius:var(--radius-lg);box-shadow:var(--shadow-md)}
+.blog-card:hover .blog-card-inner{transform:rotateY(180deg)}
+
+.blog-card-front,.blog-card-back{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:var(--radius-lg);overflow:hidden}
+.blog-card-back{transform:rotateY(180deg)}
+
+.card-media{position:absolute;inset:0;background:var(--gradient-main) center/cover no-repeat}
+.card-media svg{width:100%;height:100%;display:block}
+
+.card-front-overlay{position:absolute;left:0;right:0;bottom:0;padding:22px;background:linear-gradient(to top,rgba(6,29,53,.92) 10%,rgba(6,29,53,0) 75%)}
+.card-date{display:block;font-size:12.5px;color:var(--accent-color-light);font-weight:600;margin-bottom:6px}
+.card-title{font-family:var(--font-heading);font-size:19px;line-height:1.3;color:var(--white-color);margin:0;font-weight:600}
+
+.blog-card-back .back-content{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(to top,rgba(6,29,53,.94) 30%,rgba(6,29,53,.35) 70%,rgba(6,29,53,.1) 100%)}
+.blog-card-back .card-title{margin-bottom:10px}
+.card-excerpt{font-size:14px;line-height:1.6;color:var(--color-blue-tint);margin:0 0 16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.read-more{font-size:14px;font-weight:600;color:var(--accent-color-light);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.read-more:hover{border-color:var(--accent-color-light)}
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+<defs>
+<linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#1d689f"/><stop offset="1" stop-color="#061d35"/>
+</linearGradient>
+
+<symbol id="scene-pyramids" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/>
+  <circle cx="320" cy="70" r="34" fill="#e3bd68"/>
+  <rect x="0" y="230" width="400" height="70" fill="#0d385a"/>
+  <polygon points="70,230 150,120 230,230" fill="#082844"/>
+  <polygon points="150,230 220,150 290,230" fill="#0d385a"/>
+  <polygon points="220,230 270,170 320,230" fill="#061d35"/>
+</symbol>
+
+<symbol id="scene-felucca" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/>
+  <circle cx="80" cy="60" r="28" fill="#e3bd68"/>
+  <path d="M0,220 Q100,195 200,220 T400,220 V300 H0 Z" fill="#0d385a"/>
+  <path d="M0,245 Q100,222 200,245 T400,245 V300 H0 Z" fill="#061d35"/>
+  <polygon points="150,235 150,140 205,235" fill="#c99b3d"/>
+  <line x1="150" y1="235" x2="150" y2="130" stroke="#e3bd68" stroke-width="3"/>
+  <polygon points="270,245 270,175 305,245" fill="#e3bd68"/>
+  <line x1="270" y1="245" x2="270" y2="168" stroke="#e3bd68" stroke-width="3"/>
+</symbol>
+
+<symbol id="scene-luxor" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/>
+  <circle cx="60" cy="55" r="26" fill="#e3bd68"/>
+  <rect x="0" y="250" width="400" height="50" fill="#061d35"/>
+  <g fill="#082844">
+    <rect x="40" y="140" width="26" height="110"/><rect x="30" y="128" width="46" height="16"/>
+    <rect x="110" y="120" width="26" height="130"/><rect x="100" y="105" width="46" height="18"/>
+    <rect x="180" y="140" width="26" height="110"/><rect x="170" y="128" width="46" height="16"/>
+    <rect x="250" y="120" width="26" height="130"/><rect x="240" y="105" width="46" height="18"/>
+    <rect x="320" y="140" width="26" height="110"/><rect x="310" y="128" width="46" height="16"/>
+  </g>
+</symbol>
+
+<symbol id="scene-abusimbel" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="url(#skyGrad)"/>
+  <circle cx="340" cy="55" r="26" fill="#e3bd68"/>
+  <rect x="0" y="255" width="400" height="45" fill="#061d35"/>
+  <rect x="140" y="90" width="120" height="165" fill="#082844"/>
+  <g fill="#0d385a">
+    <rect x="70" y="120" width="55" height="135"/><circle cx="97" cy="105" r="26"/><polygon points="72,95 122,95 116,60 78,60"/>
+    <rect x="275" y="120" width="55" height="135"/><circle cx="302" cy="105" r="26"/><polygon points="277,95 327,95 321,60 283,60"/>
+  </g>
+  <rect x="185" y="150" width="30" height="105" fill="#061d35"/>
+</symbol>
+</defs>
+</svg>
+
+<section class="blog-section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="pill">Travel Journal</span>
+        <h2>Stories from the road in Egypt</h2>
+        <p>Guides, planning tips, and first-hand accounts to help shape your trip.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn-view-all">View All Posts</button>
+        <div class="nav-arrows" id="navArrows" hidden>
+          <button class="arrow-btn prev" aria-label="Previous post">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="arrow-btn next" aria-label="Next post">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper blog-swiper" id="blogSwiper">
+      <div class="swiper-wrapper" id="blogWrapper">
+        <!-- Each .swiper-slide is one post; @foreach($posts as $post) in Blade -->
+        <div class="swiper-slide">
+          <article class="blog-card">
+            <div class="blog-card-inner">
+              <div class="blog-card-front"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-pyramids"></use></svg></div>
+                <div class="card-front-overlay"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">Easy travel tips to help you plan a safe trip</h3></div>
+              </div>
+              <div class="blog-card-back"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-pyramids"></use></svg></div>
+                <div class="back-content"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">Easy travel tips to help you plan a safe trip</h3>
+                  <p class="card-excerpt">Planning ahead makes all the difference on the road. From packing light to knowing which documents to carry, a little preparation goes a long way toward a smooth, worry-free trip.</p>
+                  <a href="#" class="read-more">Read More</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="blog-card">
+            <div class="blog-card-inner">
+              <div class="blog-card-front"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-felucca"></use></svg></div>
+                <div class="card-front-overlay"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">Best places for a fun trip with friends and family</h3></div>
+              </div>
+              <div class="blog-card-back"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-felucca"></use></svg></div>
+                <div class="back-content"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">Best places for a fun trip with friends and family</h3>
+                  <p class="card-excerpt">Whether you're travelling with a big group or a close few, the right destination balances shared activities with quiet downtime, so everyone comes home happy.</p>
+                  <a href="#" class="read-more">Read More</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="blog-card">
+            <div class="blog-card-inner">
+              <div class="blog-card-front"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-luxor"></use></svg></div>
+                <div class="card-front-overlay"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">How to save more money on your next trip</h3></div>
+              </div>
+              <div class="blog-card-back"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-luxor"></use></svg></div>
+                <div class="back-content"><span class="card-date">Sep 20, 2026</span><h3 class="card-title">How to save more money on your next trip</h3>
+                  <p class="card-excerpt">Smart budgeting doesn't mean cutting the fun. Booking off-season, bundling stays, and travelling light can stretch a trip's budget without touching what makes it memorable.</p>
+                  <a href="#" class="read-more">Read More</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="swiper-slide">
+          <article class="blog-card">
+            <div class="blog-card-inner">
+              <div class="blog-card-front"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-abusimbel"></use></svg></div>
+                <div class="card-front-overlay"><span class="card-date">Sep 12, 2026</span><h3 class="card-title">A first-timer's guide to the Nile</h3></div>
+              </div>
+              <div class="blog-card-back"><div class="card-media"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#scene-abusimbel"></use></svg></div>
+                <div class="back-content"><span class="card-date">Sep 12, 2026</span><h3 class="card-title">A first-timer's guide to the Nile</h3>
+                  <p class="card-excerpt">From choosing a cruise length to knowing when the river is quietest, here's what first-time visitors ask before setting sail down Egypt's most storied waterway.</p>
+                  <a href="#" class="read-more">Read More</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var wrapper = document.getElementById('blogWrapper');
+  var swiperEl = document.getElementById('blogSwiper');
+  var navArrows = document.getElementById('navArrows');
+  var slideCount = wrapper.children.length;
+  var THRESHOLD = 3; // number of cards at which the slider kicks in
+
+  if (slideCount > THRESHOLD) {
+    navArrows.hidden = false;
+    var prevBtn = navArrows.querySelector('.prev');
+    var nextBtn = navArrows.querySelector('.next');
+
+    var swiper = new Swiper(swiperEl, {
+      slidesPerView: 1.15,
+      spaceBetween: 28,
+      navigation: {
+        nextEl: nextBtn,
+        prevEl: prevBtn
+      },
+      breakpoints: {
+        640:  { slidesPerView: 2, spaceBetween: 24 },
+        1024: { slidesPerView: 3, spaceBetween: 28 }
+      }
+    });
+
+    function updateArrowState(){
+      prevBtn.disabled = swiper.isBeginning;
+      nextBtn.disabled = swiper.isEnd;
+    }
+    swiper.on('slideChange', updateArrowState);
+    swiper.on('reachEnd', updateArrowState);
+    swiper.on('reachBeginning', updateArrowState);
+    swiper.on('resize', updateArrowState);
+    updateArrowState();
+  } else {
+    swiperEl.classList.add('is-static');
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!--
+  USAGE EXAMPLE — Tour Route Map
+  ================================
+  The map reads its stops from a plain element's text content — no data
+  attributes, no JS config per page. Just put the place name(s) in the
+  element and give it a unique id.
+-->
+
+<!-- 1. In <head>, add Leaflet + this stylesheet -->
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="assets/css/tour-route-map.css" />
+
+
+<!-- 2. The section itself -->
+<section class="tour-detail-section" id="route-map" data-tour-section data-tour-reveal aria-labelledby="route-map-heading">
+  <div class="tour-section-heading">
+    <h2 id="route-map-heading">Your route</h2>
+  </div>
+  <p>See the ground you'll cover, stop by stop, with driving distance and time between each.</p>
+
+  <!--
+    This is the element the script reads. It can be a span, p, div —
+    anything. Only its text is used, split on commas. Hide it if you don't
+    want the raw text shown on the page; it can also be left visible and
+    styled, since it's just normal text.
+  -->
+  <p id="tourLocations" hidden>Cairo, alexandria</p>
+
+  <div id="tourRouteMap" class="trm-map"></div>
+  <ul id="tourRouteList" class="trm-list" aria-label="Distance and drive time between stops"></ul>
+</section>
+
+<!-- 3. Before </body>, after Leaflet's JS and your tour-route-map.js -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/js/tour-route-map.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (document.getElementById('tourLocations')) {
+      initTourRouteMap('tourRouteMap', 'tourRouteList', 'tourLocations');
+    }
+  });
+</script>
+
+<!--
+  Other examples — just change the text inside #tourLocations:
+
+  <p id="tourLocations" hidden>Nizwa</p>
+    → single pin, no route drawn.
+
+  <p id="tourLocations" hidden>Muscat, Nizwa</p>
+    → two pins + one leg with distance/time.
+
+  <p id="tourLocations" hidden>Muscat, Nizwa, Jebel Akhdar, Wahiba Sands</p>
+    → four pins + a leg (with distance/time) between each consecutive pair.
+
+  Since every location is geocoded live (via OpenStreetMap's Nominatim) and
+  routed live (via OSRM), any real place name works — no code changes
+  needed per tour, just the text in #tourLocations. This also means the
+  first load per unique place name takes an extra network round-trip; the
+  script caches results in memory so repeats within the same page load are
+  instant.
+-->

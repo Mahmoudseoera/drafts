@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour Details Gallery — Paris &amp; Île-de-France</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.4/swiper-bundle.min.css">
+<style>
+
+/* ============================================================
+   DESIGN TOKENS — project palette, extended for the gallery
+   ============================================================ */
+:root {
+  --color-main: #FF5533;
+  --color-main-dark: #E0431F;
+  --color-main-light: #FF7A5C;
+  --color-second: #EBEEF1;
+  --color-second-light: #F5F7F9;
+  --color-second-dark: #D7DEE5;
+
+  --color-white: #FFFFFF;
+  --color-black: #10151F;
+  --color-heading: #1A2B49;
+  --color-text: #63687A;
+  --color-text-light: #868B99;
+  --color-muted: #A9AEB9;
+
+  --color-bg: #FFFFFF;
+  --color-bg-light: #FBFBFC;
+  --color-bg-soft: #EBEEF1;
+  --color-bg-dark: #1A2B49;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #EBEEF1;
+
+  --color-border: #E2E5EA;
+  --color-border-light: #EDEFF2;
+  --color-border-dark: #C9CFD9;
+
+  --color-success: #007850;
+  --color-warning: #B58A3A;
+  --color-danger: #C0392B;
+  --color-info: #2E7D9A;
+
+  --color-link: #1A2B49;
+  --color-link-hover: #FF5533;
+  --color-focus: #FF5533;
+
+  --color-overlay: rgba(16, 21, 31, 0.55);
+  --color-overlay-light: rgba(16, 21, 31, 0.25);
+
+  --shadow-sm: 0 2px 10px rgba(26, 43, 73, 0.07);
+  --shadow-md: 0 8px 30px rgba(26, 43, 73, 0.10);
+  --shadow-lg: 0 18px 50px rgba(26, 43, 73, 0.14);
+  --shadow-thumb: 0 15px 35px rgba(16, 21, 31, 0.20);
+  --shadow-thumb-hover: 0 22px 46px rgba(16, 21, 31, 0.28);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Jost', 'Segoe UI', sans-serif;
+
+  --container-width: 1240px;
+  --container-pad: 24px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expand: cubic-bezier(.16, 1, .3, 1);
+  --speed-fast: 180ms;
+  --speed-med: 320ms;
+  --speed-expand: 720ms;
+
+  /* gallery-specific layout tokens */
+  --tg-main-h: 560px;
+  --tg-thumb-w: 168px;
+  --tg-thumb-h: 152px;
+  --tg-thumb-gap: 18px;
+  --tg-overlap: 64px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--color-bg-light);
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+img { display: block; max-width: 100%; }
+button { font-family: inherit; }
+
+.tg-page {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 72px var(--container-pad) 120px;
+}
+.tg-page__eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-main);
+  margin: 0 0 10px;
+}
+.tg-page__heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 42px);
+  color: var(--color-heading);
+  margin: 0 0 40px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   GALLERY FRAME
+   ============================================================ */
+.tg {
+  position: relative;
+}
+
+.tg__frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--tg-thumb-w) 1fr var(--tg-thumb-w);
+  align-items: center;
+  gap: 0;
+  padding: 0 calc(var(--tg-thumb-w) / 2 - var(--tg-overlap));
+}
+
+/* ---- Main stage ---- */
+.tg__main {
+  position: relative;
+  height: var(--tg-main-h);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--color-second);
+  box-shadow: var(--shadow-lg);
+  isolation: isolate;
+}
+
+.tg__main-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.tg__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(16,21,31,0) 45%, rgba(16,21,31,.62) 100%);
+  pointer-events: none;
+}
+
+/* ---- Fixed title block — never moves, never fades with the image ---- */
+.tg__title {
+  position: absolute;
+  left: 32px;
+  bottom: 28px;
+  z-index: 3;
+  color: var(--color-white);
+  max-width: 62%;
+}
+.tg__title-price {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-main);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 14px;
+}
+.tg__title-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  margin: 0 0 8px;
+  text-shadow: 0 2px 18px rgba(0,0,0,.25);
+}
+.tg__title-meta {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,.92);
+  letter-spacing: .01em;
+}
+.tg__title-meta span { opacity: .55; margin: 0 8px; }
+
+/* ---- Nav arrows: minimal, secondary to the thumbnails ---- */
+.tg__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(16,21,31,.35);
+  color: var(--color-white);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background var(--speed-fast) var(--ease), transform var(--speed-fast) var(--ease);
+}
+.tg__nav:hover { background: rgba(16,21,31,.55); transform: translateY(-50%) scale(1.06); }
+.tg__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
+.tg__nav--prev { right: 76px; }
+.tg__nav--next { right: 24px; }
+.tg__nav svg { width: 16px; height: 16px; }
+
+.tg__autoplay-toggle {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 4;
+  border: none;
+  background: rgba(16,21,31,.35);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+  transition: background var(--speed-fast) var(--ease);
+}
+.tg__autoplay-toggle:hover { background: rgba(16,21,31,.55); }
+.tg__autoplay-toggle:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
+.tg__autoplay-toggle .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-main-light);
+}
+.tg__autoplay-toggle[aria-pressed="false"] .dot { background: var(--color-muted); }
+
+.tg__counter {
+  position: absolute;
+  left: 32px;
+  top: 20px;
+  z-index: 4;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--color-white);
+  background: rgba(16,21,31,.35);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(4px);
+}
+
+/* ---- Floating thumbnail stacks ---- */
+.tg__stack {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tg-thumb-gap);
+}
+.tg__stack--left { justify-self: end; }
+.tg__stack--right { justify-self: start; }
+
+.tg__thumb {
+  position: relative;
+  width: var(--tg-thumb-w);
+  height: var(--tg-thumb-h);
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-thumb);
+  background: var(--color-second);
+  transform: translateZ(0) scale(1);
+  transition: transform var(--speed-med) var(--ease-expand),
+              box-shadow var(--speed-med) var(--ease-expand);
+  will-change: transform;
+}
+.tg__stack--left .tg__thumb { margin-right: calc(-1 * var(--tg-overlap)); }
+.tg__stack--right .tg__thumb { margin-left: calc(-1 * var(--tg-overlap)); }
+
+.tg__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--speed-med) var(--ease);
+}
+.tg__thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(16,21,31,0);
+  transition: background var(--speed-med) var(--ease);
+}
+.tg__thumb:hover,
+.tg__thumb:focus-visible {
+  transform: scale(1.045);
+  box-shadow: var(--shadow-thumb-hover);
+  z-index: 6;
+}
+.tg__thumb:hover img { transform: scale(1.08); }
+.tg__thumb:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+}
+.tg__thumb.is-hidden-tap { visibility: hidden; }
+
+.tg__thumb-more {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16,21,31,.5);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .02em;
+}
+
+/* entrance for thumbnails that are newly redistributed into the stack */
+@keyframes tgThumbSettle {
+  from { opacity: 0; transform: scale(.86); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.tg__thumb.is-settling { animation: tgThumbSettle var(--speed-expand) var(--ease-expand) both; }
+
+/* ---- Flight clone used for the thumbnail -> main expansion ---- */
+.tg__flight {
+  position: fixed;
+  z-index: 999;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  will-change: transform, width, height, border-radius;
+  transition:
+    transform var(--speed-expand) var(--ease-expand),
+    width var(--speed-expand) var(--ease-expand),
+    height var(--speed-expand) var(--ease-expand),
+    border-radius var(--speed-expand) var(--ease-expand),
+    top var(--speed-expand) var(--ease-expand),
+    left var(--speed-expand) var(--ease-expand);
+}
+.tg__flight img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* fade the real main image in only once the flight has landed */
+.tg__main-img.is-swapping { opacity: 0; }
+.tg__main-img { transition: opacity 160ms linear; opacity: 1; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  :root {
+    --tg-main-h: 460px;
+    --tg-thumb-w: 128px;
+    --tg-thumb-h: 118px;
+    --tg-thumb-gap: 14px;
+    --tg-overlap: 44px;
+  }
+}
+
+@media (max-width: 820px) {
+  :root { --tg-main-h: 400px; --tg-thumb-w: 96px; --tg-thumb-h: 90px; --tg-overlap: 30px; }
+  .tg__title { max-width: 78%; left: 20px; bottom: 20px; }
+}
+
+@media (max-width: 640px) {
+  .tg__frame {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 14px;
+  }
+  .tg__stack { flex-direction: row; justify-self: center !important; gap: 12px; }
+  :root { --tg-thumb-w: 78px; --tg-thumb-h: 64px; --tg-main-h: 320px; }
+  .tg__stack--left .tg__thumb,
+  .tg__stack--right .tg__thumb { margin: 0; }
+  .tg__stack--left { order: 3; }
+  .tg__main { order: 1; }
+  .tg__stack--right { order: 2; }
+  .tg__title { max-width: 100%; }
+  .tg__nav--prev { right: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tg__thumb, .tg__thumb img, .tg__flight, .tg__main-img, .tg__nav, .tg__autoplay-toggle {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+
+/* off-screen swiper used purely for state/autoplay — no visible slides */
+.tg__swiper-state {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<main class="tg-page">
+  <p class="tg-page__eyebrow">Tour Gallery</p>
+  <h1 class="tg-page__heading">Paris &amp; Île-de-France — image gallery</h1>
+
+  <section class="tg" id="tourGallery" aria-roledescription="carousel" aria-label="Tour photo gallery">
+    <div class="tg__frame">
+
+      <div class="tg__stack tg__stack--left" id="stackLeft" aria-label="Previous photos"></div>
+
+      <div class="tg__main" id="mainStage">
+        <img class="tg__main-img" id="mainImg" src="" alt="">
+        <div class="tg__scrim"></div>
+
+        <div class="tg__counter" id="counter" aria-hidden="true">1 / 7</div>
+
+        <button class="tg__autoplay-toggle" id="autoplayToggle" type="button" aria-pressed="true">
+          <span class="dot"></span><span id="autoplayLabel">Pause</span>
+        </button>
+
+        <!-- fixed title block: independent of the image layer -->
+        <div class="tg__title">
+          <span class="tg__title-price">Starting From $899 / per person</span>
+          <h2 class="tg__title-name">Paris &amp; Île-de-France</h2>
+          <p class="tg__title-meta">5 Days<span>&bull;</span>4 Nights<span>&bull;</span>3 Destinations</p>
+        </div>
+
+        <button class="tg__nav tg__nav--prev" id="navPrev" type="button" aria-label="Previous image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="tg__nav tg__nav--next" id="navNext" type="button" aria-label="Next image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="tg__stack tg__stack--right" id="stackRight" aria-label="Upcoming photos"></div>
+
+    </div>
+
+    <!-- Swiper instance kept off-screen: owns index + autoplay state only.
+         All visible motion is handled by the custom flight/expand animation below. -->
+    <div class="swiper tg__swiper-state" id="stateSwiper" aria-hidden="true">
+      <div class="swiper-wrapper" id="stateSwiperWrapper"></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------
+     1. DATA
+     ------------------------------------------------------------ */
+  var IMAGES = [
+    { src: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1400&q=90",  alt: "Eiffel Tower at golden hour" },
+    { src: "https://picsum.photos/seed/tour-louvre/1400/1000",  alt: "The Louvre courtyard" },
+    { src: "https://picsum.photos/seed/tour-seine/1400/1000",   alt: "Seine river boats at dusk" },
+    { src: "https://picsum.photos/seed/tour-versailles/1400/1000", alt: "Palace of Versailles gardens" },
+    { src: "https://picsum.photos/seed/tour-montmartre/1400/1000", alt: "Montmartre cobbled streets" },
+    { src: "https://picsum.photos/seed/tour-cafe/1400/1000",    alt: "Parisian café terrace" },
+    { src: "https://picsum.photos/seed/tour-notredame/1400/1000", alt: "Notre-Dame facade" },
+    { src: "https://picsum.photos/seed/tour-loire/1400/1000",   alt: "Loire Valley chateau" },
+    { src: "https://picsum.photos/seed/tour-giverny/1400/1000", alt: "Monet's gardens, Giverny" }
+  ];
+  var MAX_SIDE = 3;          // max thumbnails per side
+  var ROLLING_WINDOW = IMAGES.length > 7;
+
+  var activeIndex = 0;
+  var isAnimating = false;
+  var pendingFlightSource = null; // {rect, index} captured at click-time, before index changes
+
+  var elMain = document.getElementById("mainImg");
+  var elStage = document.getElementById("mainStage");
+  var elStackLeft = document.getElementById("stackLeft");
+  var elStackRight = document.getElementById("stackRight");
+  var elCounter = document.getElementById("counter");
+  var elAutoplayToggle = document.getElementById("autoplayToggle");
+  var elAutoplayLabel = document.getElementById("autoplayLabel");
+
+  /* ------------------------------------------------------------
+     2. DISTRIBUTION LOGIC
+     Rule (<=7 images, all visible): remove the active image from
+     the array, keep original order, split the remainder 3 / 3
+     (first half -> left, second half -> right).
+     Rule (>7 images, rolling window): take up to 3 nearest
+     neighbours before and after the active index, circularly.
+     ------------------------------------------------------------ */
+  function getDistribution(index) {
+    var n = IMAGES.length;
+    var left = [];
+    var right = [];
+
+    if (!ROLLING_WINDOW) {
+      var reduced = [];
+      for (var i = 0; i < n; i++) {
+        if (i !== index) reduced.push(i);
+      }
+      left = reduced.slice(0, MAX_SIDE);
+      right = reduced.slice(MAX_SIDE, MAX_SIDE * 2);
+    } else {
+      for (var b = 1; b <= MAX_SIDE; b++) {
+        left.push(((index - b) % n + n) % n);
+      }
+      left.reverse();
+      for (var a = 1; a <= MAX_SIDE; a++) {
+        right.push((index + a) % n);
+      }
+    }
+    return { left: left, right: right };
+  }
+
+  /* ------------------------------------------------------------
+     3. RENDER
+     ------------------------------------------------------------ */
+  function thumbTemplate(imgIndex, side, settle) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tg__thumb" + (settle ? " is-settling" : "");
+    btn.dataset.index = String(imgIndex);
+    btn.dataset.side = side;
+    btn.setAttribute("aria-label", "Show photo: " + IMAGES[imgIndex].alt);
+
+    var img = document.createElement("img");
+    img.src = IMAGES[imgIndex].src;
+    img.alt = "";
+    img.loading = "lazy";
+    btn.appendChild(img);
+    btn.addEventListener("click", onThumbClick);
+    return btn;
+  }
+
+  function renderStacks(settleNewOnes) {
+    var dist = getDistribution(activeIndex);
+
+    elStackLeft.innerHTML = "";
+    dist.left.forEach(function (idx) {
+      elStackLeft.appendChild(thumbTemplate(idx, "left", settleNewOnes));
+    });
+
+    elStackRight.innerHTML = "";
+    dist.right.forEach(function (idx) {
+      elStackRight.appendChild(thumbTemplate(idx, "right", settleNewOnes));
+    });
+
+    elCounter.textContent = (activeIndex + 1) + " / " + IMAGES.length;
+  }
+
+  function setMainImmediate(index) {
+    elMain.src = IMAGES[index].src;
+    elMain.alt = IMAGES[index].alt;
+  }
+
+  /* ------------------------------------------------------------
+     4. THUMBNAIL -> MAIN EXPANSION ANIMATION (FLIP-style clone)
+     ------------------------------------------------------------ */
+  function runExpansion(sourceRect, targetIndex, onDone) {
+    var mainRect = elStage.getBoundingClientRect();
+
+    var flight = document.createElement("div");
+    flight.className = "tg__flight";
+    flight.style.top = sourceRect.top + "px";
+    flight.style.left = sourceRect.left + "px";
+    flight.style.width = sourceRect.width + "px";
+    flight.style.height = sourceRect.height + "px";
+    flight.style.borderRadius = getComputedStyle(document.documentElement)
+      .getPropertyValue("--radius-lg").trim();
+
+    var img = document.createElement("img");
+    img.src = IMAGES[targetIndex].src;
+    img.alt = "";
+    flight.appendChild(img);
+    document.body.appendChild(flight);
+
+    // fade the live main image out slightly so the clone reads as "becoming" it
+    elMain.classList.add("is-swapping");
+
+    // force layout, then animate to the main stage's rect
+    // eslint-disable-next-line no-unused-expressions
+    flight.getBoundingClientRect();
+
+    requestAnimationFrame(function () {
+      flight.style.top = mainRect.top + "px";
+      flight.style.left = mainRect.left + "px";
+      flight.style.width = mainRect.width + "px";
+      flight.style.height = mainRect.height + "px";
+      flight.style.borderRadius = getComputedStyle(document.documentElement)
+        .getPropertyValue("--radius-xl").trim();
+    });
+
+    var settled = false;
+    function finish() {
+      if (settled) return;
+      settled = true;
+      setMainImmediate(targetIndex);
+      elMain.classList.remove("is-swapping");
+      flight.remove();
+      if (onDone) onDone();
+    }
+
+    flight.addEventListener("transitionend", function (e) {
+      if (e.propertyName === "width") finish();
+    });
+    // safety fallback in case transitionend doesn't fire (e.g. tab throttling)
+    setTimeout(finish, 900);
+  }
+
+  function goToIndex(newIndex, sourceRect) {
+    if (isAnimating || newIndex === activeIndex) return;
+    isAnimating = true;
+
+    var finalize = function () {
+      activeIndex = newIndex;
+      renderStacks(true);
+      isAnimating = false;
+    };
+
+    if (sourceRect) {
+      runExpansion(sourceRect, newIndex, finalize);
+    } else {
+      // no known origin (e.g. keyboard/arrow nav) — expand from the
+      // main stage's own edge on the side we're moving toward, so the
+      // motion still reads as directional rather than a generic fade.
+      var stageRect = elStage.getBoundingClientRect();
+      var forward = isForward(activeIndex, newIndex);
+      var edge = {
+        top: stageRect.top + stageRect.height * 0.15,
+        left: forward ? stageRect.right - stageRect.width * 0.12 : stageRect.left,
+        width: stageRect.width * 0.12,
+        height: stageRect.height * 0.7
+      };
+      runExpansion(edge, newIndex, finalize);
+    }
+  }
+
+  function isForward(from, to) {
+    var n = IMAGES.length;
+    return ((to - from + n) % n) <= n / 2;
+  }
+
+  /* ------------------------------------------------------------
+     5. INTERACTIONS
+     ------------------------------------------------------------ */
+  function onThumbClick(e) {
+    if (isAnimating) return;
+    var btn = e.currentTarget;
+    var idx = Number(btn.dataset.index);
+    var rect = btn.getBoundingClientRect();
+    pendingFlightSource = { rect: rect, index: idx };
+    stateSwiper.slideToLoop ? stateSwiper.slideToLoop(idx) : stateSwiper.slideTo(idx);
+  }
+
+  document.getElementById("navPrev").addEventListener("click", function () {
+    if (isAnimating) return;
+    var n = IMAGES.length;
+    stateSwiper.slidePrev();
+  });
+  document.getElementById("navNext").addEventListener("click", function () {
+    if (isAnimating) return;
+    stateSwiper.slideNext();
+  });
+
+  elAutoplayToggle.addEventListener("click", function () {
+    if (stateSwiper.autoplay.running) {
+      stateSwiper.autoplay.stop();
+      elAutoplayToggle.setAttribute("aria-pressed", "false");
+      elAutoplayLabel.textContent = "Play";
+    } else {
+      stateSwiper.autoplay.start();
+      elAutoplayToggle.setAttribute("aria-pressed", "true");
+      elAutoplayLabel.textContent = "Pause";
+    }
+  });
+
+  /* ------------------------------------------------------------
+     6. SWIPER — state & autoplay engine only (kept invisible)
+     ------------------------------------------------------------ */
+  var wrapper = document.getElementById("stateSwiperWrapper");
+  IMAGES.forEach(function () {
+    var slide = document.createElement("div");
+    slide.className = "swiper-slide";
+    wrapper.appendChild(slide);
+  });
+
+  var stateSwiper = new Swiper("#stateSwiper", {
+    loop: true,
+    speed: 1, // instant internally — the custom flight animation is the real motion
+    allowTouchMove: false,
+    autoplay: {
+      delay: 4200,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
+    },
+    on: {
+      slideChange: function (sw) {
+        var newIndex = sw.realIndex;
+        if (newIndex === activeIndex) return;
+
+        var source = null;
+        if (pendingFlightSource && pendingFlightSource.index === newIndex) {
+          source = pendingFlightSource.rect;
+        }
+        pendingFlightSource = null;
+        goToIndex(newIndex, source);
+      }
+    }
+  });
+
+  /* ------------------------------------------------------------
+     7. KEYBOARD SUPPORT ON THE GALLERY REGION
+     ------------------------------------------------------------ */
+  document.getElementById("tourGallery").addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { stateSwiper.slidePrev(); }
+    if (e.key === "ArrowRight") { stateSwiper.slideNext(); }
+  });
+
+  /* ------------------------------------------------------------
+     8. INIT
+     ------------------------------------------------------------ */
+  setMainImmediate(activeIndex);
+  renderStacks(false);
+})();
+</script>
+</body>
+</html>

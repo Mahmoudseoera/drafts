@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tour Card – Go Travel</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+    :root {
+      --color-primary:        #273d7f;
+      --color-primary-dark:   #1d2f66;
+      --color-primary-light:  #3a5599;
+      --color-secondary:      #6bcef5;
+      --color-secondary-dark: #4bb8e8;
+      --color-secondary-light:#9edff9;
+      --color-accent:         #f2b705;
+      --color-accent-light:   #ffd166;
+      --color-accent-dark:    #d99e04;
+      --color-white:          #ffffff;
+      --color-off-white:      #f8fafc;
+      --color-gray-100:       #f3f4f6;
+      --color-gray-200:       #e5e7eb;
+      --color-gray-300:       #d1d5db;
+      --color-gray-400:       #9ca3af;
+      --color-gray-500:       #6b7280;
+      --color-gray-700:       #374151;
+      --color-gray-900:       #1f2937;
+      --text-primary:         var(--color-primary);
+      --text-secondary:       var(--color-gray-500);
+      --text-light:           var(--color-white);
+      --btn-primary-bg:       var(--color-primary);
+      --btn-primary-hover:    var(--color-primary-dark);
+      --btn-primary-text:     var(--color-white);
+      --btn-accent-bg:        var(--color-accent);
+      --btn-accent-hover:     var(--color-accent-dark);
+      --btn-accent-text:      var(--color-primary);
+      --gradient-main:        linear-gradient(135deg, #273d7f, #6bcef5);
+      --gradient-accent:      linear-gradient(135deg, #273d7f, #6bcef5, #f2b705);
+      --gradient-hover:       linear-gradient(135deg, #9edff9 0%, #6bcef5 50%, #4bb8e8 100%);
+      --border-color:         var(--color-gray-200);
+      --shadow-sm:            0 2px 6px rgba(0,0,0,.05);
+      --shadow-md:            0 4px 12px rgba(0,0,0,.08);
+      --shadow-lg:            0 8px 24px rgba(0,0,0,.12);
+      --radius-sm:            6px;
+      --radius-md:            12px;
+      --radius-lg:            20px;
+
+      /* card color token – changes on hover via CSS */
+      --clr-btn: var(--color-primary);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: var(--color-off-white);
+      font-family: "DM Sans", "Lato", sans-serif;
+      gap: 28px;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+    }
+
+    /* ================================
+       CARD BASE
+    ================================ */
+    .card {
+      background-color: var(--clr-btn);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      color: var(--color-white);
+      width: 25rem;
+      transition: background 0.45s ease, box-shadow 0.35s ease, transform 0.35s ease;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+    }
+
+    /* HOVER STATE – swap token */
+    .card:hover {
+      --clr-btn: transparent;
+      background: var(--gradient-hover);
+      box-shadow: 0 16px 40px rgba(107,206,245,.35);
+      transform: translateY(-6px);
+    }
+
+    /* ================================
+       CARD INNER (image box)
+    ================================ */
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 18.75rem;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border-bottom-right-radius: 0;
+      overflow: hidden;
+    }
+
+    .box {
+      width: 100%;
+      height: 100%;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    /* ================================
+       FEATURED LABEL (top-left)
+    ================================ */
+    .featured-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--color-accent);
+      color: var(--color-primary-dark);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(242,183,5,.4);
+    }
+
+    .featured-label .material-symbols-outlined {
+      font-size: .9rem;
+      color: var(--color-primary-dark);
+    }
+
+    /* ================================
+       IMAGE
+    ================================ */
+    .imgBox {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .imgBox img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease, filter 0.45s ease;
+    }
+
+    .card:hover .imgBox img {
+      transform: scale(1.08);
+      filter: brightness(1.05) saturate(1.1);
+    }
+
+    /* ================================
+       ICON BUTTON (bottom-right)
+       inverted-border design kept
+    ================================ */
+    .icon {
+      position: absolute;
+      bottom: -0.375rem;
+      right: -0.375rem;
+      width: 6rem;
+      height: 6rem;
+      background: var(--clr-btn);
+      border-top-left-radius: 50%;
+      transition: background 0.45s ease;
+    }
+
+    /* We must mirror the card bg on hover for the icon panel */
+    .card:hover .icon {
+      background: var(--color-secondary-dark);
+    }
+
+    .icon:hover .iconBox {
+      transform: scale(1.1);
+    }
+
+    /* inverted border – bottom-left pseudo */
+    .icon::before {
+      position: absolute;
+      content: "";
+      bottom: 0.375rem;
+      left: -1.25rem;
+      background: transparent;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-bottom-right-radius: 1.25rem;
+      box-shadow: 0.313rem 0.313rem 0 0.313rem var(--clr-btn);
+      transition: box-shadow 0.45s ease;
+    }
+
+    .card:hover .icon::before {
+      box-shadow: 0.313rem 0.313rem 0 0.313rem var(--color-secondary-dark);
+    }
+
+    /* inverted border – top-right pseudo */
+    .icon::after {
+      position: absolute;
+      content: "";
+      top: -1.25rem;
+      right: 0.375rem;
+      background: transparent;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-bottom-right-radius: 1.25rem;
+      box-shadow: 0.313rem 0.313rem 0 0.313rem var(--clr-btn);
+      transition: box-shadow 0.45s ease;
+    }
+
+    .card:hover .icon::after {
+      box-shadow: 0.313rem 0.313rem 0 0.313rem var(--color-secondary-dark);
+    }
+
+    .iconBox {
+      position: absolute;
+      inset: 0.625rem;
+      background: var(--color-white);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .iconBox span {
+      color: var(--clr-btn);
+      font-size: 1.5rem;
+      transition: color 0.45s ease;
+    }
+
+    .card:hover .iconBox span {
+      color: var(--color-primary);
+    }
+
+    /* ================================
+       CARD CONTENT
+    ================================ */
+    .content {
+      padding: 1rem 0.625rem 0.5rem;
+    }
+
+    /* tour title */
+    .content h3 {
+      text-transform: capitalize;
+      font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.25;
+      transition: color 0.3s;
+    }
+
+    .card:hover .content h3 {
+      color: var(--color-primary-dark);
+    }
+
+    /* description */
+    .content p {
+      margin: 0.5rem 0 0.875rem;
+      color: rgba(255,255,255,.78);
+      font-size: .84rem;
+      line-height: 1.6;
+      transition: color 0.3s;
+    }
+
+    .card:hover .content p {
+      color: var(--color-primary-dark);
+      opacity: .8;
+    }
+
+    /* ================================
+       META ROW (duration + price)
+    ================================ */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.875rem;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* duration pill */
+    .meta-duration {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--color-white);
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .card:hover .meta-duration {
+      background: rgba(39,61,127,.12);
+      border-color: var(--color-primary-light);
+      color: var(--color-primary-dark);
+    }
+
+    .meta-duration .material-symbols-outlined {
+      font-size: .95rem;
+    }
+
+    /* price block */
+    .meta-price {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .price-from {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,.6);
+      transition: color 0.3s;
+    }
+
+    .card:hover .price-from {
+      color: var(--color-primary-light);
+    }
+
+    .price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+
+    .price-per {
+      font-size: .65rem;
+      color: rgba(255,255,255,.55);
+      transition: color 0.3s;
+    }
+
+    .card:hover .price-per {
+      color: var(--color-primary-light);
+    }
+
+    /* ================================
+       CTA BUTTON
+    ================================ */
+    .card-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: var(--radius-sm);
+      background: var(--color-accent);
+      color: var(--color-primary-dark);
+      font-weight: 700;
+      font-size: .85rem;
+      text-decoration: none;
+      letter-spacing: .3px;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 3px 14px rgba(242,183,5,.35);
+      margin-top: 4px;
+    }
+
+    .card-cta:hover {
+      background: var(--color-accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(242,183,5,.5);
+    }
+
+    /* ================================
+       TAGS
+    ================================ */
+    .tags-row {
+      margin-top: 12px;
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0;
+    }
+
+    .tags-row li {
+      text-transform: uppercase;
+      background: var(--clr-tag);
+      color: #282828;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 0.188rem;
+      transition: opacity 0.3s;
+    }
+
+    .tags-row .culture  { color: #2b1a6e; }
+    .tags-row .nature   { color: #1a3d2b; }
+    .tags-row .beach    { color: #1e3938; }
+    .tags-row .adventure{ color: #4d1637; }
+
+    /* ================================
+       RATING BADGE (inside img)
+    ================================ */
+    .rating-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(15,20,40,.7);
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--color-white);
+      border: 1px solid rgba(255,255,255,.15);
+      transition: opacity 0.3s;
+    }
+
+    .rating-star { color: var(--color-accent); font-size: .85rem; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ CARD 1 – Featured ============ -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="box">
+
+        <!-- Featured Label -->
+        <div class="featured-label">
+          <span class="material-symbols-outlined">star</span>
+          Featured
+        </div>
+
+        <!-- Image -->
+        <div class="imgBox">
+          <img
+            src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80"
+            alt="Santorini, Greece"
+          />
+        </div>
+
+        <!-- Rating inside image -->
+        <div class="rating-badge">
+          <span class="rating-star">★</span> 4.9 &nbsp;(128 reviews)
+        </div>
+
+        <!-- CTA icon -->
+        <div class="icon">
+          <a href="#" class="iconBox">
+            <span class="material-symbols-outlined">arrow_outward</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content">
+      <h3>Santorini, Greece</h3>
+      <p>Experience the magic of whitewashed villages, volcanic beaches, and world-class sunsets over the Aegean Sea.</p>
+
+      <!-- Meta row: duration + price -->
+      <div class="card-meta">
+        <div class="meta-duration">
+          <span class="material-symbols-outlined">schedule</span>
+          7 Days / 6 Nights
+        </div>
+        <div class="meta-price">
+          <span class="price-from">From</span>
+          <span class="price-value">$1,299</span>
+          <span class="price-per">per person</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <a href="#" class="card-cta">Book This Tour</a>
+
+      <!-- Tags -->
+      <ul class="tags-row">
+        <li style="--clr-tag:#d3b19a;" class="culture">Culture</li>
+        <li style="--clr-tag:#70b3b1;" class="beach">Beach</li>
+        <li style="--clr-tag:#b5e0c0;" class="nature">Nature</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============ CARD 2 – Regular ============ -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="box">
+
+        <!-- Image -->
+        <div class="imgBox">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+            alt="Swiss Alps, Switzerland"
+          />
+        </div>
+
+        <!-- Rating inside image -->
+        <div class="rating-badge">
+          <span class="rating-star">★</span> 4.8 &nbsp;(94 reviews)
+        </div>
+
+        <!-- CTA icon -->
+        <div class="icon">
+          <a href="#" class="iconBox">
+            <span class="material-symbols-outlined">arrow_outward</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content">
+      <h3>Swiss Alps, Switzerland</h3>
+      <p>Discover snow-capped peaks, crystal-clear lakes, and charming alpine villages on this unforgettable mountain escape.</p>
+
+      <div class="card-meta">
+        <div class="meta-duration">
+          <span class="material-symbols-outlined">schedule</span>
+          5 Days / 4 Nights
+        </div>
+        <div class="meta-price">
+          <span class="price-from">From</span>
+          <span class="price-value">$2,150</span>
+          <span class="price-per">per person</span>
+        </div>
+      </div>
+
+      <a href="#" class="card-cta">Book This Tour</a>
+
+      <ul class="tags-row">
+        <li style="--clr-tag:#d3b19a;" class="culture">Culture</li>
+        <li style="--clr-tag:#b5e0c0;" class="nature">Nature</li>
+        <li style="--clr-tag:#d05fa2;" class="adventure">Adventure</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============ CARD 3 – Featured ============ -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="box">
+
+        <!-- Featured Label -->
+        <div class="featured-label">
+          <span class="material-symbols-outlined">star</span>
+          Featured
+        </div>
+
+        <!-- Image -->
+        <div class="imgBox">
+          <img
+            src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80"
+            alt="Venice, Italy"
+          />
+        </div>
+
+        <!-- Rating inside image -->
+        <div class="rating-badge">
+          <span class="rating-star">★</span> 4.7 &nbsp;(210 reviews)
+        </div>
+
+        <!-- CTA icon -->
+        <div class="icon">
+          <a href="#" class="iconBox">
+            <span class="material-symbols-outlined">arrow_outward</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content">
+      <h3>Venice, Italy</h3>
+      <p>Glide through iconic canals, explore Renaissance palaces, and savour authentic Italian cuisine in the floating city.</p>
+
+      <div class="card-meta">
+        <div class="meta-duration">
+          <span class="material-symbols-outlined">schedule</span>
+          6 Days / 5 Nights
+        </div>
+        <div class="meta-price">
+          <span class="price-from">From</span>
+          <span class="price-value">$1,850</span>
+          <span class="price-per">per person</span>
+        </div>
+      </div>
+
+      <a href="#" class="card-cta">Book This Tour</a>
+
+      <ul class="tags-row">
+        <li style="--clr-tag:#d3b19a;" class="culture">Culture</li>
+        <li style="--clr-tag:#70b3b1;" class="beach">Beach</li>
+        <li style="--clr-tag:#d05fa2;" class="adventure">Adventure</li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>

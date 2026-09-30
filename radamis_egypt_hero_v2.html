@@ -1,0 +1,362 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  .hero-wrap {
+    font-family:'Poppins',sans-serif;
+    position:relative;
+    width:100%;
+    min-height:460px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+  }
+
+  /* Background image */
+  .hero-bg {
+    position:absolute;
+    inset:0;
+    background-image: url('https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=1400&fit=crop');
+    background-size:cover;
+    background-position:center;
+    z-index:0;
+  }
+
+  /* Navy + secondary overlay */
+  .hero-overlay {
+    position:absolute;
+    inset:0;
+    background: linear-gradient(135deg,
+      rgba(39,61,127,0.88) 0%,
+      rgba(29,47,102,0.82) 40%,
+      rgba(107,206,245,0.35) 100%
+    );
+    z-index:1;
+  }
+
+  /* Dot grid texture */
+  .hero-dots {
+    position:absolute;
+    inset:0;
+    background-image:radial-gradient(circle,rgba(242,183,5,0.13) 1px,transparent 1px);
+    background-size:28px 28px;
+    z-index:2;
+    pointer-events:none;
+  }
+
+  /* Glow orb top-right using secondary */
+  .orb {
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:2;
+  }
+  .orb-1{
+    width:300px;height:300px;
+    background:radial-gradient(circle,rgba(107,206,245,0.22) 0%,transparent 70%);
+    top:-60px;right:140px;
+  }
+  .orb-2{
+    width:180px;height:180px;
+    background:radial-gradient(circle,rgba(242,183,5,0.14) 0%,transparent 70%);
+    bottom:-20px;left:35%;
+  }
+
+  /* ---- Photo strips ---- */
+  .strips-side {
+    position:absolute;
+    top:0;bottom:0;
+    width:148px;
+    display:flex;
+    gap:8px;
+    padding:10px 8px;
+    overflow:hidden;
+    z-index:3;
+  }
+  .strips-side.left{left:0;}
+  .strips-side.right{right:0;}
+
+  /* Fade edges */
+  .strips-side::before,
+  .strips-side::after{
+    content:'';
+    position:absolute;
+    left:0;right:0;height:70px;z-index:5;pointer-events:none;
+  }
+  .strips-side.left::before,.strips-side.right::before{
+    top:0;
+    background:linear-gradient(to bottom,rgba(29,47,102,0.95),transparent);
+  }
+  .strips-side.left::after,.strips-side.right::after{
+    bottom:0;
+    background:linear-gradient(to top,rgba(29,47,102,0.95),transparent);
+  }
+
+  .strip-col{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    overflow:hidden;
+  }
+
+  .strip-inner{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .col-up .strip-inner{animation:go-up 18s linear infinite;}
+  .col-down .strip-inner{animation:go-down 22s linear infinite;}
+
+  @keyframes go-up{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-50%);}
+  }
+  @keyframes go-down{
+    0%{transform:translateY(-50%);}
+    100%{transform:translateY(0);}
+  }
+
+  .photo-card{
+    width:62px;height:80px;
+    border-radius:10px;
+    overflow:hidden;
+    flex-shrink:0;
+    border:1.5px solid rgba(107,206,245,0.2);
+  }
+  .photo-card img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* ---- Center content ---- */
+  .hero-center{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:44px 20px 90px;
+    position:relative;
+    z-index:4;
+    max-width:540px;
+    margin:0 auto;
+  }
+
+  .hero-subtitle{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#f2b705;
+    background:rgba(242,183,5,0.1);
+    border:1px solid rgba(242,183,5,0.35);
+    padding:5px 16px;
+    border-radius:999px;
+    margin-bottom:18px;
+    display:inline-block;
+  }
+
+  .hero-title{
+    font-family:'Playfair Display',serif;
+    font-size:42px;
+    font-weight:900;
+    color:#ffffff;
+    line-height:1.1;
+    margin-bottom:14px;
+  }
+  .hero-title span{color:#f2b705;}
+
+  .hero-desc{
+    font-size:13.5px;
+    color:rgba(255,255,255,0.65);
+    line-height:1.75;
+    margin-bottom:28px;
+    max-width:380px;
+  }
+
+  .hero-ctas{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .btn-primary{
+    background:#f2b705;
+    color:#1d2f66;
+    font-family:'Poppins',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:12px 28px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:background 0.2s,transform 0.15s;
+  }
+  .btn-primary:hover{background:#ffd166;transform:translateY(-2px);}
+
+  .btn-outline{
+    background:transparent;
+    color:#ffffff;
+    font-family:'Poppins',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    padding:11px 24px;
+    border-radius:999px;
+    border:1.5px solid rgba(107,206,245,0.5);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:border-color 0.2s,background 0.2s,transform 0.15s;
+  }
+  .btn-outline:hover{
+    border-color:#6bcef5;
+    background:rgba(107,206,245,0.1);
+    transform:translateY(-2px);
+  }
+
+  /* Arrow SVGs inline */
+  .ico-arrow-dark{display:inline-block;width:15px;height:15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231d2f66' stroke-width='2.5'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;}
+  .ico-arrow-light{display:inline-block;width:15px;height:15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236bcef5' stroke-width='2.5'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;}
+
+  /* ---- Animated wave ---- */
+  .wave-wrap{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    z-index:5;
+    line-height:0;
+    pointer-events:none;
+  }
+  .waves{
+    position:relative;
+    width:100%;
+    height:90px;
+    min-height:60px;
+    max-height:100px;
+  }
+  .parallax>use{
+    animation:move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  }
+  .parallax>use:nth-child(1){animation-delay:-2s;animation-duration:7s;}
+  .parallax>use:nth-child(2){animation-delay:-3s;animation-duration:10s;}
+  .parallax>use:nth-child(3){animation-delay:-4s;animation-duration:13s;}
+  .parallax>use:nth-child(4){animation-delay:-5s;animation-duration:20s;}
+  @keyframes move-forever{
+    0%{transform:translate3d(-90px,0,0);}
+    100%{transform:translate3d(85px,0,0);}
+  }
+</style>
+
+<div class="hero-wrap">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-dots"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- LEFT: two columns, col-1 up, col-2 down -->
+  <div class="strips-side left">
+    <div class="strip-col col-up">
+      <div class="strip-inner">
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=150&h=200&fit=crop" alt="Pyramids"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=150&h=200&fit=crop" alt="Nile"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=150&h=200&fit=crop" alt="Abu Simbel"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=150&h=200&fit=crop" alt="Cairo"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1592561199818-6b3da74e5f4e?w=150&h=200&fit=crop" alt="Luxor"></div>
+        <!-- dupe -->
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=150&h=200&fit=crop" alt="Pyramids"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=150&h=200&fit=crop" alt="Nile"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=150&h=200&fit=crop" alt="Abu Simbel"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=150&h=200&fit=crop" alt="Cairo"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1592561199818-6b3da74e5f4e?w=150&h=200&fit=crop" alt="Luxor"></div>
+      </div>
+    </div>
+    <div class="strip-col col-down">
+      <div class="strip-inner">
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1548786811-dd6e453ccca7?w=150&h=200&fit=crop" alt="Red Sea"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1601985705806-5b9a6a2cf2c0?w=150&h=200&fit=crop" alt="Sphinx"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1547948749-2d10dc51f5e9?w=150&h=200&fit=crop" alt="Desert"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1548019979-4d0cd2e40d62?w=150&h=200&fit=crop" alt="Temple"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=150&h=200&fit=crop" alt="Aswan"></div>
+        <!-- dupe -->
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1548786811-dd6e453ccca7?w=150&h=200&fit=crop" alt="Red Sea"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1601985705806-5b9a6a2cf2c0?w=150&h=200&fit=crop" alt="Sphinx"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1547948749-2d10dc51f5e9?w=150&h=200&fit=crop" alt="Desert"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1548019979-4d0cd2e40d62?w=150&h=200&fit=crop" alt="Temple"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=150&h=200&fit=crop" alt="Aswan"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center content -->
+  <div class="hero-center">
+    <div class="hero-subtitle">✦ Discover Ancient Wonders</div>
+    <h1 class="hero-title">
+      Your Egypt Tour,<br>
+      <span>Perfectly Crafted!</span>
+    </h1>
+    <p class="hero-desc">
+      Explore the land of Pharaohs — from the timeless Pyramids of Giza to the serene waters of the Nile. Tailor-made journeys for every traveller.
+    </p>
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary">Explore Tours <span class="ico-arrow-dark"></span></a>
+      <a href="#" class="btn-outline">Plan My Trip <span class="ico-arrow-light"></span></a>
+    </div>
+  </div>
+
+  <!-- RIGHT: two columns, col-1 down, col-2 up -->
+  <div class="strips-side right">
+    <div class="strip-col col-down">
+      <div class="strip-inner">
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1527838832700-5059252407fa?w=150&h=200&fit=crop" alt="Sinai"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1565881606991-789a8dce8f45?w=150&h=200&fit=crop" alt="Dahab"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1562602833-0f4ab2fc46e3?w=150&h=200&fit=crop" alt="Karnak"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=150&h=200&fit=crop" alt="Valley"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=150&h=200&fit=crop" alt="Hurghada"></div>
+        <!-- dupe -->
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1527838832700-5059252407fa?w=150&h=200&fit=crop" alt="Sinai"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1565881606991-789a8dce8f45?w=150&h=200&fit=crop" alt="Dahab"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1562602833-0f4ab2fc46e3?w=150&h=200&fit=crop" alt="Karnak"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=150&h=200&fit=crop" alt="Valley"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=150&h=200&fit=crop" alt="Hurghada"></div>
+      </div>
+    </div>
+    <div class="strip-col col-up">
+      <div class="strip-inner">
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1586500036706-41963de24d8b?w=150&h=200&fit=crop" alt="Alexandria"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=150&h=200&fit=crop" alt="Felucca"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1601985705806-5b9a6a2cf2c0?w=150&h=200&fit=crop" alt="Sphinx2"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=150&h=200&fit=crop" alt="Giza"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=150&h=200&fit=crop" alt="Cairo2"></div>
+        <!-- dupe -->
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1586500036706-41963de24d8b?w=150&h=200&fit=crop" alt="Alexandria"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=150&h=200&fit=crop" alt="Felucca"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1601985705806-5b9a6a2cf2c0?w=150&h=200&fit=crop" alt="Sphinx2"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=150&h=200&fit=crop" alt="Giza"></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=150&h=200&fit=crop" alt="Cairo2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animated wave bottom -->
+  <div class="wave-wrap">
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+      </defs>
+      <g class="parallax">
+        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(107,206,245,0.25)"/>
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(107,206,245,0.15)"/>
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)"/>
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#f8fafc"/>
+      </g>
+    </svg>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+:root {
+  --color-primary:#273d7f;
+  --color-primary-dark:#1d2f66;
+  --color-secondary:#6bcef5;
+  --color-accent:#f2b705;
+  --color-white:#ffffff;
+  --color-gray:#6b7280;
+}
+
+/* ===== نفس فكرة الكارت الأصلية ===== */
+.post-card {
+  height: 470px;
+}
+
+.post-img {
+  height: 400px;
+}
+
+.post-img img {
+  width: 120%;
+  transition: .3s;
+}
+
+/* Hover effects */
+.post-card:hover img {
+  transform: scale(1.1);
+  opacity: .6;
+}
+
+/* تحريك المحتوى لفوق */
+.post-content {
+  transition: .3s cubic-bezier(0.37,0.75,0.61,1.05);
+}
+
+/* description hidden */
+.desc {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: .3s;
+}
+
+/* عند hover */
+.post-card:hover .post-content {
+  transform: translateY(-80px);
+}
+
+.post-card:hover .desc {
+  opacity: 1;
+  max-height: 100px;
+}
+</style>
+</head>
+
+<body class="bg-gray-100">
+
+<section class="py-12">
+<div class="max-w-6xl mx-auto px-4">
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+<!-- CARD -->
+<div class="post-card relative bg-white shadow-md hover:shadow-xl overflow-hidden">
+
+  <!-- IMAGE -->
+  <a href="#">
+    <div class="post-img bg-black overflow-hidden">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg" class="w-full h-full object-cover">
+    </div>
+  </a>
+
+  <!-- CONTENT -->
+  <div class="post-content absolute bottom-0 w-full bg-white p-6">
+
+    <!-- DATE بدل category -->
+    <div class="absolute -top-8 right-0 bg-[var(--color-accent)] text-[var(--color-primary)] px-4 py-2 rounded-tl-xl font-semibold text-sm">
+      12 May 2026
+    </div>
+
+    <!-- TITLE -->
+    <a href="#">
+      <h3 class="text-2xl font-bold text-[var(--color-primary)] mb-2">
+        Title Goes Here
+      </h3>
+    </a>
+
+    <p class="text-[var(--color-secondary)] mb-3">
+      And Subtitle Goes Here.
+    </p>
+
+    <!-- DESCRIPTION -->
+    <p class="desc text-[var(--color-gray)] text-sm leading-relaxed mb-4">
+      New York, the largest city in the U.S., is an architectural marvel with plenty of historic monuments.
+    </p>
+
+    <!-- READ MORE -->
+    <a href="#" class="flex items-center gap-2 text-[var(--color-primary)] font-semibold hover:text-[var(--color-accent)]">
+
+      <!-- BOOK SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+        <path stroke-width="2" d="M6.5 2H20v15H6.5A2.5 2.5 0 004 19.5V4a2 2 0 012-2z"/>
+      </svg>
+
+      Read More
+    </a>
+
+  </div>
+</div>
+
+<!-- CARD 2 -->
+<div class="post-card relative bg-white shadow-md hover:shadow-xl overflow-hidden">
+
+  <a href="#">
+    <div class="post-img bg-black overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" class="w-full h-full object-cover">
+    </div>
+  </a>
+
+  <div class="post-content absolute bottom-0 w-full bg-white p-6">
+    <div class="absolute -top-8 right-0 bg-[var(--color-accent)] text-[var(--color-primary)] px-4 py-2 rounded-tl-xl text-sm font-semibold">
+      10 May 2026
+    </div>
+
+    <a href="#"><h3 class="text-2xl font-bold text-[var(--color-primary)] mb-2">Explore Mountains</h3></a>
+    <p class="text-[var(--color-secondary)] mb-3">Adventure awaits</p>
+
+    <p class="desc text-[var(--color-gray)] text-sm mb-4">
+      Discover the beauty of mountain landscapes and fresh air.
+    </p>
+
+    <a href="#" class="flex items-center gap-2 text-[var(--color-primary)] font-semibold hover:text-[var(--color-accent)]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+        <path stroke-width="2" d="M6.5 2H20v15H6.5A2.5 2.5 0 004 19.5V4a2 2 0 012-2z"/>
+      </svg>
+      Read More
+    </a>
+  </div>
+</div>
+
+<!-- CARD 3 -->
+<div class="post-card relative bg-white shadow-md hover:shadow-xl overflow-hidden">
+
+  <a href="#">
+    <div class="post-img bg-black overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d" class="w-full h-full object-cover">
+    </div>
+  </a>
+
+  <div class="post-content absolute bottom-0 w-full bg-white p-6">
+    <div class="absolute -top-8 right-0 bg-[var(--color-accent)] text-[var(--color-primary)] px-4 py-2 rounded-tl-xl text-sm font-semibold">
+      8 May 2026
+    </div>
+
+    <a href="#"><h3 class="text-2xl font-bold text-[var(--color-primary)] mb-2">City Lights</h3></a>
+    <p class="text-[var(--color-secondary)] mb-3">Modern lifestyle</p>
+
+    <p class="desc text-[var(--color-gray)] text-sm mb-4">
+      Experience vibrant nightlife and modern city architecture.
+    </p>
+
+    <a href="#" class="flex items-center gap-2 text-[var(--color-primary)] font-semibold hover:text-[var(--color-accent)]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+        <path stroke-width="2" d="M6.5 2H20v15H6.5A2.5 2.5 0 004 19.5V4a2 2 0 012-2z"/>
+      </svg>
+      Read More
+    </a>
+  </div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+</body>
+</html>
