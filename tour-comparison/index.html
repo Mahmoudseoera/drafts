@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare six sample Egypt journeys side by side: prices, activities, comfort, flexibility and pace.">
+  <meta name="theme-color" content="#143e3a">
+  <title>Find your kind of Egypt · Tour comparison</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="../index.html" aria-label="Egypt journeys home"><span aria-hidden="true">◈</span> EGYPT <span class="wordmark-light">/ JOURNEYS</span></a><span class="masthead-note">Different paths. Your perfect journey.</span></header>
+  <main id="main-content">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">LESS GUESSWORK. MORE ADVENTURE.</p>
+      <h1 id="page-title">Find your kind <em>of Egypt.</em></h1>
+      <p class="intro-copy">Temples at sunrise or a slower life by the sea? Pick up to three journeys and compare the details that matter to you.</p>
+      <div class="intro-meta"><span><span aria-hidden="true">✓</span> Six distinctive journeys</span><span><span aria-hidden="true">✓</span> Every detail, side by side</span></div>
+    </section>
+    <section class="collection" aria-labelledby="collection-title">
+      <div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="collection-title">A journey for every explorer</h2></div><span id="selection-count" class="selection-count" aria-live="polite">0 of 3 selected</span></div>
+      <!-- Cards are generated from the same data used by the matrix. -->
+      <div id="tour-grid" class="tour-grid"></div>
+      <noscript><p>Please enable JavaScript to select and compare these sample journeys.</p></noscript>
+      <p class="sample-note">A little inspiration for your next escape. These are sample packages and indicative prices, not live availability. Booking links open our tailor-made enquiry page.</p>
+    </section>
+  </main>
+  <footer class="page-footer"><span>Thoughtfully chosen. Ready to explore.</span><a href="../tailor-made.html">Prefer something personal? Create your trip <span aria-hidden="true">↗</span></a></footer>
+
+  <!-- Fixed selection tray: buttons remain reachable at narrow viewport widths. -->
+  <aside id="compare-bar" class="compare-bar" aria-label="Selected journeys" hidden>
+    <div class="bar-summary"><div id="selected-thumbnails" class="selected-thumbnails"></div><div><strong id="bar-count">1 journey selected</strong><span>Up to 3. All the details.</span></div></div>
+    <div class="bar-actions"><button id="clear-all" class="text-button" type="button">Clear all</button><button id="compare-now" class="button button-gold" type="button">Compare now <span aria-hidden="true">↗</span></button></div>
+  </aside>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Native dialog supplies modal semantics, focus containment and an inert background. -->
+  <dialog id="comparison-dialog" aria-labelledby="comparison-title" aria-describedby="comparison-hint">
+    <div class="modal-heading"><div><p class="eyebrow">YOUR SHORTLIST</p><h2 id="comparison-title">Good journeys. A great match.</h2></div><button id="close-dialog" class="icon-button" type="button" aria-label="Close comparison">×</button></div>
+    <div class="matrix-toolbar"><p id="comparison-hint">Compare the little details before your next big adventure.</p><label class="switch-label"><input id="differences" type="checkbox"><span class="switch" aria-hidden="true"></span>Highlight differences</label></div>
+    <p class="scroll-hint">Swipe or scroll sideways to explore every journey. Row labels stay in view.</p>
+    <div id="matrix-scroll" class="matrix-scroll" tabindex="0" role="region" aria-label="Tour comparison table, horizontally scrollable">
+      <table id="comparison-table"><caption class="sr-only">Selected tours, prices and included features</caption><thead id="matrix-head"></thead><tbody id="matrix-body"></tbody></table>
+    </div>
+    <div class="modal-footer"><span>Prices are per person · Sample packages</span><button id="keep-exploring" class="text-button" type="button">Keep exploring</button></div>
+  </dialog>
+</body>
+</html>
