@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour Gallery Grid — Example</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css" />
+<style>
+  :root {
+    --color-main: #176F78;
+    --color-text: #1c2b2a;
+    --color-text-light: #6b7a79;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--color-text);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .subtitle { color: var(--color-text-light); margin: 0 0 1.5rem; }
+
+  /* ======================================================
+     THE GRID — this is the "non-equal images" bento layout.
+     One big tile on the left, four smaller tiles on the right.
+     Swap the column/row counts below to change the shape.
+     ====================================================== */
+  .tour-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 150px;
+    gap: 8px;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .tour-gallery-grid__item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: #eef2f1;
+  }
+
+  .tour-gallery-grid__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .tour-gallery-grid__item:hover img {
+    transform: scale(1.04);
+  }
+
+  /* First tile spans 2 columns and both rows — the "hero" tile */
+  .tour-gallery-grid__item:nth-child(1) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  /* Remaining tiles fill the 2x2 block on the right */
+  .tour-gallery-grid__item:nth-child(n+2) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  @media (max-width: 700px) {
+    .tour-gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 140px;
+    }
+    .tour-gallery-grid__item:nth-child(1) {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+  }
+
+  /* "+N more" overlay on the last visible tile, Airbnb-style */
+  .tour-gallery-grid__more {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(28, 43, 42, 0.55);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: none;
+  }
+
+  .tour-gallery-grid__hidden {
+    display: none;
+  }
+
+  .tour-gallery-grid__item--map img { object-fit: contain; }
+  .tour-gallery-grid__map-label {
+    position: absolute; bottom: 8px; left: 8px; pointer-events: none;
+    background: #fff; color: var(--color-main); padding: 5px 9px;
+    border-radius: 5px; font-size: .75rem; box-shadow: 0 1px 5px #0002;
+  }
+  .tour-gallery-grid__map-status {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 16px;
+    text-align: center; gap: 10px; font-size: .8rem;
+  }
+  .tour-gallery-grid__map-status button {
+    padding: 8px 14px; min-height: 44px; cursor: pointer;
+    background: white; border: 1px solid var(--color-main); border-radius: 5px;
+  }
+  .tour-gallery-grid__item:focus-visible { outline: 3px solid var(--color-main); outline-offset: -3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .tour-gallery-grid__item img { transition: none; }
+  }
+
+  /* Loading state for the map tile while it builds */
+  .tour-gallery-grid__item--loading img {
+    opacity: 0;
+  }
+  .tour-gallery-grid__item--loading::after {
+    content: "Loading map…";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+  }
+</style>
+</head>
+<body>
+
+  <h1>Your route</h1>
+  <p class="subtitle">A grid of real tour photos, with the route map as one more tile.</p>
+
+  <!--
+    Same pattern as the interactive map: one element, the location names
+    in its text, everything else reads from here.
+  -->
+  <p id="tourLocations" hidden>Cairo, Giza, aswan</p>
+
+  <div class="tour-gallery-grid" id="tourGalleryGrid"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ----------------------------------------------------------------
+    // CONFIG — swap these for your real data when you wire this into
+    // the Blade template.
+    // ----------------------------------------------------------------
+
+    // Paste a free Geoapify key here (geoapify.com → dashboard → API keys).
+         var GEOAPIFY_API_KEY = '0c4e4567e0a9452a98d85e806e1b3e0a';
+
+    // Your real tour photos. In Blade this would come from @foreach
+    // ($tour->images as $image) — src/thumb/alt per photo.
+    var PHOTOS = [
+      { full: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=1600&q=80', alt: 'Nile river cruise' },
+      { full: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=1600&q=80', alt: 'Alexandria waterfront' },
+      { full: 'https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1600&q=80', alt: 'Desert safari' },
+      { full: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1600&q=80', alt: 'Red Sea coast' },
+      { full: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1600&q=80', alt: 'Sharm El Sheikh coast' },
+    ];
+
+    var MAX_VISIBLE = 5;
+    var GEOAPIFY_URL = 'https://maps.geoapify.com/v1/staticmap';
+    var BRAND_COLOR = 'teal'; // Named color accepted by the static-map marker parser.
+    var grid = document.getElementById('tourGalleryGrid');
+    var gallery = null;
+    var mapElement = null;
+    var names = (document.getElementById('tourLocations').textContent || '')
+      .split(',').map(function (name) { return name.trim(); }).filter(Boolean);
+
+    // Known stops avoid unnecessary geocoding calls in this standalone example.
+    // In Blade, prefer supplying coordinates from your tour's destination records.
+    var KNOWN_LOCATIONS = {
+      cairo: { lat: 30.0444, lon: 31.2357 },
+      giza: { lat: 30.0131, lon: 31.2089 },
+      luxor: { lat: 25.6872, lon: 32.6396 }
+    };
+
+    async function geocode(name) {
+      var known = KNOWN_LOCATIONS[name.toLowerCase()];
+      if (known) return { name: name, lat: known.lat, lon: known.lon };
+      var params = new URLSearchParams({
+        text: name, filter: 'countrycode:eg', format: 'json', limit: '1',
+        apiKey: GEOAPIFY_API_KEY
+      });
+      var controller = new AbortController();
+      var timeout = setTimeout(function () { controller.abort(); }, 12000);
+      try {
+        var response = await fetch('https://api.geoapify.com/v1/geocode/search?' + params, {
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error('Location lookup failed (HTTP ' + response.status + ').');
+        var data = await response.json();
+        var point = data.results && data.results[0];
+        if (!point || !Number.isFinite(point.lat) || !Number.isFinite(point.lon)) {
+          throw new Error('No coordinates found for ' + name + '.');
+        }
+        return { name: name, lat: point.lat, lon: point.lon };
+      } finally { clearTimeout(timeout); }
+    }
+
+    function buildStaticMapUrl(points) {
+      // Encode separators safely; named colors avoid marker-parser hex ambiguity.
+      var params = new URLSearchParams({
+        style: 'osm-bright', width: '900', height: '600', format: 'png',
+        marker: points.map(function (p, i) {
+          return 'lonlat:' + p.lon + ',' + p.lat + ';type:material;color:' +
+            BRAND_COLOR + ';size:48;text:' + (i + 1);
+        }).join('|'),
+        apiKey: GEOAPIFY_API_KEY
+      });
+      if (points.length > 1) {
+        // Geoapify requires LONGITUDE, LATITUDE for each polyline point.
+        params.set('geometry', 'polyline:' + points.map(function (p) {
+          return p.lon + ',' + p.lat;
+        }).join(',') + ';linecolor:' + BRAND_COLOR + ';linewidth:3');
+      }
+      // Let the API fit all markers and geometry into the image.
+      return GEOAPIFY_URL + '?' + params.toString();
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function buildGridItem(photo, hidden) {
+      var a = document.createElement('a');
+      a.className = 'tour-gallery-grid__item tour-img';
+      if (hidden) a.classList.add('tour-gallery-grid__hidden');
+      a.href = photo.full;
+      a.setAttribute('data-sub-html', escapeHtml(photo.alt));
+      var img = document.createElement('img');
+      img.src = photo.full;
+      img.alt = photo.alt;
+      img.loading = hidden ? 'lazy' : 'eager';
+      a.appendChild(img);
+      return a;
+    }
+
+    function initGallery() {
+      if (gallery) { gallery.destroy(); gallery = null; }
+      if (typeof lightGallery !== 'function') return; // Plain image links still work.
+      var plugins = [];
+      if (typeof lgZoom !== 'undefined') plugins.push(lgZoom);
+      if (typeof lgThumbnail !== 'undefined') plugins.push(lgThumbnail);
+      gallery = lightGallery(grid, {
+        plugins: plugins, thumbnail: true, selector: '.tour-img', speed: 400
+      });
+      window.lgInstance = gallery;
+    }
+
+    function renderGrid() {
+      grid.replaceChildren();
+      // Four photos + a map, regardless of how many photos the tour contains.
+      var visibleCount = Math.min(PHOTOS.length, names.length ? MAX_VISIBLE - 1 : MAX_VISIBLE);
+      PHOTOS.slice(0, visibleCount).forEach(function (photo) {
+        grid.appendChild(buildGridItem(photo, false));
+      });
+      if (names.length) {
+        mapElement = document.createElement('div');
+        mapElement.className = 'tour-gallery-grid__item tour-gallery-grid__item--map';
+        grid.appendChild(mapElement);
+      }
+      var extraCount = PHOTOS.length - visibleCount;
+      if (extraCount > 0 && visibleCount > 0) {
+        // A span inside the photo link avoids nesting a button inside an anchor.
+        var lastPhoto = grid.children[visibleCount - 1];
+        var overlay = document.createElement('span');
+        overlay.className = 'tour-gallery-grid__more';
+        overlay.textContent = '+' + extraCount + ' more photo' + (extraCount === 1 ? '' : 's');
+        lastPhoto.appendChild(overlay);
+        lastPhoto.setAttribute('aria-label', 'View ' + extraCount + ' more tour photos');
+        lastPhoto.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          var firstHidden = grid.querySelector('.tour-gallery-grid__hidden');
+          if (gallery) {
+            var index = Array.from(grid.querySelectorAll('.tour-img')).indexOf(firstHidden);
+            gallery.openGallery(index);
+          } else { window.location.href = firstHidden.href; }
+        }, true);
+      }
+      PHOTOS.slice(visibleCount).forEach(function (photo) {
+        grid.appendChild(buildGridItem(photo, true));
+      });
+      initGallery();
+    }
+
+    function setMapStatus(message, retry) {
+      mapElement.replaceChildren();
+      var status = document.createElement('div');
+      status.className = 'tour-gallery-grid__map-status';
+      status.setAttribute('role', 'status');
+      var text = document.createElement('span');
+      text.textContent = message;
+      status.appendChild(text);
+      if (retry) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Retry map';
+        button.addEventListener('click', loadMap);
+        status.appendChild(button);
+      }
+      mapElement.appendChild(status);
+    }
+
+    async function loadMap() {
+      setMapStatus('Loading route map?', false);
+      if (!GEOAPIFY_API_KEY || GEOAPIFY_API_KEY === 'YOUR_GEOAPIFY_API_KEY') {
+        setMapStatus('Add your Geoapify API key to show the route map.', false);
+        return;
+      }
+      try {
+        var points = await Promise.all(names.map(geocode));
+        var url = buildStaticMapUrl(points);
+        // Verify that the URL actually returns an image before adding it to LightGallery.
+        var img = await new Promise(function (resolve, reject) {
+          var image = new Image();
+          var timeout = setTimeout(function () { cleanup(); reject(new Error('Map image timed out.')); }, 20000);
+          function cleanup() { clearTimeout(timeout); image.onload = null; image.onerror = null; }
+          image.onload = function () { cleanup(); resolve(image); };
+          image.onerror = function () { cleanup(); reject(new Error('Map image could not load. Check the API key, allowed domains and quota.')); };
+          image.src = url;
+        });
+        img.alt = names.join(' ? ') + ' route overview (straight-line connections)';
+        img.loading = 'eager';
+        var anchor = document.createElement('a');
+        anchor.className = 'tour-gallery-grid__item tour-gallery-grid__item--map tour-img';
+        anchor.href = url;
+        anchor.setAttribute('data-sub-html', escapeHtml(img.alt));
+        anchor.appendChild(img);
+        var label = document.createElement('span');
+        label.className = 'tour-gallery-grid__map-label';
+        label.textContent = 'View route map';
+        anchor.appendChild(label);
+        mapElement.replaceWith(anchor);
+        mapElement = anchor;
+        initGallery();
+      } catch (error) {
+        setMapStatus(error.message === 'Map image timed out.' ? error.message :
+          'Route map unavailable. Check your connection and Geoapify key settings.', true);
+        console.warn('tour-gallery-grid: map loading failed.');
+      }
+    }
+
+    // Show photos immediately; load the map in its reserved, visible final slot.
+    renderGrid();
+    if (mapElement) loadMap();
+  })();
+  </script>
+
+</body>
+</html>

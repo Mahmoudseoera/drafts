@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163e35">
+  <meta name="description" content="Create a personalized travel itinerary around your destination, budget, and travel style.">
+  <title>The Journey Atelier | AI Itinerary Planner</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">✳</span> THE JOURNEY ATELIER</a><span class="header-note">Extraordinary places. Your own pace.</span></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">A LITTLE INSPIRATION. ENDLESS POSSIBILITY.</p>
+      <h1 id="page-title">Your next chapter,<br><em>beautifully planned.</em></h1>
+      <p class="intro-copy">From the first morning coffee to the last golden sunset.<br>Let us shape a journey that feels entirely yours.</p>
+      <span class="ai-label"><span aria-hidden="true">✧</span> AI-powered travel inspiration</span>
+    </section>
+    <div class="planner-layout">
+      <aside class="planner-panel">
+        <div class="panel-heading"><span class="eyebrow">01 / THE POSSIBILITIES</span><h2>Where shall we go?</h2><p>A few details. A world of discovery.</p></div>
+        <form id="trip-form">
+          <fieldset id="form-fields">
+            <label for="destination">Your destination</label>
+            <input id="destination" name="destination" type="text" placeholder="e.g. Kyoto, Japan" maxlength="120" required autocomplete="off">
+            <div class="form-row">
+              <div><label for="days">Number of days</label><input id="days" name="days" type="number" min="1" max="14" step="1" value="5" required></div>
+              <div><label for="budget">Budget level</label><select id="budget" name="budget"><option>Budget</option><option selected>Moderate</option><option>Luxury</option></select></div>
+            </div>
+            <label for="vibe">Your travel style</label>
+            <select id="vibe" name="vibe"><option>Family</option><option>Adventure</option><option>Relaxation</option><option selected>Cultural</option></select>
+            <button class="primary-button" type="submit"><span aria-hidden="true">✧</span> Generate My Itinerary <span aria-hidden="true">↗</span></button>
+          </fieldset>
+          <p class="form-note">Made around you. Ready for a little adventure.</p>
+        </form>
+        <div id="error-message" class="error-message" role="alert" hidden></div>
+        <div class="personal-note"><span aria-hidden="true">◎</span><p><strong>Thoughtfully paced. Personally yours.</strong><br>Daily discoveries, local flavors, and insider tips — all in one place.</p></div>
+      </aside>
+      <section class="journey-panel" aria-labelledby="journey-title" aria-busy="false">
+        <div class="journey-heading"><div><p class="eyebrow">02 / YOUR JOURNEY</p><h2 id="journey-title" tabindex="-1">Good things begin with a plan.</h2></div><button id="print-button" class="secondary-button" type="button" hidden>Print itinerary ↗</button></div>
+        <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+        <div id="empty-state" class="empty-state"><div class="compass" aria-hidden="true"><span>N</span><b>✧</b><span>S</span></div><p class="eyebrow">THE WORLD IS WAITING</p><h3>A journey only you could take.</h3><p>Choose a destination and tell us your style.<br>Your personalized day-by-day itinerary starts here.</p><div class="features"><span>↗ Curated days</span><span>◇ Local discoveries</span><span>☼ Your pace</span></div></div>
+        <div id="loading-state" hidden><div class="loading-copy"><span class="spinner" aria-hidden="true"></span><div><h3>Crafting your personalized trip...</h3><p>Finding the places and moments worth traveling for.</p></div></div><div class="skeleton" aria-hidden="true"></div><div class="skeleton" aria-hidden="true"></div><div class="skeleton" aria-hidden="true"></div><button id="cancel-button" class="secondary-button" type="button">Cancel generation</button></div>
+        <div id="results" hidden></div>
+        <p id="travel-note" class="travel-note" hidden>Consider this your starting point. Check opening hours, availability, entry requirements, and local conditions before you travel.</p>
+      </section>
+    </div>
+  </main>
+  <footer><span>THE JOURNEY ATELIER</span><span>Less planning. More possibility.</span></footer>
+  <noscript><p class="error-message">Please enable JavaScript to generate your itinerary.</p></noscript>
+</body>
+</html>

@@ -1,0 +1,9 @@
+import {fresh,hydrate,migrate,derive} from './engine.mjs';
+const KEY='egypt-story-v2';
+export function load(){try{const raw=localStorage.getItem(KEY);if(raw)return {state:hydrate(JSON.parse(raw))};const legacy=localStorage.getItem('egypt-game');if(legacy)return {state:migrate(JSON.parse(legacy)),notice:'Your earlier explicit experience choices were imported. Anubis’s choices were left out.'};}catch{return {state:derive(fresh()),notice:'Your saved story could not be read. You can still play.'};}return {state:derive(fresh())};}
+export function save(s){try{localStorage.setItem(KEY,JSON.stringify(s));return true;}catch{return false;}}
+export function track(event,detail={}){window.dispatchEvent(new CustomEvent('egypt:analytics',{detail:{event,...detail,timestamp:new Date().toISOString()}}));}
+export function download(data,name){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export function share(s){const token=crypto.randomUUID();const publicState=hydrate({...s,traveler:{name:''},gameHistory:[],games:{}});const encoded=btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(publicState))));return {token,url:location.href.split('#')[0]+'#trip='+token+'.'+encodeURIComponent(encoded)};}
+export function readShare(){if(!location.hash.startsWith('#trip='))return null;try{const [token,data]=location.hash.slice(6).split('.');if(!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(token)||!data||data.length>50000)throw Error();return hydrate(JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(decodeURIComponent(data)),c=>c.charCodeAt(0)))));}catch{return false;}}
+export const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -2,7 +2,7 @@
 // Proxy contract and Laravel setup: visual-search.md.
 const AI = {
   model: 'gemini-3.8-flash',
-  apiKey: 'AQ.Ab8RN6LCR_89VTmLXEis_m5L2YawbTS5TyF77qkO-gg36nnZzA',
+  apiKey: 'AQ.Ab8RN6I9FTEWi-d65SgY-ngBgtqoZ94lw9QdNmZigiK5Pv9-lQ',
   proxyUrl: ''
 };
 (() => {
