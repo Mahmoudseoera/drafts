@@ -1,0 +1,11 @@
+{
+  "realMapMarkers": 8,
+  "playPauseResumeReplay": "passed",
+  "markerTimelineSync": "passed",
+  "scrollSync": "passed",
+  "mapInstancesAfterSwitching": 2,
+  "reducedMotion": "passed",
+  "adapterFixtureRequests": 9,
+  "adapterThrottleAndSuccessFailureCache": "passed",
+  "runtimeErrors": []
+}

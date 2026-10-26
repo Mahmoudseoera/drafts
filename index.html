@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123d3b">
+<title>Build Your Trip — A journey, piece by piece</title>
+<style>
+:root{--ink:#153f3b;--deep:#103d3a;--teal:#177a72;--gold:#b89456;--sand:#eee6d8;--cream:#faf8f3;--white:#fffdf8;--muted:#74837d;--hair:#dddcd4;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,"Avenir Next",Avenir,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.53}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ddaf58;outline-offset:4px}button,input,select{-webkit-tap-highlight-color:transparent}h1,h2,h3,p{margin-top:0}.serif{font-family:Georgia,"Iowan Old Style",Cambria,serif;font-weight:400;letter-spacing:-.035em}a{color:inherit}.site{min-height:100vh;overflow:hidden}.site-header{max-width:1500px;margin:auto;padding:25px clamp(20px,4vw,68px);display:flex;align-items:center;gap:22px;justify-content:space-between;border-bottom:1px solid #e9e4db}.brand{display:flex;align-items:center;gap:11px;color:var(--deep);font-weight:770;letter-spacing:.23em;font-size:13px}.brand-mark{width:35px;height:35px}.brand-mark path,.brand-mark circle{stroke:var(--deep)}.header-caption{font-size:10px;letter-spacing:.2em;font-weight:740;color:#9a9c8f}.text-button{border:0;background:none;color:var(--deep);font-size:12px;font-weight:750;letter-spacing:.055em;padding:10px;display:inline-flex;align-items:center;gap:8px}.text-button:hover{text-decoration:underline}.header-reset svg{width:15px;height:15px}.intro{max-width:1500px;margin:0 auto;padding:37px clamp(20px,4vw,68px) 18px;display:flex;align-items:flex-end;justify-content:space-between;gap:30px}.eyebrow{display:flex;align-items:center;gap:12px;color:var(--gold);font-size:10px;font-weight:800;letter-spacing:.23em;text-transform:uppercase}.eyebrow:before{content:"";display:inline-block;width:27px;height:1px;background:currentColor}.intro h1{font-size:clamp(35px,4.2vw,64px);line-height:1.08;margin:15px 0 0;max-width:740px}.intro h1 em{color:var(--teal);font-weight:400}.intro-sub{max-width:260px;font-size:13px;color:#79847c;line-height:1.75;margin-bottom:7px}.workspace{max-width:1500px;margin:0 auto;padding:25px clamp(20px,4vw,68px) 75px;display:grid;grid-template-columns:minmax(300px,.78fr) minmax(450px,1.22fr);gap:clamp(22px,4vw,65px);align-items:start}.question-panel{padding-top:14px;min-width:0}.step-line{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.step-mark{display:flex;align-items:center;gap:9px;color:var(--teal);font-size:11px;font-weight:780;letter-spacing:.17em}.small-rule{height:1px;background:var(--hair);flex:1;margin:0 16px}.step-index{font-family:Georgia,serif;color:var(--gold);font-size:16px}.question-title{font-size:clamp(34px,3.3vw,54px);line-height:1.08;margin:0 0 16px}.question-desc{max-width:410px;color:#697b75;line-height:1.75;font-size:14px;margin:0 0 18px}.selection-hint{font-size:11px;letter-spacing:.13em;color:#a28a63;font-weight:750;text-transform:uppercase;margin:15px 0 4px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px;margin:5px -8px 10px;max-width:430px}.choice{border:none;background:none;position:relative;width:100%;aspect-ratio:1.12;padding:0;display:flex;align-items:center;justify-content:center;isolation:isolate;transition:transform .24s var(--ease),filter .24s;filter:drop-shadow(0 10px 10px rgba(30,67,62,.10));--label:14px}.choice:hover{transform:translateY(-6px);filter:drop-shadow(0 14px 13px rgba(25,75,68,.19))}.choice.is-selected{filter:drop-shadow(0 0 4px #ae8c53) drop-shadow(0 12px 10px rgba(25,75,68,.16));transform:translateY(-4px)}.choice.is-selected:after{content:"";position:absolute;z-index:3;right:13%;top:12%;width:18px;height:18px;border-radius:50%;background:#fff;border:5px solid var(--teal);box-shadow:0 2px 8px #0002}.choice-svg{display:block;width:92%;height:100%;overflow:visible}.choice-inner{position:absolute;pointer-events:none;inset:0;display:flex;justify-content:flex-end;align-items:center;flex-direction:column;padding:0 22px 22%;color:white;text-shadow:0 2px 10px #08291d9f;line-height:1.2}.choice-name{font-size:clamp(12px,1.1vw,16px);font-weight:800;text-align:center;max-width:155px}.choice-detail{margin-top:5px;font-size:10px;color:#f9e9d0;text-align:center;font-weight:600}.choices[data-count="3"] .choice:last-child{grid-column:auto}.followup{max-width:405px;background:#f1ede3;border:1px solid #e1d8c8;padding:20px 20px 18px;border-radius:3px;box-shadow:0 11px 35px #163b2b09;margin:14px 0}.followup h3{font-size:23px;margin-bottom:7px}.followup p{font-size:12px;line-height:1.7;color:#68766c;margin-bottom:16px}.party-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.counter-label{font-size:11px;font-weight:750;margin-bottom:10px}.counter{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #dad8cf;height:42px}.counter button{border:0;background:none;color:var(--deep);width:30px;height:100%;font-size:19px}.counter strong{font-size:13px;font-variant-numeric:tabular-nums}.followup-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:11px;font-weight:750;color:#46655e;margin-bottom:7px}.field input,.field select{width:100%;min-height:43px;padding:0 12px;background:#fff;border:1px solid #d7d8d0;border-radius:2px;color:#153e3b;font-size:13px;min-width:0}.field-error{color:#a54838;font-size:12px;margin:8px 0 0;min-height:14px}.primary-btn{border:1px solid var(--deep);background:var(--deep);color:white;min-height:48px;padding:12px 20px;display:inline-flex;align-items:center;justify-content:center;gap:18px;font-size:12px;letter-spacing:.045em;font-weight:800;transition:background .2s,transform .2s}.primary-btn:hover{background:#217368;transform:translateY(-2px)}.primary-btn:disabled{transform:none}.secondary-btn{background:transparent;border:1px solid #9baba1;color:var(--deep);min-height:44px;padding:10px 17px;font-size:12px;font-weight:750}.secondary-btn:hover{background:#dceae4}.followup .primary-btn{width:100%;margin-top:15px}.style-next{max-width:405px;margin-top:18px;display:flex;width:100%;justify-content:space-between}.progress-caption{font-size:12px;color:var(--muted);margin-top:9px}.board-column{min-width:0}.board-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 15px;gap:10px}.board-heading h2{font-size:10px;font-weight:800;letter-spacing:.21em;text-transform:uppercase;margin:0}.board-state{font-size:11px;color:var(--teal);font-weight:700}.board-shell{position:relative;padding:15px;background:#e4d9c3;border:1px solid #d4c7b0;box-shadow:0 30px 60px #264c4026,0 2px 6px #264c4015;isolation:isolate}.puzzle-board{width:100%;display:block;overflow:visible;aspect-ratio:3/2;background:#c8c7ac}.board-corner{position:absolute;width:30px;height:30px;border-color:#9e865e;z-index:2;pointer-events:none}.board-corner.tl{left:8px;top:8px;border-left:1px solid;border-top:1px solid}.board-corner.tr{right:8px;top:8px;border-right:1px solid;border-top:1px solid}.board-corner.bl{left:8px;bottom:8px;border-left:1px solid;border-bottom:1px solid}.board-corner.br{right:8px;bottom:8px;border-right:1px solid;border-bottom:1px solid}.board-progress{display:flex;align-items:center;justify-content:space-between;margin:17px 2px 12px;gap:20px;font-size:12px;color:#71827d}.board-progress strong{font-weight:700;color:var(--deep)}.progress-track{height:3px;flex:1;background:#dcded5}.progress-fill{width:0%;height:100%;background:var(--teal);transition:width .6s var(--ease)}.placed-labels{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;min-height:30px}.placed-pill{background:#eae9e0;padding:7px 11px;font-size:10px;font-weight:700;color:#516f66;animation:fade-up .35s ease}.empty-note{font-size:12px;color:#89928a;font-style:italic}.flying-piece{z-index:80;position:fixed;pointer-events:none;filter:drop-shadow(0 20px 18px #0b312a63);transition:left .73s var(--ease),top .73s var(--ease),width .73s var(--ease),height .73s var(--ease),opacity .73s;opacity:1}.flying-piece svg{width:100%;height:100%;display:block}.reveal-tile{transition:opacity .35s ease}.final-chip{position:absolute;bottom:33px;right:36px;color:#fff;border:1px solid #ffffff55;background:#083c36ad;backdrop-filter:blur(7px);font-size:10px;font-weight:790;letter-spacing:.17em;padding:12px 16px;display:none}.board-shell.is-complete .final-chip{display:block}.reward-section{display:none;margin-top:23px;animation:fade-up .65s var(--ease)}.reward-section.is-visible{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,1fr);gap:22px;align-items:center}.reward-copy .eyebrow{font-size:9px}.reward-copy h3{font-size:31px;line-height:1.08;margin:12px 0 10px}.reward-copy p{color:#728078;line-height:1.65;font-size:12px;margin-bottom:0}.scratch-wrap{background:#fff;padding:7px;border:1px solid #ddd0b9;box-shadow:0 13px 25px #173f3920}.scratch-card{position:relative;aspect-ratio:1.9;background:radial-gradient(ellipse at 40% 20%,#287c70,#0e4641 75%);overflow:hidden;color:white;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}.scratch-card:before,.scratch-card:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #dbba7f55;border-radius:50%;pointer-events:none}.scratch-card:before{left:-80px;top:-105px}.scratch-card:after{right:-90px;bottom:-115px}.reward-sub{font-size:9px;font-weight:750;letter-spacing:.25em;color:#ddc58e}.discount-number{font:400 46px/.99 Georgia,serif;margin:7px 0 0}.reward-code{font-size:15px;letter-spacing:.23em;font-weight:830;margin-top:7px}.scratch-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;transition:opacity .5s;z-index:1}.scratch-canvas.is-cleared{opacity:0;pointer-events:none}.scratch-actions{display:flex;align-items:center;gap:9px;justify-content:space-between;margin-top:12px}.scratch-actions button{flex:1}.scratch-status{font-size:11px;color:#56756d;margin:9px 0 0;text-align:center;min-height:15px}.recap{padding-top:10px;max-width:455px}.recap-intro{font-size:14px;line-height:1.8;color:#647971;margin:0 0 25px}.recap-list{border-top:1px solid var(--hair);margin:15px 0 25px}.recap-line{display:flex;justify-content:space-between;align-items:start;gap:25px;border-bottom:1px solid var(--hair);padding:13px 0}.recap-line span:first-child{font-size:11px;color:#80918a}.recap-line span:last-child{text-align:right;font-size:12px;font-weight:790;max-width:66%}.recap .primary-btn{margin-top:14px}.footer{max-width:1500px;margin:auto;padding:20px clamp(20px,4vw,68px) 35px;border-top:1px solid #e9e5da;display:flex;justify-content:space-between;gap:12px;color:#82938c;font-size:11px}.footer strong{letter-spacing:.17em;color:var(--deep)}
+/* Traveler details modal */
+.modal-wrap{position:fixed;inset:0;background:rgba(10,37,34,.62);backdrop-filter:blur(10px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}.modal-wrap.is-hidden{display:none}.modal-card{width:min(910px,100%);max-height:min(95vh,890px);overflow:auto;background:#fcfaf5;display:grid;grid-template-columns:.85fr 1.15fr;box-shadow:0 38px 110px #0926238a;animation:modal-enter .5s var(--ease)}.modal-art{min-height:510px;background:linear-gradient(158deg,#0a3533b9,#0d55454a),url('https://images.unsplash.com/photo-1539768942893-daf53e448371?auto=format&fit=crop&w=950&q=80') center/cover,#366b60;color:white;position:relative;padding:36px;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}.modal-art:before{content:"";position:absolute;inset:0;background:linear-gradient(170deg,#082d2a77,transparent 55%,#072f2cbd);z-index:-1}.art-brand{font-size:10px;letter-spacing:.23em;font-weight:790}.art-caption{font-size:12px;line-height:1.75;max-width:245px;color:#f6eee4}.art-title{font:400 clamp(32px,3.6vw,52px)/1.09 Georgia,serif;letter-spacing:-.04em;margin:0 0 20px}.modal-form{padding:clamp(23px,3.5vw,48px)}.modal-form h2{font-size:39px;line-height:1.08;margin:15px 0 10px}.modal-form>p{font-size:12px;line-height:1.7;color:#6a7b74;margin-bottom:23px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 14px}.form-grid .field:first-child,.form-grid .field:nth-child(2),.form-grid .field:nth-child(3),.form-grid .field:last-child{grid-column:1/-1}.phone-pair{display:grid;grid-template-columns:105px 1fr;gap:8px}.modal-submit{width:100%;margin-top:23px;min-height:51px}.form-smallprint{color:#96a099;font-size:10px;text-align:center;margin:13px 0 0;line-height:1.5}.modal-icon{width:37px;height:37px;color:var(--gold)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@keyframes modal-enter{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}@keyframes fade-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:1100px){.workspace{grid-template-columns:minmax(300px,.9fr) minmax(370px,1.1fr);gap:24px}.choice-inner{padding-bottom:20%}.reward-section.is-visible{grid-template-columns:1fr}.reward-copy h3{font-size:28px}.scratch-wrap{max-width:430px}}
+@media(max-width:760px){.site-header{padding:16px 20px}.header-caption{display:none}.brand{font-size:11px}.intro{padding:32px 22px 2px;display:block}.intro h1{font-size:42px}.intro-sub{margin-top:12px;max-width:420px}.workspace{display:flex;flex-direction:column;padding:19px 20px 48px;gap:28px}.board-column{order:0;width:100%;position:sticky;top:0;z-index:8;background:var(--cream);padding-top:9px;padding-bottom:5px}.board-column.is-finished{position:static}.question-panel{order:1;width:100%;padding-top:0}.board-shell{padding:10px}.board-corner.tl{left:5px;top:5px}.board-corner.tr{right:5px;top:5px}.board-corner.bl{left:5px;bottom:5px}.board-corner.br{right:5px;bottom:5px}.choices{max-width:550px;grid-template-columns:repeat(2,minmax(0,1fr))}.choice{aspect-ratio:1.22}.choice-inner{padding-bottom:19%}.question-title{font-size:43px}.reward-section.is-visible{grid-template-columns:minmax(0,1fr) minmax(230px,1fr)}.modal-card{grid-template-columns:1fr;max-width:530px}.modal-art{min-height:155px;padding:23px;background-position:center 48%}.modal-art .art-title{font-size:27px;margin:10px 0 0}.art-caption{display:none}.modal-form{padding:25px 26px 30px}.modal-form h2{font-size:33px}.modal-form>p{margin-bottom:19px}.footer{padding:20px;flex-wrap:wrap}}
+@media(max-width:480px){.intro h1{font-size:37px}.header-reset{font-size:10px}.question-title{font-size:37px}.reward-section.is-visible{grid-template-columns:1fr}.choice-name{font-size:13px}.choice-inner{padding:0 8px 20%}.choice-detail{font-size:9px}.choices{gap:3px;margin-left:-10px;margin-right:-10px}.followup{padding:15px}.phone-pair{grid-template-columns:90px 1fr}.modal-wrap{padding:9px}.modal-art{min-height:125px}.modal-form{padding:21px}.modal-form h2{font-size:30px}.form-grid{gap:12px}.form-grid .field:nth-child(3),.form-grid .field:nth-child(4){grid-column:1/-1}.form-grid .field:nth-child(2){grid-column:1/-1}.party-grid{gap:5px}.counter button{width:25px}.modal-form>p{margin-bottom:15px}.field label{margin-bottom:4px}.field input,.field select{min-height:41px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="site" id="site" inert>
+<header class="site-header">
+ <div class="brand"><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="17" stroke-width="1"/><circle cx="20" cy="20" r="8" stroke-width="1"/><path d="M20 4V36M4 20H36M27 13L18 22L13 27L22 18Z" stroke-width="1"/></svg><span>ATELIER <span style="font-weight:400">TRAVEL</span></span></div>
+ <div class="header-caption">A CURATED EXPERIENCE, JUST FOR YOU</div>
+ <button class="text-button header-reset" id="headerRestart" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 11a9 9 0 1 1 3 7M3 3v8h8"/></svg> START OVER</button>
+</header>
+<section class="intro"><div><div class="eyebrow">The journey begins here</div><h1 class="serif">Build your trip, <em>piece by piece.</em></h1></div><p class="intro-sub">Every great journey is made of moments. Choose yours, and watch your story come together.</p></section>
+<main class="workspace" id="main">
+ <section class="question-panel" aria-label="Trip questions"><div id="questionArea" aria-live="polite" aria-atomic="true"></div></section>
+ <section class="board-column" aria-label="Interactive jigsaw board">
+  <div class="board-heading"><h2>Your journey in the making</h2><div class="board-state" id="boardState">THE FIRST PIECE AWAITS</div></div>
+  <div class="board-shell" id="boardShell"><span class="board-corner tl"></span><span class="board-corner tr"></span><span class="board-corner bl"></span><span class="board-corner br"></span><svg id="puzzleBoard" class="puzzle-board" viewBox="0 0 900 600" role="img" aria-label="Six interlocking puzzle pieces progressively reveal a travel photograph"></svg><span class="final-chip">YOUR JOURNEY AWAITS</span></div>
+  <div class="board-progress"><span id="progressText"><strong>0 of 6</strong> pieces placed</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="progressFill" style="display:block"></span></span><span id="progressPercent">0%</span></div>
+  <div class="placed-labels" id="placedLabels"><span class="empty-note">Your first decision brings the picture to life.</span></div>
+  <section class="reward-section" id="rewardSection" aria-label="Scratch-to-reveal reward">
+   <div class="reward-copy"><div class="eyebrow">A little something for you</div><h3 class="serif">Your adventure deserves a reward.</h3><p>Scratch the gold surface with your finger or mouse to uncover your sample reward.</p></div>
+   <div><div class="scratch-wrap"><div class="scratch-card" id="scratchCard"><span class="reward-sub">A GIFT FOR THE JOURNEY</span><strong class="discount-number">10% OFF</strong><span class="reward-code" id="rewardCode">TRIP10</span><canvas class="scratch-canvas" id="scratchCanvas" aria-label="Scratch the coating with your pointer to reveal your demonstration discount code"></canvas></div></div><div class="scratch-actions"><button class="secondary-btn" type="button" id="revealButton">Reveal instead</button><button class="primary-btn" type="button" id="copyButton" disabled>Copy code</button></div><p class="scratch-status" id="scratchStatus" role="status" aria-live="polite">Demonstration reward only. Not valid for bookings.</p></div>
+  </section>
+ </section>
+</main>
+<footer class="footer"><strong>ATELIER TRAVEL</strong><span>Thoughtfully designed journeys. Standalone interactive concept · No booking or payment.</span></footer>
+</div>
+<div class="modal-wrap" id="travelerModal">
+ <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <section class="modal-art"><span class="art-brand">ATELIER TRAVEL / AN INVITATION</span><div><h2 class="art-title">Every journey<br>starts with a story.</h2><p class="art-caption">Tell us a little about yourself. We will make the rest feel like an adventure.</p></div><span class="art-brand">A JOURNEY DESIGNED AROUND YOU</span></section>
+  <form class="modal-form" id="travelerForm" novalidate>
+   <svg class="modal-icon" viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="20" cy="20" r="16" stroke-width="1"/><path d="M20 8l4 8-4 16-4-16zM9 20h22" stroke-width="1.2"/></svg>
+   <div class="eyebrow" style="margin-top:13px">Before we begin</div><h2 class="serif" id="modalTitle">Let's get acquainted.</h2><p id="modalDesc">Just a few details, then your personalized travel puzzle is ready. This is a private, in-browser demonstration.</p>
+   <div class="form-grid">
+    <div class="field"><label for="fullName">Full name</label><input id="fullName" name="fullName" placeholder="e.g. Alex Morgan" autocomplete="name" required maxlength="80"></div>
+    <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" placeholder="alex@example.com" autocomplete="email" required></div>
+    <div class="field"><label for="phone">Phone number</label><div class="phone-pair"><select id="callingCode" name="callingCode" aria-label="Country calling code"><option value="+20">+20 EG</option><option value="+1">+1 US/CA</option><option value="+44">+44 UK</option><option value="+33">+33 FR</option><option value="+49">+49 DE</option><option value="+971">+971 AE</option><option value="+91">+91 IN</option><option value="+61">+61 AU</option></select><input id="phone" name="phone" placeholder="100 123 4567" inputmode="tel" autocomplete="tel-national" required></div></div>
+    <div class="field"><label for="nationality">Nationality</label><select id="nationality" name="nationality" required><option value="">Select nationality</option><option>Egyptian</option><option>American</option><option>British</option><option>Canadian</option><option>French</option><option>German</option><option>Emirati</option><option>Indian</option><option>Australian</option><option>Other / Prefer not to say</option></select></div>
+   </div>
+   <p class="field-error" id="modalError" role="alert"></p><button class="primary-btn modal-submit" type="submit">Start Building My Trip <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 6.5h15m-6-6 6 6-6 6"/></svg></button><div class="form-smallprint">Demo only. Your information remains in this browser session.</div>
+  </form>
+ </div>
+</div>
+<script>
+(() => {
+'use strict';
+/*
+  COMPLETION RULES — deliberately data-driven, no unused stages:
+  1. Traveler name, valid email, country code, valid phone, nationality exist.
+  2. Party type exists; adults >= 1, children/infants >= 0, valid group-size values.
+  3. Travel time is EITHER a valid future start/end range OR an explicit flexible period.
+  4. At least one travel style is selected (the board gets just one style-category tile).
+  5. Destination is selected (including the explicit "Surprise me" selection).
+  6. Budget tier is selected (including "Flexible").
+  The next stage is the FIRST incomplete field group in REQUIRED_STAGES. On completion
+  the sixth, decorative finishing tile reveals automatically: it is not a question.
+  No information is posted anywhere, no framework/API/backend used.
+*/
+const REQUIRED_STAGES=['party','dates','styles','destination','budget'];
+const HERO='https://images.unsplash.com/photo-1539768942893-daf53e448371?auto=format&fit=crop&w=1600&q=85';
+const IMG={solo:'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=560&q=80',couple:'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=560&q=80',family:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=560&q=80',friends:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=560&q=80',exact:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=560&q=80',soon:'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=560&q=80',summer:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=560&q=80',flex:'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=560&q=80',culture:'https://images.unsplash.com/photo-1539768942893-daf53e448371?auto=format&fit=crop&w=560&q=80',beach:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=560&q=80',adventure:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=560&q=80',nature:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=560&q=80',cairo:'https://images.unsplash.com/photo-1539768942893-daf53e448371?auto=format&fit=crop&w=560&q=80',redsea:'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=560&q=80',aswan:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=560&q=80',suggest:'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=560&q=80',essential:'https://images.unsplash.com/photo-1497436072909-60f362e1d4b1?auto=format&fit=crop&w=560&q=80',comfort:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=560&q=80',signature:'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=560&q=80',open:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=560&q=80'};
+// Embedded illustrated backdrops keep all puzzle pieces visually complete even offline.
+const FALLBACK_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600"><defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a6c9be"/><stop offset=".55" stop-color="#eee0bd"/><stop offset="1" stop-color="#f0bc89"/></linearGradient><linearGradient id="earth" x2="0" y2="1"><stop stop-color="#c4a87d"/><stop offset="1" stop-color="#aa7955"/></linearGradient></defs><path fill="url(#sky)" d="M0 0h900v600H0z"/><circle cx="680" cy="165" r="78" fill="#fae7b6" opacity=".8"/><path d="M0 325Q180 280 350 326T900 306v294H0z" fill="#cab28d"/><path d="M0 427Q205 350 500 410T900 386v214H0z" fill="url(#earth)"/><path d="M12 513l205-286 206 286z" fill="#b68d62"/><path d="M220 512l150-225 169 225z" fill="#ceb087"/><path d="M240 387l-23-160 81 113z" fill="#f0cf9b" opacity=".33"/><path d="M590 512L738 305l152 207z" fill="#9b8066" opacity=".74"/><path d="M0 540Q230 500 480 542T900 526v74H0z" fill="#567c75" opacity=".75"/></svg>`;
+const SVG_DATA='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(FALLBACK_SVG);
+const OPTIONS={
+party:[{id:'solo',label:'Solo',detail:'Just me',hue:'#668780'},{id:'couple',label:'Couple',detail:'For two',hue:'#ab8b6b'},{id:'family',label:'Family',detail:'Together is better',hue:'#497467'},{id:'friends',label:'Friends or Group',detail:'Our kind of adventure',hue:'#628282'}],
+dates:[{id:'exact',label:'Choose my dates',detail:'I have a plan',hue:'#648e80'},{id:'soon',label:'Next 3 months',detail:'Flexible window',hue:'#769b8c'},{id:'summer',label:'Summer 2027',detail:'June — August',hue:'#ac9273'},{id:'flex',label:'Anytime in 2027',detail:'Keep it open',hue:'#748376'}],
+styles:[{id:'culture',label:'Culture & History',detail:'Stories of the past',hue:'#9e8064'},{id:'beach',label:'Beaches & Relaxation',detail:'Slow down',hue:'#437e83'},{id:'adventure',label:'Adventure',detail:'The road less taken',hue:'#68847a'},{id:'nature',label:'Nature',detail:'Wild and wonderful',hue:'#799171'}],
+destination:[{id:'cairo',label:'Cairo & Luxor',detail:'Ancient wonders',hue:'#987957'},{id:'redsea',label:'The Red Sea',detail:'Coastal escapes',hue:'#277e86'},{id:'aswan',label:'Aswan & Nile',detail:'River journeys',hue:'#587a66'},{id:'suggest',label:'Surprise me',detail:'You decide',hue:'#6b8d8b'}],
+budget:[{id:'essential',label:'Essential',detail:'Under $1,000 / person',hue:'#638a79'},{id:'comfort',label:'Comfort',detail:'$1,000–$2,500 / person',hue:'#8b8875'},{id:'signature',label:'Signature',detail:'$2,500+ / person',hue:'#7d7867'},{id:'open',label:'Flexible',detail:'Open to ideas',hue:'#668c84'}]};
+const META={party:{title:'Who is coming along?',desc:'The best journeys start with the people you share them with. Choose the piece that feels right.',hint:'CHOOSE YOUR TRAVEL COMPANIONS'},dates:{title:'When shall we set off?',desc:'Have your dates ready? Wonderful. A little flexibility can open up even more possibilities.',hint:'PICK YOUR TRAVEL WINDOW'},styles:{title:'What moves your soul?',desc:'Choose one or more experiences. Every interest adds another layer to your trip.',hint:'SELECT ALL THAT INSPIRE YOU'},destination:{title:'Where will wonder take you?',desc:'Follow a place you love, or leave the destination as a beautiful surprise.',hint:'CHOOSE YOUR DESTINATION'},budget:{title:'How would you like to travel?',desc:'There is something remarkable at every price point. Choose the level that feels right for you.',hint:'YOUR PREFERRED BUDGET'}};
+let state;
+let busy=false;
+let pendingDateElement=null;
+let currentStage='party';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const prefersReduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function freshState(){return {traveler:null,party:null,count:null,dates:null,styles:[],destination:null,budget:null,placed:[false,false,false,false,false,false],finished:false,selectedStyles:[],datePending:false,detailsPending:false,rewardRevealed:false};}
+const signH=[[1,-1,1]]; // internal row boundary: top cell bottom and bottom cell top share the same path.
+const signV=[[1,-1],[ -1,1]]; // vertical joins: reversed contours are equal and opposite.
+const f=n=>Number(n.toFixed(2));
+function edge(x0,y0,x1,y1,sgn){
+ const dx=x1-x0,dy=y1-y0,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L,A=sgn*70;
+ const pt=(t,off=0)=>`${f(x0+dx*t+nx*off)} ${f(y0+dy*t+ny*off)}`;
+ if(!sgn)return `L ${pt(1)}`;
+ return `L ${pt(.30)} C ${pt(.38)} ${pt(.41,-.09*A)} ${pt(.39,.07*A)} C ${pt(.31,.15*A)} ${pt(.35,.34*A)} ${pt(.50,.35*A)} C ${pt(.65,.34*A)} ${pt(.69,.15*A)} ${pt(.61,.07*A)} C ${pt(.59,-.09*A)} ${pt(.62)} ${pt(.70)} L ${pt(1)}`;
+}
+function pathFor(index,local=false){
+ const row=Math.floor(index/3),col=index%3;
+ const x=local?0:col*300,y=local?0:row*300;
+ return `M ${x} ${y}`+
+ edge(x,y,x+300,y,row>0?signH[0][col]:0)+
+ edge(x+300,y,x+300,y+300,col<2?signV[row][col]:0)+
+ edge(x+300,y+300,x,y+300,row<1?-signH[0][col]:0)+
+ edge(x,y+300,x,y,col>0?-signV[row][col-1]:0)+' Z';
+}
+function optionArt(option,stageIndex,unique){
+ const id=`clip_${unique}`,shade=`shade_${unique}`,path=pathFor(stageIndex,true);
+ return `<svg class="choice-svg" viewBox="-34 -34 368 368" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><clipPath id="${id}"><path d="${path}"/></clipPath><linearGradient id="${shade}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#092c2c" stop-opacity=".10"/><stop offset=".47" stop-color="#092c2c" stop-opacity=".12"/><stop offset="1" stop-color="#062927" stop-opacity=".9"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="300" height="300" fill="${option.hue}"/><image href="${SVG_DATA}" x="0" y="0" width="300" height="300" preserveAspectRatio="xMidYMid slice"/><image href="${IMG[option.id]||HERO}" x="0" y="0" width="300" height="300" preserveAspectRatio="xMidYMid slice"/><rect x="0" y="0" width="300" height="300" fill="url(#${shade})"/></g><path d="${path}" fill="none" stroke="#fff8e9" stroke-opacity=".7" stroke-width="2.2"/></svg>`;
+}
+function renderBoard(){
+ const svg=$('puzzleBoard');let html='<defs>';
+ for(let i=0;i<6;i++)html+=`<clipPath id="tileclip_${i}"><path d="${pathFor(i)}"/></clipPath>`;
+ html+='</defs>';
+ html+=`<image href="${SVG_DATA}" width="900" height="600" preserveAspectRatio="xMidYMid slice"/>`;
+ html+=`<image href="${HERO}" width="900" height="600" opacity=".22" preserveAspectRatio="xMidYMid slice"/>`;
+ html+='<rect width="900" height="600" fill="#e6dbc5" opacity=".53"/>';
+ for(let i=0;i<6;i++)html+=`<g clip-path="url(#tileclip_${i})" opacity="${state.placed[i]?1:0}" class="reveal-tile" id="boardTile_${i}"><image href="${SVG_DATA}" width="900" height="600" preserveAspectRatio="xMidYMid slice"/><image href="${HERO}" width="900" height="600" preserveAspectRatio="xMidYMid slice"/></g>`;
+ for(let i=0;i<6;i++)html+=`<path d="${pathFor(i)}" fill="none" stroke="${state.placed[i]?'#fff1d6':'#837968'}" stroke-opacity="${state.placed[i]?'.72':'.62'}" stroke-width="${state.placed[i]?2:2.6}" />`;
+ svg.innerHTML=html;
+ updateBoardMeta();
+}
+function updateBoardMeta(){
+ const n=state.placed.filter(Boolean).length;
+ $('progressText').innerHTML=`<strong>${n} of 6</strong> pieces placed`;
+ $('progressFill').style.width=`${n/6*100}%`;
+ $('progressPercent').textContent=`${Math.round(n/6*100)}%`;
+ $('boardState').textContent=state.finished?'THE PICTURE IS COMPLETE':n===0?'THE FIRST PIECE AWAITS':`${n} PIECE${n!==1?'S':''} FOUND`;
+ $('boardShell').classList.toggle('is-complete',state.finished);
+ document.querySelector('.board-column').classList.toggle('is-finished',state.finished);
+ const tags=[];
+ if(state.party)tags.push(OPTIONS.party.find(x=>x.id===state.party)?.label);
+ if(state.dates)tags.push(state.dates.type==='fixed'?'Dates selected':state.dates.label);
+ if(state.styles.length)tags.push(state.styles.map(x=>OPTIONS.styles.find(y=>y.id===x)?.label).join(' + '));
+ if(state.destination)tags.push(OPTIONS.destination.find(x=>x.id===state.destination)?.label);
+ if(state.budget)tags.push(OPTIONS.budget.find(x=>x.id===state.budget)?.label);
+ $('placedLabels').innerHTML=tags.length?tags.map(s=>`<span class="placed-pill">${esc(s)}</span>`).join(''):'<span class="empty-note">Your first decision brings the picture to life.</span>';
+}
+function completeFor(key){
+ switch(key){
+ case 'party':return !!state.party&&!!state.count&&state.count.adults>=1&&state.count.children>=0&&state.count.infants>=0&&Number.isInteger(state.count.adults)&&Number.isInteger(state.count.children)&&Number.isInteger(state.count.infants);
+ case 'dates':return !!state.dates&&(state.dates.type==='flex'?!!state.dates.period:state.dates.type==='fixed'&&!!state.dates.start&&!!state.dates.end&&state.dates.end>=state.dates.start&&state.dates.start>=localISO(new Date()));
+ case 'styles':return state.styles.length>0;
+ case 'destination':return !!state.destination;
+ case 'budget':return !!state.budget;
+ }return false;
+}
+function travelerValid(t){return !!t&&t.name.trim().length>=2&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t.email)&&/^\+\d{1,4}$/.test(t.callingCode)&&t.phone.replace(/\D/g,'').length>=7&&t.phone.replace(/\D/g,'').length<=15&&!!t.nationality;}
+function allComplete(){return travelerValid(state.traveler)&&REQUIRED_STAGES.every(completeFor);}
+function nextRequired(){return REQUIRED_STAGES.find(x=>!completeFor(x))||null;}
+function stepIndex(k){return REQUIRED_STAGES.indexOf(k);}
+function renderStep(){
+ if(state.finished){renderRecap();return;}
+ const key=nextRequired(); if(!key){if(allComplete())finishJourney();return;}
+ currentStage=key;
+ const i=stepIndex(key),meta=META[key];
+ $('questionArea').innerHTML=`<div class="step-line"><span class="step-mark">CHAPTER ${String(i+1).padStart(2,'0')} <span style="color:#7e9b92;letter-spacing:0">/ 05</span></span><span class="small-rule"></span><span class="step-index">${String(i+1).padStart(2,'0')}</span></div><h2 class="serif question-title">${meta.title}</h2><p class="question-desc">${meta.desc}</p><div class="selection-hint">${meta.hint}</div><div class="choices" id="choices" data-count="${OPTIONS[key].length}" role="group" aria-label="${meta.title}"></div><div id="followupContainer"></div>`;
+ const choices=$('choices');
+ OPTIONS[key].forEach((opt,idx)=>{
+  const btn=document.createElement('button');btn.type='button';btn.className='choice';btn.dataset.id=opt.id;btn.setAttribute('aria-label',`${opt.label}. ${opt.detail}`);
+  if(key==='styles'){btn.setAttribute('aria-pressed',state.selectedStyles.includes(opt.id)?'true':'false'); if(state.selectedStyles.includes(opt.id))btn.classList.add('is-selected');}
+  btn.innerHTML=optionArt(opt,i,`${key}_${idx}`)+`<span class="choice-inner"><span class="choice-name">${esc(opt.label)}</span><span class="choice-detail">${esc(opt.detail)}</span></span>`;
+  btn.addEventListener('click',()=>choose(key,opt,btn));choices.append(btn);
+ });
+ if(key==='styles')renderStyleContinue();
+ if(state.traveler && window.innerWidth<=760)requestAnimationFrame(()=>{document.documentElement.style.scrollPaddingTop=(document.querySelector('.board-column').offsetHeight+18)+'px';$('questionArea').scrollIntoView({block:'start',behavior:prefersReduced()?'instant':'smooth'});});
+}
+function choose(key,opt,button){
+ if(busy)return;
+ if(key==='styles'){
+  const ix=state.selectedStyles.indexOf(opt.id);if(ix>=0)state.selectedStyles.splice(ix,1);else state.selectedStyles.push(opt.id);
+  $('choices').querySelectorAll('.choice').forEach(b=>{const yes=state.selectedStyles.includes(b.dataset.id);b.classList.toggle('is-selected',yes);b.setAttribute('aria-pressed',String(yes));});
+  renderStyleContinue();return;
+ }
+ if(key==='party'){
+  state.party=opt.id;
+  state.count=opt.id==='solo'?{adults:1,children:0,infants:0}:opt.id==='couple'?{adults:2,children:0,infants:0}:null;
+  state.detailsPending=!state.count;
+  animatePlacement(0,button,()=>{if(state.detailsPending)renderPartyCounts();else renderStep();});return;
+ }
+ if(key==='dates'){
+  if(opt.id==='exact'){pendingDateElement=button;state.datePending=true;renderDateInput();button.classList.add('is-selected');return;}
+  const periods={soon:'Next 3 months',summer:'June–August 2027',flex:'Anytime in 2027'};
+  state.dates={type:'flex',period:opt.id,label:periods[opt.id]};animatePlacement(1,button,renderStep);return;
+ }
+ if(key==='destination'){state.destination=opt.id;animatePlacement(3,button,renderStep);return;}
+ if(key==='budget'){state.budget=opt.id;animatePlacement(4,button,()=>{if(allComplete())finishJourney();else renderStep();});return;}
+}
+function renderStyleContinue(){
+ let wrap=$('followupContainer');if(!wrap)return;
+ wrap.innerHTML=`<button class="primary-btn style-next" id="styleContinue" ${state.selectedStyles.length===0?'disabled':''} type="button"><span>Continue with ${state.selectedStyles.length} experience${state.selectedStyles.length===1?'':'s'}</span><span aria-hidden="true">→</span></button><p class="progress-caption">Choose up to four. Your puzzle records the combined selection as one piece.</p>`;
+ $('styleContinue').addEventListener('click',()=>{
+  if(!state.selectedStyles.length||busy)return;
+  const selectedButton=$('choices').querySelector(`.choice[data-id="${state.selectedStyles[0]}"]`);
+  state.styles=[...state.selectedStyles];animatePlacement(2,selectedButton,renderStep);
+ });
+}
+function renderPartyCounts(){
+ const defaults=state.party==='family'?{adults:2,children:2,infants:0}:{adults:4,children:0,infants:0};
+ const holder=$('followupContainer');if(!holder)return;
+ holder.innerHTML=`<div class="followup"><h3 class="serif">How many travelers?</h3><p>A little detail to help us tailor the experience. Adjust the suggested numbers.</p><div class="party-grid">${['adults','children','infants'].map(type=>`<div><div class="counter-label">${type[0].toUpperCase()+type.slice(1)}</div><div class="counter"><button type="button" data-counter="${type}" data-delta="-1" aria-label="Decrease ${type}">−</button><strong id="n_${type}" aria-live="polite">${defaults[type]}</strong><button type="button" data-counter="${type}" data-delta="1" aria-label="Increase ${type}">+</button></div></div>`).join('')}</div><p class="field-error" id="partyError" role="alert"></p><button class="primary-btn" id="confirmParty" type="button">Continue journey <span aria-hidden="true">→</span></button></div>`;
+ holder.querySelectorAll('[data-counter]').forEach(btn=>btn.addEventListener('click',()=>{
+  const kind=btn.dataset.counter;defaults[kind]=Math.max(kind==='adults'?1:0,Math.min(24,defaults[kind]+Number(btn.dataset.delta)));$('n_'+kind).textContent=defaults[kind];
+ }));
+ if(window.innerWidth<=760)requestAnimationFrame(()=>holder.scrollIntoView({block:'nearest',behavior:prefersReduced()?'instant':'smooth'}));
+ $('confirmParty').addEventListener('click',()=>{if(defaults.adults+defaults.children+defaults.infants>30){$('partyError').textContent='Maximum 30 travelers in this demonstration.';return;}state.count={...defaults};state.detailsPending=false;renderStep();});
+}
+function localISO(date){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`;}
+function addDays(date,n){const d=new Date(date);d.setDate(d.getDate()+n);return d;}
+function renderDateInput(){
+ const holder=$('followupContainer');if(!holder)return;
+ const tomorrow=addDays(new Date(),21);const end=addDays(tomorrow,7);
+ holder.innerHTML=`<div class="followup"><h3 class="serif">Choose your dates</h3><p>Tell us when your adventure should begin and end.</p><div class="followup-dates"><div class="field"><label for="startDate">Arrival</label><input id="startDate" type="date" value="${localISO(tomorrow)}" min="${localISO(new Date())}"></div><div class="field"><label for="endDate">Departure</label><input id="endDate" type="date" value="${localISO(end)}" min="${localISO(new Date())}"></div></div><p class="field-error" id="dateError" role="alert"></p><button type="button" class="primary-btn" id="confirmDates">Add these dates <span aria-hidden="true">→</span></button></div>`;
+ if(window.innerWidth<=760)requestAnimationFrame(()=>holder.scrollIntoView({block:'nearest',behavior:prefersReduced()?'instant':'smooth'}));
+ $('confirmDates').addEventListener('click',()=>{
+ const start=$('startDate').value,end=$('endDate').value;
+ if(!start||!end||start<localISO(new Date())||end<start){$('dateError').textContent='Select valid future dates. Departure must be after or on arrival.';return;}
+ state.dates={type:'fixed',start,end};state.datePending=false;animatePlacement(1,pendingDateElement,renderStep);
+ });
+}
+function animatePlacement(index,source,after){
+ busy=true;
+ const reveal=()=>{state.placed[index]=true;const tile=$('boardTile_'+index);if(tile)tile.setAttribute('opacity','1');updateBoardMeta();busy=false;if(after)after();};
+ if(prefersReduced()||!source||!source.isConnected){reveal();return;}
+ const svg=source.querySelector('svg');
+ if(!svg){reveal();return;}
+ const src=svg.getBoundingClientRect(),board=$('puzzleBoard').getBoundingClientRect();
+ const target={left:board.left+(index%3)*board.width/3,top:board.top+Math.floor(index/3)*board.height/2,width:board.width/3,height:board.height/2};
+ const flying=document.createElement('div');flying.className='flying-piece';Object.assign(flying.style,{left:src.left+'px',top:src.top+'px',width:src.width+'px',height:src.height+'px'});
+ // IDs are unique on the flying copy so SVG clip paths cannot conflict with source pieces.
+ const art=svg.cloneNode(true),uniq='f'+Date.now()+'_'+index;
+ const ids=Array.from(art.querySelectorAll('[id]'),el=>el.id);
+ art.querySelectorAll('[id]').forEach((el,j)=>{el.id=ids[j]+'_'+uniq;});
+ art.querySelectorAll('*').forEach(el=>{for(const attr of Array.from(el.attributes)){let v=attr.value;for(const old of ids)v=v.replaceAll(`url(#${old})`,`url(#${old}_${uniq})`);if(v!==attr.value)el.setAttribute(attr.name,v);}});
+ flying.append(art);document.body.append(flying);
+ requestAnimationFrame(()=>requestAnimationFrame(()=>Object.assign(flying.style,{left:target.left+'px',top:target.top+'px',width:target.width+'px',height:target.height+'px',opacity:'.83'})));
+ setTimeout(()=>{flying.remove();reveal();},780);
+}
+function finishJourney(){
+ if(!allComplete()||state.finished)return;
+ busy=true;
+ const autoFill=()=>{state.placed[5]=true;state.finished=true;busy=false;const tile=$('boardTile_5');if(tile)tile.setAttribute('opacity','1');updateBoardMeta();renderRecap();$('rewardSection').classList.add('is-visible');setupScratch();if(window.innerWidth<=760){document.documentElement.style.scrollPaddingTop='0px';requestAnimationFrame(()=>document.querySelector('.board-column').scrollIntoView({block:'start',behavior:prefersReduced()?'instant':'smooth'}));}};
+ if(prefersReduced())autoFill();else setTimeout(autoFill,420);
+}
+function readableDates(){if(!state.dates)return 'Not selected';if(state.dates.type==='flex')return state.dates.label;const opt={month:'short',day:'numeric',year:'numeric'};const fmt=s=>new Date(s+'T12:00:00').toLocaleDateString('en-GB',opt);return fmt(state.dates.start)+' — '+fmt(state.dates.end);}
+function renderRecap(){
+ const values=[['Travelers',OPTIONS.party.find(x=>x.id===state.party)?.label+` · ${state.count.adults} adults${state.count.children?`, ${state.count.children} children`:''}${state.count.infants?`, ${state.count.infants} infants`:''}`],['Dates',readableDates()],['Experiences',state.styles.map(x=>OPTIONS.styles.find(y=>y.id===x)?.label).join(', ')],['Destination',OPTIONS.destination.find(x=>x.id===state.destination)?.label],['Budget',OPTIONS.budget.find(x=>x.id===state.budget)?.label]];
+ $('questionArea').innerHTML=`<div class="step-line"><span class="step-mark">THE FINAL CHAPTER</span><span class="small-rule"></span><span class="step-index">06</span></div><h2 class="serif question-title">It all comes <em style="color:var(--teal)">together.</em></h2><div class="recap"><p class="recap-intro">Beautifully done, <strong>${esc(state.traveler.name.split(/\s+/)[0])}</strong>. Every piece tells a little part of your story. This is the trip you imagined.</p><div class="recap-list">${values.map(([name,value])=>`<div class="recap-line"><span>${esc(name)}</span><span>${esc(value)}</span></div>`).join('')}</div><p class="progress-caption">Your selections stay in this browser and are not submitted or booked.</p><button class="primary-btn" id="recapRestart" type="button">Build another trip <span aria-hidden="true">→</span></button></div>`;
+ $('recapRestart').addEventListener('click',restart);
+}
+let scratchDown=false, scratchLast=null;
+function setupScratch(){
+ const canvas=$('scratchCanvas');const card=$('scratchCard');const r=card.getBoundingClientRect();
+ const ratio=Math.min(window.devicePixelRatio||1,2);const w=Math.max(1,r.width),h=Math.max(1,r.height);
+ canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);
+ canvas.classList.remove('is-cleared');canvas.style.pointerEvents='auto';
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.setTransform(ratio,0,0,ratio,0,0);
+ const gradient=ctx.createLinearGradient(0,0,w,h);gradient.addColorStop(0,'#d9c597');gradient.addColorStop(.4,'#bca16c');gradient.addColorStop(.68,'#e9d9b5');gradient.addColorStop(1,'#ac8c52');ctx.globalCompositeOperation='source-over';ctx.fillStyle=gradient;ctx.fillRect(0,0,w,h);
+ ctx.strokeStyle='rgba(255,255,255,.14)';ctx.lineWidth=1;
+ for(let x=-h;x<w+h;x+=17){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+h,h);ctx.stroke();}
+ ctx.textAlign='center';ctx.fillStyle='#58482b';ctx.font=`800 ${Math.max(12,Math.min(16,w/26))}px Segoe UI, sans-serif`;ctx.fillText('A LITTLE SURPRISE AWAITS',w/2,h/2-13);
+ ctx.font=`600 ${Math.max(11,Math.min(13,w/30))}px Segoe UI, sans-serif`;ctx.fillText('SCRATCH TO REVEAL',w/2,h/2+18);
+ const pos=e=>{const b=canvas.getBoundingClientRect();return {x:(e.clientX-b.left)*w/b.width,y:(e.clientY-b.top)*h/b.height};};
+ function scratch(e){const p=pos(e);ctx.globalCompositeOperation='destination-out';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=Math.max(26,w*.115);if(scratchLast){ctx.beginPath();ctx.moveTo(scratchLast.x,scratchLast.y);ctx.lineTo(p.x,p.y);ctx.stroke();}ctx.beginPath();ctx.arc(p.x,p.y,ctx.lineWidth/2,0,Math.PI*2);ctx.fill();scratchLast=p;}
+ function checkReveal(){if(state.rewardRevealed)return;const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;let gone=0,total=0;for(let y=0;y<canvas.height;y+=9)for(let x=0;x<canvas.width;x+=9){total++;if(pixels[(y*canvas.width+x)*4+3]<80)gone++;}if(gone/total>.34)revealReward();}
+ canvas.onpointerdown=e=>{if(state.rewardRevealed)return;scratchDown=true;scratchLast=null;canvas.setPointerCapture?.(e.pointerId);scratch(e);e.preventDefault();};
+ canvas.onpointermove=e=>{if(scratchDown){scratch(e);e.preventDefault();}};
+ canvas.onpointerup=canvas.onpointercancel=e=>{if(!scratchDown)return;scratchDown=false;scratchLast=null;checkReveal();};
+ canvas.onlostpointercapture=()=>{if(scratchDown){scratchDown=false;scratchLast=null;checkReveal();}};
+ $('revealButton').disabled=false;$('revealButton').textContent='Reveal instead';$('copyButton').disabled=true;$('copyButton').textContent='Copy code';
+ $('scratchStatus').textContent='Demonstration reward only. Not valid for bookings.';
+}
+function revealReward(){if(state.rewardRevealed)return;state.rewardRevealed=true;$('scratchCanvas').classList.add('is-cleared');$('copyButton').disabled=false;$('revealButton').disabled=true;$('revealButton').textContent='Revealed';$('scratchStatus').textContent='Sample reward revealed: TRIP10. This is not a real discount.';}
+async function copyCode(){if(!state.rewardRevealed)return;let ok=false;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText('TRIP10');ok=true;}}catch(e){}
+ if(!ok){const area=document.createElement('textarea');area.value='TRIP10';area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();try{ok=document.execCommand('copy');}catch(e){}area.remove();}
+ $('scratchStatus').textContent=ok?'TRIP10 copied. Demonstration code only.':'Copy unavailable here. Your sample code is TRIP10.';
+ if(ok){$('copyButton').textContent='Copied';setTimeout(()=>{if($('copyButton'))$('copyButton').textContent='Copy code';},1800);}
+}
+function restart(){
+ document.querySelectorAll('.flying-piece').forEach(x=>x.remove());
+ state=freshState();busy=false;pendingDateElement=null;currentStage='party';$('rewardSection').classList.remove('is-visible');$('travelerForm').reset();$('modalError').textContent='';$('travelerModal').classList.remove('is-hidden');$('site').inert=true;renderBoard();renderStep();$('fullName').focus();window.scrollTo({top:0,behavior:'instant'});
+}
+$('travelerForm').addEventListener('submit',e=>{
+ e.preventDefault();const t={name:$('fullName').value.trim(),email:$('email').value.trim(),callingCode:$('callingCode').value,phone:$('phone').value.trim(),nationality:$('nationality').value};
+ if(!travelerValid(t)){$('modalError').textContent='Please enter a name, valid email, phone (7–15 digits), and nationality.';if(t.name.length<2)$('fullName').focus();else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t.email))$('email').focus();else if(t.phone.replace(/\D/g,'').length<7)$('phone').focus();else $('nationality').focus();return;}
+ state.traveler=t;$('modalError').textContent='';$('travelerModal').classList.add('is-hidden');$('site').inert=false;renderStep();$('choices button')?.focus?.();
+});
+$('headerRestart').addEventListener('click',restart);$('revealButton').addEventListener('click',revealReward);$('copyButton').addEventListener('click',copyCode);
+state=freshState();renderBoard();renderStep();$('fullName').focus();
+})();
+</script>
+</body>
+</html>

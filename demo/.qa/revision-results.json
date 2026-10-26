@@ -1,0 +1,26 @@
+[
+  {
+    "viewport": [
+      1440,
+      900
+    ],
+    "animationStartMatchesButton": true,
+    "animationEndFillsWorkspace": true,
+    "mapLoaded": true
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "animationStartMatchesButton": true,
+    "animationEndFillsWorkspace": true,
+    "mapLoaded": true
+  },
+  {
+    "directFilePreviewMap": "loaded",
+    "pageErrors": [],
+    "httpErrors": [],
+    "directOSMTileRequests": 0
+  }
+]

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Before you go – suitcase section</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+:root{
+  --bg:#e4f1ee;--fg:#10243a;--muted:#4a6072;--gold:#ffc65c;--shell:#1d4e89;--lining:#12353f;
+  --h:min(58vh,540px);--w:min(calc(var(--h)*.82),42vw);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;
+}
+@supports (height:1svh){:root{--h:min(58svh,540px)}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1a2b;--fg:#eaf2f7;--muted:#9db2c4}}
+:root[data-theme="dark"]{--bg:#0c1a2b;--fg:#eaf2f7;--muted:#9db2c4}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg)}
+.spacer{min-height:60vh;display:grid;place-items:center;padding:2rem;text-align:center;opacity:.55}
+
+.pack{background:var(--bg);color:var(--fg);padding:4rem 6vw 5rem;display:flex;flex-direction:column}
+.pack h2{margin:0;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;font-weight:800;letter-spacing:-.035em}
+.pack header p{margin:.7rem 0 0;max-width:38ch;color:var(--muted);font-size:1.05rem;line-height:1.5}
+.stage{flex:1;min-height:0;display:grid;place-items:center;perspective:2200px;padding-top:1.5rem}
+.hint{margin:.5rem 0 0;text-align:center;font-weight:600;color:var(--muted);font-size:.95rem}
+
+/* ---- suitcase ---- */
+.case{position:relative;width:calc(var(--w)*2);height:var(--h);transform-style:preserve-3d}
+.half{position:absolute;width:var(--w);height:var(--h);right:0;top:0;border-radius:22px}
+.base{transform:translateZ(-2px)}
+.lid{z-index:2;transform-origin:left center;transform-style:preserve-3d;transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.in{transform:rotateY(180deg)}
+
+/* outer shell */
+.shell{position:absolute;inset:0;border-radius:22px;overflow:hidden;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.1) 0 3px,transparent 3px 20%),linear-gradient(150deg,#2b66ad,var(--shell) 55%,#173d6e);
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),0 30px 50px -20px rgba(8,20,40,.55)}
+.shell i{position:absolute;width:15%;aspect-ratio:1;background:var(--gold)}
+.shell i:nth-child(1){top:0;left:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.shell i:nth-child(2){top:0;right:0;clip-path:polygon(0 0,100% 0,100% 100%)}
+.shell i:nth-child(3){bottom:0;left:0;clip-path:polygon(0 0,0 100%,100% 100%)}
+.shell i:nth-child(4){bottom:0;right:0;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.stk{position:absolute;width:22%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:clamp(.6rem,1vw,.85rem);color:#10243a;border:3px dashed rgba(255,255,255,.75)}
+.stk.a{left:12%;bottom:20%;background:var(--gold);transform:rotate(-12deg)}
+.stk.b{left:40%;bottom:12%;background:#ff7a59;transform:rotate(8deg)}
+.stk.c{left:50%;bottom:34%;background:#35c2b0;transform:rotate(-5deg)}
+.handle{position:absolute;top:-24px;left:50%;width:34%;height:32px;transform:translateX(-50%);border:8px solid #101c34;border-bottom:0;border-radius:16px 16px 0 0}
+.latch{position:absolute;right:-6px;width:12px;height:12%;border-radius:6px;background:var(--gold);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.latch.l1{top:24%}.latch.l2{top:60%}
+.tag{position:absolute;top:12%;left:14%;width:34%;padding:.45rem .5rem;border-radius:8px;background:#fff;color:#10243a;font-weight:800;font-size:clamp(.6rem,.95vw,.8rem);line-height:1.15;transform:rotate(-6deg);box-shadow:0 6px 12px rgba(0,0,0,.3)}
+.tag small{display:block;font-weight:600;opacity:.65}
+
+/* inner lining with items */
+.panel{position:absolute;inset:0;border-radius:22px;padding:1rem;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.6rem;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 2px,transparent 2px 14px),var(--lining);
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.25),0 30px 50px -20px rgba(8,20,40,.5)}
+.panel::before{content:"";position:absolute;inset:7px;border:2px dashed rgba(255,198,92,.5);border-radius:16px;pointer-events:none}
+.shade{position:absolute;inset:0;border-radius:22px;background:linear-gradient(90deg,rgba(0,0,0,.7),rgba(0,0,0,0) 70%);pointer-events:none;opacity:0}
+.item{position:relative;background:#fff;color:#10243a;border-radius:14px;padding:.7rem;overflow:hidden;display:flex;flex-direction:column;gap:.35rem}
+.item .ico{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--tint);flex:none}
+.item svg{width:22px;height:22px;fill:none;stroke:#10243a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.item h3{margin:0;font-size:.98rem;line-height:1.15;font-weight:600;letter-spacing:-.01em}
+.item p{margin:0;font-size:.76rem;line-height:1.4;color:#44586b}
+
+@media (min-width:801px){
+  .pack.is-anim{height:100vh;height:100svh;padding-top:2.5rem;padding-bottom:1.5rem;overflow:hidden}
+}
+@media (max-width:800px){
+  :root{--h:460px;--w:min(92vw,400px)}
+  .pack{padding:3rem 4vw 4rem}
+  .case{width:var(--w);height:calc(var(--h)*2);margin-inline:auto}
+  .half{right:auto;left:0;top:auto;bottom:0}
+  .lid{transform-origin:center top;transform:rotateX(180deg)}
+  .face.in{transform:rotateX(180deg)}
+}
+</style>
+</head>
+<body>
+
+<div class="spacer">Tour overview above — scroll down</div>
+
+<section class="pack" id="pack" aria-labelledby="pack-title">
+  <header>
+    <h2 id="pack-title">Before you go</h2>
+    <p>Pack these eight things and you’re ready for sun, stone and desert nights.</p>
+  </header>
+
+  <div class="stage">
+    <div class="case" id="case">
+      <div class="half base">
+        <div class="panel">
+          <article class="item" style="--tint:rgba(120,190,120,.35)"><div class="ico"><svg viewBox="0 0 48 48"><path d="M5 36V21L15 17L21 24L34 27C40 28 43 31 43 36Z"/><path d="M5 36H43"/></svg></div><h3>Walking shoes</h3><p>Broken-in, closed-toe soles for stone and sand.</p></article>
+          <article class="item" style="--tint:rgba(190,140,220,.35)"><div class="ico"><svg viewBox="0 0 48 48"><path d="M12 8H36V20C36 30 30 33 30 42H20C20 33 12 30 12 20Z"/><path d="M12 15H36"/></svg></div><h3>Light scarf</h3><p>Cover shoulders at mosques and shade your neck.</p></article>
+          <article class="item" style="--tint:rgba(255,198,92,.45)"><div class="ico"><svg viewBox="0 0 48 48"><rect x="11" y="12" width="26" height="26" rx="5"/><path d="M19 12V5M29 12V5"/><circle cx="19" cy="25" r="2"/><circle cx="29" cy="25" r="2"/></svg></div><h3>Plug adapter</h3><p>Sockets are type C and F at 220 V.</p></article>
+          <article class="item" style="--tint:rgba(93,134,196,.35)"><div class="ico"><svg viewBox="0 0 48 48"><path d="M16 8L24 14L32 8L42 16L38 24L34 22V42H14V22L10 24L6 16Z"/><path d="M24 14V42"/></svg></div><h3>Warm layer</h3><p>Desert evenings get cold, especially Nov–Feb.</p></article>
+        </div>
+        <div class="shade"></div>
+      </div>
+
+      <div class="half lid">
+        <div class="face out">
+          <div class="shell"><i></i><i></i><i></i><i></i>
+            <span class="stk a">Giza</span><span class="stk b">Luxor</span><span class="stk c">Aswan</span>
+          </div>
+          <div class="handle"></div>
+          <span class="latch l1"></span><span class="latch l2"></span>
+          <div class="tag">Egypt<small>8 days</small></div>
+        </div>
+        <div class="face in">
+          <div class="panel">
+            <article class="item" style="--tint:rgba(255,198,92,.45)"><div class="ico"><svg viewBox="0 0 48 48"><rect x="16" y="16" width="16" height="26" rx="4"/><rect x="20" y="7" width="8" height="9" rx="2"/><circle cx="24" cy="29" r="4"/></svg></div><h3>Sunscreen SPF 50+</h3><p>Reapply every two hours. The sun is strong all year.</p></article>
+            <article class="item" style="--tint:rgba(93,134,196,.35)"><div class="ico"><svg viewBox="0 0 48 48"><path d="M5 33Q24 42 43 33"/><path d="M13 33C13 13 35 13 35 33"/><path d="M13 27H35"/></svg></div><h3>Wide-brim hat</h3><p>Temples and tombs have little shade.</p></article>
+            <article class="item" style="--tint:rgba(255,140,100,.35)"><div class="ico"><svg viewBox="0 0 48 48"><circle cx="15" cy="29" r="8"/><circle cx="33" cy="29" r="8"/><path d="M23 27Q24 25 25 27M7 27L5 20M41 27L43 20"/></svg></div><h3>Sunglasses</h3><p>UV lenses cut the glare off sand and stone.</p></article>
+            <article class="item" style="--tint:rgba(80,190,200,.35)"><div class="ico"><svg viewBox="0 0 48 48"><rect x="16" y="14" width="16" height="28" rx="5"/><rect x="20" y="6" width="8" height="8" rx="2"/><path d="M16 28q4-3 8 0t8 0"/></svg></div><h3>Water bottle</h3><p>Carry a litre or more on sightseeing days.</p></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Scroll to open your bag</p>
+</section>
+
+<div class="spacer">Reviews or next section below</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+  var sec=document.getElementById("pack"),
+      box=document.getElementById("case"),
+      lid=sec.querySelector(".lid"),
+      items=gsap.utils.toArray(".item"),
+      mm=gsap.matchMedia();
+
+  mm.add({ok:"(prefers-reduced-motion: no-preference)",wide:"(min-width:801px)"},function(ctx){
+    if(!ctx.conditions.ok) return;      // reduced motion: suitcase stays open, no animation
+    var wide=ctx.conditions.wide;
+    sec.classList.add("is-anim");
+
+    var st=wide
+      ? {trigger:sec,start:"top top",end:"+=220%",pin:true,scrub:.8,anticipatePin:1,invalidateOnRefresh:true}
+      : {trigger:sec,start:"top 60%",once:true,toggleActions:"play none none none",invalidateOnRefresh:true};
+    var tl=gsap.timeline({defaults:{ease:"none"},scrollTrigger:st});
+
+    // centre the closed case, then slide it into place as it opens
+    tl.fromTo(box,wide?{x:function(){return -lid.offsetWidth/2}}:{y:function(){return -lid.offsetHeight/2}},
+                  {x:0,y:0,duration:1.3,ease:"power2.inOut"},.1)
+      .fromTo(lid,wide?{rotationY:0}:{rotationX:0},
+                  wide?{rotationY:-180,duration:1.2,ease:"power2.inOut"}:{rotationX:180,duration:1.2,ease:"power2.inOut"},.2)
+      .fromTo(".shade",{opacity:1},{opacity:0,duration:1},.3)
+      .to(".hint",{opacity:0,duration:.4},.2)
+      .fromTo(items,{y:14,opacity:0,scale:.94},{y:0,opacity:1,scale:1,duration:.5,stagger:.12,ease:"power2.out"},.95)
+      .to({},{duration:.4});
+
+    return function(){ sec.classList.remove("is-anim"); };
+  });
+})();
+</script>
+</body>
+</html>

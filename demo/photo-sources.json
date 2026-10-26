@@ -1,0 +1,82 @@
+{
+  "0": {
+    "src": "assets/tour-0.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Images_by_the_Nile_No_329..JPG",
+    "page": "https://en.wikipedia.org/wiki/Esna",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Badics\" title=\"User:Badics\">Badics</a>",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "1": {
+    "src": "assets/tour-1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Temple_de_Louxor_68.jpg",
+    "page": "https://en.wikipedia.org/wiki/Karnak",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Renhour48\" title=\"User:Renhour48\">Ren\u00e9 Hourdry</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "2": {
+    "src": "assets/tour-2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Pyramids_of_the_Giza_Necropolis.jpg",
+    "page": "https://en.wikipedia.org/wiki/Giza_pyramid_complex",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:KennyOMG\" class=\"mw-redirect\" title=\"User:KennyOMG\">KennyOMG</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "3": {
+    "src": "assets/tour-3.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Luxor%2C_Tal_der_K%C3%B6nige_%281995%2C_860x605%29.jpg",
+    "page": "https://en.wikipedia.org/wiki/Valley_of_the_Kings",
+    "author": "<b>Fotograf/Photographer:</b> Peter J. Bubenik (1995)",
+    "license": "CC BY-SA 2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "4": {
+    "src": "assets/tour-4.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Temple_Edfou_Egypte.jpg",
+    "page": "https://en.wikipedia.org/wiki/Temple_of_Edfu",
+    "author": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Patrick.reb&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Patrick.reb (page does not exist)\">Patrick.reb</a>",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "5": {
+    "src": "assets/tour-5.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kom_Ombo_Portal_04.jpg",
+    "page": "https://en.wikipedia.org/wiki/Temple_of_Kom_Ombo",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Oltau\" title=\"User:Oltau\">Olaf Tausch</a>",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0"
+  },
+  "6": {
+    "src": "assets/tour-6.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:1977_bis_1980_wurde_die_Tempel_auf_der_Insel_Philae_auf_die_h%C3%B6her_gelegene_Insel_Agilka_versetzt._01.jpg",
+    "page": "https://en.wikipedia.org/wiki/Philae",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Holger_Uwe_Schmitt\" title=\"User:Holger Uwe Schmitt\">Holger Uwe Schmitt</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "7": {
+    "src": "assets/tour-7.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Panoramic_view_of_Aswan%2C_Egypt.jpg",
+    "page": "https://en.wikipedia.org/wiki/Aswan",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Argenberg\" title=\"User:Argenberg\">Vyacheslav Argenberg</a>",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "8": {
+    "src": "assets/tour-8.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:1550_bis_1070_v._Chr._ca._wurde_der_Tempel_von_Luxor_erbaut._01.jpg",
+    "page": "https://en.wikipedia.org/wiki/Luxor_Temple",
+    "author": "<a href=\"//commons.wikimedia.org/wiki/User:Holger_Uwe_Schmitt\" title=\"User:Holger Uwe Schmitt\">Holger Uwe Schmitt</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "9": {
+    "src": "assets/tour-9.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Flickr_-_archer10_%28Dennis%29_-_Egypt-13A-061.jpg",
+    "page": "https://en.wikipedia.org/wiki/Islamic_Cairo",
+    "author": "<bdi><a href=\"https://www.wikidata.org/wiki/Q122977591\" class=\"extiw\" title=\"d:Q122977591\"><span title=\"photographer\">Dennis G. Jarvis</span></a></bdi>",
+    "license": "CC BY-SA 2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0"
+  }
+}
